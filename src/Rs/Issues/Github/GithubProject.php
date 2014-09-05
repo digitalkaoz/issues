@@ -3,6 +3,7 @@
 namespace Rs\Issues\Github;
 
 use Github\Client;
+use Github\ResultPager;
 use Rs\Issues\Project;
 
 
@@ -61,11 +62,13 @@ class GithubProject implements Project
 
         list($username, $repo) = explode('/', $this->getName());
 
-        $issues = $this->client->issue()->all($username, $repo, $criteria);
+        $pager = new ResultPager($this->client);
+
+        $issues = $pager->fetchAll($this->client->issue(), 'all', array($username, $repo, $criteria));
 
         $newIssues = array();
 
-        foreach ($issues as $issue) {
+        foreach ((array)$issues as $issue) {
             $newIssues[] = new GithubIssue($issue);
         }
 

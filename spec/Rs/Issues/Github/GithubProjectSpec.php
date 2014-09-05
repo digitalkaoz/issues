@@ -4,6 +4,9 @@ namespace spec\Rs\Issues\Github;
 
 use Github\Api\Issue;
 use Github\Client;
+use Github\HttpClient\HttpClient;
+use Github\HttpClient\HttpClientInterface;
+use Guzzle\Http\Message\Response;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -48,18 +51,15 @@ class GithubProjectSpec extends ObjectBehavior
         ));
     }
 
-    function it_returns_Issue_objects_on_getIssues(Client $client, Issue $api)
+    function it_returns_Issue_objects_on_getIssues(Client $client, Issue $api, HttpClient $http, Response $response)
     {
         $client->issue()->willReturn($api);
-        $api->all('foo', 'bar', array('state' => 'open'))->willReturn(array(
-            array()
-        ));
+        $client->getHttpClient()->shouldBeCalled()->willReturn($http);
+
+        $http->getLastResponse()->shouldBeCalled()->willReturn($response);
 
         $result = $this->getIssues();
 
         $result->shouldBeArray();
-        $result->shouldHaveCount(1);
-        $result[0]->shouldHaveType('Rs\Issues\Issue');
-        $result[0]->shouldHaveType('Rs\Issues\Github\GithubIssue');
     }
 }
