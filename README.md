@@ -49,9 +49,9 @@ to use it programmaticly:
 <?php
 
 $tracker = new GithubTracker(); // or new JiraTracker();
-$tracker->connect($username, $password, $host); //if you want or need authentication Rs/Issues/Tracker
+$tracker->connect($username, $password, $host); //if you want or need authentication
 $project = $tracker->getProject('digitalkaoz/issues'); //Rs/Issues/Project
-$issues = $project->getIssues(); //Rs/Issues/Issues[]
+$issues = $project->getIssues(); //Rs/Issues/Issue[]
 
 ```
 
