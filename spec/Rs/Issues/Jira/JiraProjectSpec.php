@@ -33,10 +33,10 @@ class JiraProjectSpec extends ObjectBehavior
         $this->getDescription()->shouldBe('bar');
     }
 
-    function it_returns_its_url()
-    {
-        //$this->getUrl()->shouldBe('http://jira.google.com');
-    }
+//    function it_returns_its_url()
+//    {
+//        //$this->getUrl()->shouldBe('http://jira.google.com');
+//    }
 
     function it_returns_its_issues(Api $client, Api\Result $result)
     {

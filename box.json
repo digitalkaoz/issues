@@ -20,6 +20,10 @@
                 "tests", "Tests"
             ],
             "in": "vendor"
+        },
+        {
+            "name": "cacert.pem",
+            "in": "vendor"
         }
     ],
     "git-commit": "git-commit",
