@@ -1,0 +1,141 @@
+object(chobie\Jira\Issue)
+  Properties
+  # [expand]: array (5)
+    [0]: string (8) "editmeta"
+    [1]: string (14) "renderedFields"
+    [2]: string (11) "transitions"
+    [3]: string (9) "changelog"
+    [4]: string (10) "operations"
+  # [expandedInformation]: array (0)
+
+  # [fields]: array (43)
+    [Progress]: array (2)
+      [progress]: int 0
+      [total]: int 0
+    [Summary]: string (65) "Bei Anonymen-Spielen ist Weiß/Schwarz klickbar im Liga Scoreboard"
+    [Issue Type]: array (6)
+      [self]: string (54) "https://jira.domain.com/rest/api/2/issuetype/1"
+      [id]: string (1) "1"
+      [description]: string (65) "A problem which impairs or prevents the functions of the product."
+      [iconUrl]: string (63) "https://jira.domain.com/images/icons/issuetypes/bug.png"
+      [name]: string (3) "Bug"
+      [subtask]: bool false
+    [Sprint]: null
+    [Rank]: string (9) "0|105pzk:"
+    [Epic Link]: null
+    [Rank (Obsolete)]: string (5) "33419"
+    [Fix Version/s]: array (1)
+      [0]: array (6)
+        [self]: string (56) "https://jira.domain.com/rest/api/2/version/12245"
+        [id]: string (5) "12245"
+        [description]: string (14) "Wartungsupdate"
+        [name]: string (5) "0.2.1"
+        [archived]: bool false
+        [released]: bool false
+    [Resolution]: null
+    [Resolved]: null
+    [Time Spent]: null
+    [Creator]: array (6)
+      [self]: string (63) "https://jira.domain.com/rest/api/2/user?username=helgri"
+      [name]: string (6) "helgri"
+      [emailAddress]: string (30) "helge.grimm@gmail.com"
+      [avatarUrls]: array (4)
+        [16x16]: string (76) "https://jira.domain.com/secure/useravatar?size=xsmall&avatarId=10113"
+        [24x24]: string (75) "https://jira.domain.com/secure/useravatar?size=small&avatarId=10113"
+        [32x32]: string (76) "https://jira.domain.com/secure/useravatar?size=medium&avatarId=10113"
+        [48x48]: string (64) "https://jira.domain.com/secure/useravatar?avatarId=10113"
+      [displayName]: string (11) "Helge Grimm"
+      [active]: bool true
+    [Reporter]: array (6)
+      [self]: string (63) "https://jira.domain.com/rest/api/2/user?username=helgri"
+      [name]: string (6) "helgri"
+      [emailAddress]: string (30) "helge.grimm@gmail.com"
+      [avatarUrls]: array (4)
+        [16x16]: string (76) "https://jira.domain.com/secure/useravatar?size=xsmall&avatarId=10113"
+        [24x24]: string (75) "https://jira.domain.com/secure/useravatar?size=small&avatarId=10113"
+        [32x32]: string (76) "https://jira.domain.com/secure/useravatar?size=medium&avatarId=10113"
+        [48x48]: string (64) "https://jira.domain.com/secure/useravatar?avatarId=10113"
+      [displayName]: string (11) "Helge Grimm"
+      [active]: bool true
+    [Σ Original Estimate]: null
+    [Epic/Theme]: null
+    [Flagged]: null
+    [Updated]: string (28) "2013-10-10T10:16:03.000+0200"
+    [Created]: string (28) "2011-10-12T12:12:10.000+0200"
+    [Description]: null
+    [Priority]: array (4)
+      [self]: string (53) "https://jira.domain.com/rest/api/2/priority/4"
+      [iconUrl]: string (65) "https://jira.domain.com/images/icons/priorities/minor.png"
+      [name]: string (5) "Minor"
+      [id]: string (1) "4"
+    [Operating System]: null
+    [Due Date]: null
+    [Browser]: null
+    [Linked Issues]: array (0)
+
+    [Global Rank]: string (5) "20114"
+    [Watchers]: array (3)
+      [self]: string (66) "https://jira.domain.com/rest/api/2/issue/FUEDK-83/watchers"
+      [watchCount]: int 0
+      [isWatching]: bool false
+    [URL/Path]: null
+    [Sub-Tasks]: array (0)
+
+    [Status]: array (6)
+      [self]: string (51) "https://jira.domain.com/rest/api/2/status/1"
+      [description]: string (65) "The issue is open and ready for the assignee to start work on it."
+      [iconUrl]: string (62) "https://jira.domain.com/images/icons/statuses/open.png"
+      [name]: string (4) "Open"
+      [id]: string (1) "1"
+      [statusCategory]: array (5)
+        [self]: string (59) "https://jira.domain.com/rest/api/2/statuscategory/2"
+        [id]: int 2
+        [key]: string (3) "new"
+        [colorName]: string (9) "blue-gray"
+        [name]: string (3) "New"
+    [Labels]: array (0)
+
+    [Work Ratio]: int -1
+    [Assignee]: null
+    [Σ Remaining Estimate]: null
+    [Project]: array (6)
+      [self]: string (56) "https://jira.domain.com/rest/api/2/project/10340"
+      [id]: string (5) "10340"
+      [key]: string (5) "FUEDK"
+      [name]: string (19) "FUE_DigitalFoosball"
+      [avatarUrls]: array (4)
+        [16x16]: string (89) "https://jira.domain.com/secure/projectavatar?size=xsmall&pid=10340&avatarId=10227"
+        [24x24]: string (88) "https://jira.domain.com/secure/projectavatar?size=small&pid=10340&avatarId=10227"
+        [32x32]: string (89) "https://jira.domain.com/secure/projectavatar?size=medium&pid=10340&avatarId=10227"
+        [48x48]: string (77) "https://jira.domain.com/secure/projectavatar?pid=10340&avatarId=10227"
+      [projectCategory]: array (4)
+        [self]: string (64) "https://jira.domain.com/rest/api/2/projectCategory/10190"
+        [id]: string (5) "10190"
+        [description]: string (33) "Projektfamilie für domain"
+        [name]: string (3) "ZRs"
+    [Affects Version/s]: array (1)
+      [0]: array (6)
+        [self]: string (56) "https://jira.domain.com/rest/api/2/version/12245"
+        [id]: string (5) "12245"
+        [description]: string (14) "Wartungsupdate"
+        [name]: string (5) "0.2.1"
+        [archived]: bool false
+        [released]: bool false
+    [Remaining Estimate]: null
+    [Last Viewed]: string (28) "2014-09-03T11:53:04.706+0200"
+    [Σ Progress]: array (2)
+      [progress]: int 0
+      [total]: int 0
+    [Component/s]: array (1)
+      [0]: array (4)
+        [self]: string (58) "https://jira.domain.com/rest/api/2/component/11539"
+        [id]: string (5) "11539"
+        [name]: string (4) "Liga"
+        [description]: string (57) "Die Website für die Liga und zur Verwaltung von User usw."
+    [Original Estimate]: null
+    [E-Mail Notification CC]: null
+    [Historie veröffentlichter Versionen]: null
+    [Σ Time Spent]: null
+  # [id]: string (5) "90507"
+  # [key]: string (8) "FUEDK-83"
+  # [self]: string (54) "https://jira.domain.com/rest/api/2/issue/90507"

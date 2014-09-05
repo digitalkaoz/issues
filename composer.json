@@ -1,0 +1,25 @@
+{
+    "name":         "digitalkaoz/issues",
+    "homepage":     "https://github.com/digitalkaoz/issues",
+    "description":  "wrapper for github and jira issues",
+    "type":         "library",
+    "license":      "MIT",
+
+    "require" : {
+        "chobie/jira-api-restclient" :  "2.0.*@dev",
+        "knplabs/github-api" :          "1.3.*@dev",
+        "symfony/console" :             "@stable"
+    },
+
+    "require-dev" : {
+        "phpspec/phpspec" :     "@stable",
+        "raulfraile/ladybug":   "@stable",
+        "kherge/box":           "@stable"
+    },
+
+    "autoload" : {
+        "psr-4" : {
+            "Rs\\Issues\\" : "src/Rs/Issues/"
+        }
+    }
+}
