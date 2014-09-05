@@ -55,7 +55,7 @@ $issues = $project->getIssues(); //Rs/Issues/Issues[]
 
 ```
 
-[![Console Output](http://i57.tinypic.com/vrgfg2.png)]
+![Console Output](http://i57.tinypic.com/vrgfg2.png)
 
 Phar
 ----
