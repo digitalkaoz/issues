@@ -9,7 +9,6 @@ use chobie\Jira\Api;
 use chobie\Jira\Api\Authentication\Basic;
 use Rs\Issues\Tracker;
 
-
 /**
  * JiraTracker
  * @author Robert Schönthal <robert.schoenthal@gmail.com>

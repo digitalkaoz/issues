@@ -7,7 +7,6 @@ namespace Rs\Issues\Jira;
 
 use Rs\Issues\Issue;
 
-
 /**
  * JiraIssue
  * @author Robert Schönthal <robert.schoenthal@gmail.com>

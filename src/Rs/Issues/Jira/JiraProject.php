@@ -9,7 +9,6 @@ use chobie\Jira\Api;
 use chobie\Jira\Issues\Walker;
 use Rs\Issues\Project;
 
-
 /**
  * JiraProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
@@ -25,9 +24,11 @@ class JiraProject implements Project
      */
     private $client;
 
+    private $issues = array();
+
     /**
      * @param array $data
-     * @param Api $client
+     * @param Api   $client
      */
     public function __construct(array $data, Api $client)
     {
@@ -73,6 +74,6 @@ class JiraProject implements Project
             $issues[] = new JiraIssue($issue);
         }
 
-        return $issues;
+        return $this->issues = $issues;
     }
 }

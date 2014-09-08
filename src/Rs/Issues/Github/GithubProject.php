@@ -6,7 +6,6 @@ use Github\Client;
 use Github\ResultPager;
 use Rs\Issues\Project;
 
-
 /**
  * GithubProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
@@ -20,13 +19,10 @@ class GithubProject implements Project
      */
     private $client;
 
-    /**
-     * @var array
-     */
     private $issues = array();
 
     /**
-     * @param array $data
+     * @param array  $data
      * @param Client $client
      */
     public function __construct(array $data, Client $client)
@@ -68,7 +64,7 @@ class GithubProject implements Project
 
         $newIssues = array();
 
-        foreach ((array)$issues as $issue) {
+        foreach ((array) $issues as $issue) {
             $newIssues[] = new GithubIssue($issue);
         }
 
@@ -91,4 +87,4 @@ class GithubProject implements Project
 
         return $this->raw;
     }
-} 
+}

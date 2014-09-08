@@ -2,7 +2,6 @@
 
 namespace Rs\Issues;
 
-
 /**
  * Issue
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
@@ -43,4 +42,4 @@ interface Issue
      * @return int
      */
     public function getCommentCount();
-} 
+}

@@ -7,7 +7,6 @@ namespace Rs\Issues\Github;
 
 use Rs\Issues\Issue;
 
-
 /**
  * GithubIssue
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
@@ -69,7 +68,7 @@ class GithubIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state']; //TODO use own consts?!
+        return $this->raw['state'];
     }
 
     /**

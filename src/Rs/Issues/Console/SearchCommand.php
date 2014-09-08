@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 /**
  * SearchCommand
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
@@ -67,7 +66,7 @@ EOT
     }
 
     /**
-     * @param array $issues
+     * @param array           $issues
      * @param OutputInterface $output
      */
     private function listIssues(array $issues, OutputInterface $output)
@@ -89,4 +88,4 @@ EOT
 
         $helper->render($output);
     }
-} 
+}

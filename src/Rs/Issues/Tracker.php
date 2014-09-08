@@ -10,17 +10,17 @@ namespace Rs\Issues;
 interface Tracker
 {
     /**
-     * @param string $username
-     * @param string $password
-     * @param string $host
+     * @param  string  $username
+     * @param  string  $password
+     * @param  string  $host
      * @return boolean
      */
     public function connect($username = null, $password = null, $host = null);
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return Project
      */
     public function getProject($name);
 
-} 
+}
