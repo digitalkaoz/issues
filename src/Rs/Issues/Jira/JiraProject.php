@@ -65,6 +65,10 @@ class JiraProject implements Project
      */
     public function getIssues(array $criteria = array('status != closed', 'status != resolved'))
     {
+        if ($this->issues) {
+            return $this->issues;
+        }
+
         $conditions = join(' AND ', $criteria);
         $walker = new Walker($this->client);
         $walker->push(sprintf('project = %s AND %s', $this->raw['key'], $conditions));

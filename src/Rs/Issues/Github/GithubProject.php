@@ -50,10 +50,10 @@ class GithubProject implements Project
     /**
      * @inheritdoc
      */
-    public function getIssues(array $criteria = array())
+    public function getIssues(array $criteria = array('state' => 'open'))
     {
-        if (!$criteria) {
-            $criteria = array('state' => 'open');
+        if ($this->issues) {
+            return $this->issues;
         }
 
         list($username, $repo) = explode('/', $this->getName());
