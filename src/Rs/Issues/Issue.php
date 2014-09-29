@@ -34,6 +34,11 @@ interface Issue
     public function getClosedAt();
 
     /**
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt();
+
+    /**
      * @return string
      */
     public function getState();
@@ -42,4 +47,16 @@ interface Issue
      * @return int
      */
     public function getCommentCount();
+
+    public function getAssignee();
+
+    public function getNumber();
+
+    public function getOwner();
+
+    public function getOwnerUrl();
+
+    public function getAssigneeUrl();
+
+    public function getType();
 }

@@ -24,8 +24,6 @@ class JiraProject implements Project
      */
     private $client;
 
-    private $issues = array();
-
     /**
      * @param array $data
      * @param Api   $client
@@ -65,10 +63,6 @@ class JiraProject implements Project
      */
     public function getIssues(array $criteria = array('status != closed', 'status != resolved'))
     {
-        if ($this->issues) {
-            return $this->issues;
-        }
-
         $conditions = join(' AND ', $criteria);
         $walker = new Walker($this->client);
         $walker->push(sprintf('project = %s AND %s', $this->raw['key'], $conditions));
@@ -78,6 +72,19 @@ class JiraProject implements Project
             $issues[] = new JiraIssue($issue);
         }
 
-        return $this->issues = $issues;
+        return $issues;
+    }
+
+    public function getType()
+    {
+        return 'jira';
+    }
+
+    /**
+     * @return array
+     */
+    public function getBadges()
+    {
+        return [];
     }
 }

@@ -19,6 +19,9 @@ class GithubProject implements Project
      */
     private $client;
 
+    /**
+     * @var array
+     */
     private $issues = array();
 
     /**
@@ -50,10 +53,10 @@ class GithubProject implements Project
     /**
      * @inheritdoc
      */
-    public function getIssues(array $criteria = array('state' => 'open'))
+    public function getIssues(array $criteria = array())
     {
-        if ($this->issues) {
-            return $this->issues;
+        if (!$criteria) {
+            $criteria = array('state' => 'open');
         }
 
         list($username, $repo) = explode('/', $this->getName());
@@ -86,5 +89,66 @@ class GithubProject implements Project
         }
 
         return $this->raw;
+    }
+
+    public function getType()
+    {
+        return 'github';
+    }
+
+    /**
+     * @return array
+     */
+    public function getBadges()
+    {
+        $badges = [];
+
+        if ($travis = $this->getTravisName()) {
+            $badges[] = array(
+                'img' => 'https://secure.travis-ci.org/'.$this->raw['full_name'].'.png',
+                'link' => 'http://travis-ci.org/'.$this->raw['full_name']
+            );
+        }
+
+        if ($composer = $this->getComposerName()) {
+            $badges[] = array(
+                'img'  => 'https://poser.pugx.org/' . $composer . '/version.png',
+                'link' => 'https://packagist.org/packages/' . $composer
+            );
+            $badges[] = array(
+                'img' => 'https://poser.pugx.org/'.$composer.'/d/total.png',
+                'link' => 'https://packagist.org/packages/'.$composer
+            );
+        }
+
+        return $badges;
+    }
+
+    private function getTravisName()
+    {
+        try {
+            $travis = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], '.travis.yml');
+            if ('base64' === $travis['encoding']) {
+                return true;
+            }
+        } catch (\Exception $e) {
+        }
+
+        return false;
+    }
+
+    private function getComposerName()
+    {
+        try {
+            $composer = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], 'composer.json');
+            if ('base64' === $composer['encoding']) {
+                $composer = json_decode(base64_decode($composer['content']));
+
+                return isset($composer->name) ? $composer->name : false;
+            }
+        } catch (\Exception $e) {
+        }
+
+        return false;
     }
 }

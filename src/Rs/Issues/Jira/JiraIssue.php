@@ -85,4 +85,42 @@ class JiraIssue implements Issue
 
         return $comment['total'];
     }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt()
+    {
+        // TODO: Implement getUpdatedAt() method.
+    }
+
+    public function getAssignee()
+    {
+        // TODO: Implement getAssignee() method.
+    }
+
+    public function getNumber()
+    {
+        // TODO: Implement getNumber() method.
+    }
+
+    public function getOwner()
+    {
+        // TODO: Implement getOwner() method.
+    }
+
+    public function getOwnerUrl()
+    {
+        // TODO: Implement getOwnerUrl() method.
+    }
+
+    public function getAssigneeUrl()
+    {
+        // TODO: Implement getAssigneeUrl() method.
+    }
+
+    public function getType()
+    {
+        // TODO: Implement getType() method.
+    }
 }

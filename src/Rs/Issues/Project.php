@@ -28,4 +28,15 @@ interface Project
      * @return Issue[]
      */
     public function getIssues(array $criteria = array());
+
+    /**
+     * @return string
+     */
+    public function getType();
+
+    /**
+     * @return array
+     */
+    public function getBadges();
+
 }

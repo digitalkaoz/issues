@@ -68,7 +68,7 @@ class GithubIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state'];
+        return $this->raw['state']; //TODO use own consts?!
     }
 
     /**
@@ -79,6 +79,44 @@ class GithubIssue implements Issue
         return $this->raw['comments'];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatedAt()
+    {
+        return $this->raw['updated_at'] ? new \DateTime($this->raw['updated_at']) : null;
+    }
+
+    public function getAssignee()
+    {
+        return $this->raw['assignee']['login'];
+    }
+
+    public function getAssigneeUrl()
+    {
+        return $this->raw['assignee']['html_url'];
+    }
+
+    public function getNumber()
+    {
+        return $this->raw['number'];
+    }
+
+    public function getOwner()
+    {
+        return $this->raw['user']['login'];
+    }
+
+    public function getOwnerUrl()
+    {
+        return $this->raw['user']['html_url'];
+    }
+
+    public function getType()
+    {
+        return isset($this->raw['pull_request']) ? 'pull' : 'issue';
+    }
+
     public function getRaw($key = null)
     {
         if ($key && array_key_exists($key, $this->raw)) {
@@ -87,4 +125,5 @@ class GithubIssue implements Issue
 
         return $this->raw;
     }
+
 }
