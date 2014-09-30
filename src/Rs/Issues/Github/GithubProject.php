@@ -101,7 +101,7 @@ class GithubProject implements Project
      */
     public function getBadges()
     {
-        $badges = [];
+        $badges = array();
 
         if ($travis = $this->getTravisName()) {
             $badges[] = array(
@@ -151,4 +151,20 @@ class GithubProject implements Project
 
         return false;
     }
+
+    private function getNpmName()
+    {
+        try {
+            $composer = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], 'package.json');
+            if ('base64' === $composer['encoding']) {
+                $composer = json_decode(base64_decode($composer['content']));
+
+                return isset($composer->name) ? $composer->name : false;
+            }
+        } catch (\Exception $e) {
+        }
+
+        return false;
+    }
+
 }
