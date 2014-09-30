@@ -85,6 +85,6 @@ class JiraProject implements Project
      */
     public function getBadges()
     {
-        return [];
+        return array();
     }
 }
