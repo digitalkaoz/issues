@@ -6,7 +6,7 @@
     "license":      "MIT",
 
     "require" : {
-        "chobie/jira-api-restclient" :  "2.0.*@dev",
+        "chobie/jira-api-restclient" :  "@dev",
         "knplabs/github-api" :          "1.3.*@dev",
         "symfony/console" :             "@stable"
     },
