@@ -3,6 +3,7 @@
 namespace Rs\Issues\Console;
 
 use Rs\Issues\Github\GithubTracker;
+use Rs\Issues\Gitlab\GitlabTracker;
 use Rs\Issues\Issue;
 use Rs\Issues\Jira\JiraTracker;
 use Symfony\Component\Console\Command\Command;
@@ -53,6 +54,9 @@ EOT
                 break;
             case 'jira' :
                 $tracker = new JiraTracker();
+                break;
+            case 'gitlab' :
+                $tracker = new GitlabTracker();
                 break;
             default :
                 throw new \InvalidArgumentException('unknown type, choose github|jira');

@@ -45,7 +45,7 @@ class JiraTracker implements Tracker
     {
         $p = $this->client->getProject($name);
 
-        if(!is_array($p)) {
+        if (!is_array($p)) {
             throw new \RuntimeException('invalid Project');
         }
 

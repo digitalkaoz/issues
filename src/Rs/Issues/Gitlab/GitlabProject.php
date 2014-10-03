@@ -1,16 +1,15 @@
 <?php
 
-namespace Rs\Issues\Github;
+namespace Rs\Issues\Gitlab;
 
-use Github\Client;
-use Github\ResultPager;
+use Gitlab\Client;
 use Rs\Issues\Project;
 
 /**
- * GithubProject
+ * GitlabProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GithubProject implements Project
+class GitlabProject implements Project
 {
     private $raw = array();
 
@@ -47,7 +46,7 @@ class GithubProject implements Project
      */
     public function getUrl()
     {
-        return $this->raw['html_url'];
+        return $this->raw['web_url'];
     }
 
     /**
@@ -59,16 +58,21 @@ class GithubProject implements Project
             $criteria = array('state' => 'open');
         }
 
-        list($username, $repo) = explode('/', $this->getName());
-
-        $pager = new ResultPager($this->client);
-
-        $issues = $pager->fetchAll($this->client->issue(), 'all', array($username, $repo, $criteria));
+        $issues = $this->client->api('issues')->all($this->getName(),1 , 9999, $criteria);
 
         $newIssues = array();
 
         foreach ((array) $issues as $issue) {
-            $newIssues[] = new GithubIssue($issue);
+            if ('closed' === $issue['state']) {
+                continue;
+            }
+            $newIssues[] = new GitlabIssue($issue, 'issue', $this->getUrl());
+        }
+
+        $issues = $this->client->api('merge_requests')->opened($this->getName(),1 , 9999);
+
+        foreach ((array) $issues as $issue) {
+            $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
         }
 
         return $this->issues = $newIssues;
@@ -79,7 +83,7 @@ class GithubProject implements Project
      */
     public function getName()
     {
-        return $this->raw['full_name'];
+        return $this->raw['path_with_namespace'];
     }
 
     public function getRaw($key = null)
@@ -93,7 +97,7 @@ class GithubProject implements Project
 
     public function getType()
     {
-        return 'github';
+        return 'gitlab';
     }
 
     /**
@@ -102,13 +106,6 @@ class GithubProject implements Project
     public function getBadges()
     {
         $badges = array();
-
-        if ($travis = $this->getTravisName()) {
-            $badges[] = array(
-                'img' => 'https://secure.travis-ci.org/'.$this->raw['full_name'].'.png',
-                'link' => 'http://travis-ci.org/'.$this->raw['full_name']
-            );
-        }
 
         if ($composer = $this->getComposerName()) {
             $badges[] = array(
@@ -124,23 +121,10 @@ class GithubProject implements Project
         return $badges;
     }
 
-    private function getTravisName()
-    {
-        try {
-            $travis = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], '.travis.yml');
-            if ('base64' === $travis['encoding']) {
-                return true;
-            }
-        } catch (\Exception $e) {
-        }
-
-        return false;
-    }
-
     private function getComposerName()
     {
         try {
-            $composer = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], 'composer.json');
+            $composer = $this->client->api('repositories')->getFile($this->raw['path_with_namespace'], 'composer.json');
             if ('base64' === $composer['encoding']) {
                 $composer = json_decode(base64_decode($composer['content']));
 
