@@ -109,8 +109,9 @@ class GitlabIssue implements Issue
     public function getAssigneeUrl()
     {
         $base = parse_url($this->url, PHP_URL_HOST);
+        $proto = parse_url($this->url, PHP_URL_SCHEME);
 
-        return sprintf('%s/u/%s', $base, $this->getAssignee());
+        return sprintf('%s://%s/u/%s', $proto, $base, $this->getAssignee());
     }
 
     public function getNumber()
@@ -126,8 +127,9 @@ class GitlabIssue implements Issue
     public function getOwnerUrl()
     {
         $base = parse_url($this->url, PHP_URL_HOST);
+        $proto = parse_url($this->url, PHP_URL_SCHEME);
 
-        return sprintf('%s/u/%s', $base, $this->getOwner());
+        return sprintf('%s://%s/u/%s', $proto, $base, $this->getOwner());
     }
 
     public function getType()

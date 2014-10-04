@@ -30,6 +30,11 @@ class GithubProjectSpec extends ObjectBehavior
         $this->getName()->shouldReturn('foo/bar');
     }
 
+    public function it_returns_the_type()
+    {
+        $this->getType()->shouldReturn('github');
+    }
+
     public function it_returns_the_description()
     {
         $this->getDescription()->shouldReturn('lorem ipsum');
