@@ -2,6 +2,7 @@
 
 namespace Rs\Issues\Gitlab;
 
+use Gitlab\Api\Projects;
 use Gitlab\Client;
 use Rs\Issues\Tracker;
 
@@ -47,7 +48,9 @@ class GitlabTracker implements Tracker
      */
     public function getProject($name)
     {
-        $data = $this->client->api('projects')->show($name);
+        $api = $this->client->api('projects');
+        /** @var Projects $api */
+        $data = $api->show($name);
 
         return new GitlabProject($data, $this->client);
     }

@@ -103,7 +103,7 @@ class GithubProject implements Project
     {
         $badges = array();
 
-        if ($travis = $this->getTravisName()) {
+        if ($this->getTravisName()) {
             $badges[] = array(
                 'img' => 'https://secure.travis-ci.org/'.$this->raw['full_name'].'.png',
                 'link' => 'http://travis-ci.org/'.$this->raw['full_name']
@@ -132,6 +132,7 @@ class GithubProject implements Project
                 return true;
             }
         } catch (\Exception $e) {
+            //no .travis.yml found
         }
 
         return false;
@@ -147,6 +148,7 @@ class GithubProject implements Project
                 return isset($composer->name) ? $composer->name : false;
             }
         } catch (\Exception $e) {
+            //no composer.json found
         }
 
         return false;

@@ -2,6 +2,9 @@
 
 namespace Rs\Issues\Gitlab;
 
+use Gitlab\Api\Issues;
+use Gitlab\Api\MergeRequests;
+use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use Rs\Issues\Project;
 
@@ -58,7 +61,9 @@ class GitlabProject implements Project
             $criteria = array('state' => 'open');
         }
 
-        $issues = $this->client->api('issues')->all($this->getName(),1 , 9999, $criteria);
+        $api = $this->client->api('issues');
+        /** @var Issues $api */
+        $issues = $api->all($this->getName(),1 , 9999, $criteria);
 
         $newIssues = array();
 
@@ -69,7 +74,9 @@ class GitlabProject implements Project
             $newIssues[] = new GitlabIssue($issue, 'issue', $this->getUrl());
         }
 
-        $issues = $this->client->api('merge_requests')->opened($this->getName(),1 , 9999);
+        $api = $this->client->api('merge_requests');
+        /** @var MergeRequests $api */
+        $issues = $api->opened($this->getName(),1 , 9999);
 
         foreach ((array) $issues as $issue) {
             $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
@@ -124,13 +131,16 @@ class GitlabProject implements Project
     private function getComposerName()
     {
         try {
-            $composer = $this->client->api('repositories')->getFile($this->raw['path_with_namespace'], 'composer.json');
+            $api = $this->client->api('repositories');
+            /** @var Repositories $api */
+            $composer = $api->getFile($this->raw['path_with_namespace'], 'composer.json', 'master');
             if ('base64' === $composer['encoding']) {
                 $composer = json_decode(base64_decode($composer['content']));
 
                 return isset($composer->name) ? $composer->name : false;
             }
         } catch (\Exception $e) {
+            //no composer.json found
         }
 
         return false;
