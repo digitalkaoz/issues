@@ -77,4 +77,9 @@ interface Issue
      * @return string
      */
     public function getType();
+
+    /**
+     * @return array
+     */
+    public function getTags();
 }

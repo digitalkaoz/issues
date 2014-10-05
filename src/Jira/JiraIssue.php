@@ -45,7 +45,7 @@ class JiraIssue implements Issue
     /**
      * @return string
      */
-    public function getText()
+    public function getDescription()
     {
         return $this->raw->getDescription();
     }
@@ -99,17 +99,17 @@ class JiraIssue implements Issue
         // TODO: Implement getAssignee() method.
     }
 
-    public function getNumber()
+    public function getId()
     {
         // TODO: Implement getNumber() method.
     }
 
-    public function getOwner()
+    public function getAuthor()
     {
         // TODO: Implement getOwner() method.
     }
 
-    public function getOwnerUrl()
+    public function getAuthorUrl()
     {
         // TODO: Implement getOwnerUrl() method.
     }
@@ -122,5 +122,10 @@ class JiraIssue implements Issue
     public function getType()
     {
         // TODO: Implement getType() method.
+    }
+
+    public function getTags()
+    {
+        //TODO: implement
     }
 }

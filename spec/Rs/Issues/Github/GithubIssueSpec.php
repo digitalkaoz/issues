@@ -7,16 +7,17 @@ use PhpSpec\ObjectBehavior;
 class GithubIssueSpec extends ObjectBehavior
 {
     private $data = array(
-        'title'      => 'foo bar',
-        'body'       => 'lorem ipsum',
-        'html_url'   => 'http://foo.com',
-        'state'      => 'open',
-        'created_at' => '25.05.1981 13:37:42',
-        'closed_at'  => null,
-        'comments'   => 7,
+        'title'        => 'foo bar',
+        'body'         => 'lorem ipsum',
+        'html_url'     => 'http://foo.com',
+        'state'        => 'open',
+        'created_at'   => '25.05.1981 13:37:42',
+        'closed_at'    => null,
+        'comments'     => 7,
         'pull_request' => 'foo',
-        'assignee'    => array('login' => 'digitalkaoz', 'html_url' => 'http://bazz.com'),
-        'user'      => array('login' => 'lolcat', 'html_url' => 'http://bar.com')
+        'assignee'     => array('login' => 'digitalkaoz', 'html_url' => 'http://bazz.com'),
+        'user'         => array('login' => 'lolcat', 'html_url' => 'http://bar.com'),
+        'labels'       => array(array('name' => 'foo'), array('name' => 'bar'))
     );
 
     public function let()
@@ -35,9 +36,9 @@ class GithubIssueSpec extends ObjectBehavior
         $this->getTitle()->shouldReturn('foo bar');
     }
 
-    public function it_returns_the_text()
+    public function it_returns_the_description()
     {
-        $this->getText()->shouldReturn('lorem ipsum');
+        $this->getDescription()->shouldReturn('lorem ipsum');
     }
 
     public function it_returns_the_url()
@@ -70,10 +71,10 @@ class GithubIssueSpec extends ObjectBehavior
         $this->getRaw()->shouldReturn($this->data);
     }
 
-    public function it_returns_the_owner()
+    public function it_returns_the_author()
     {
-        $this->getOwner()->shouldReturn('lolcat');
-        $this->getOwnerUrl()->shouldReturn('http://bar.com');
+        $this->getAuthor()->shouldReturn('lolcat');
+        $this->getAuthorUrl()->shouldReturn('http://bar.com');
     }
 
     public function it_returns_the_type()
@@ -85,5 +86,10 @@ class GithubIssueSpec extends ObjectBehavior
     {
         $this->getAssignee()->shouldReturn('digitalkaoz');
         $this->getAssigneeUrl()->shouldReturn('http://bazz.com');
+    }
+
+    public function it_returns_its_tags()
+    {
+        $this->getTags()->shouldBe(array('foo', 'bar'));
     }
 }

@@ -82,9 +82,9 @@ class GithubProjectSpec extends ObjectBehavior
         $result->shouldHaveCount(2);
 
         $result[0]->shouldHaveType('Rs\Issues\Github\GithubIssue');
-        $result[0]->getNumber()->shouldBe(1);
+        $result[0]->getId()->shouldBe(1);
 
         $result[1]->shouldHaveType('Rs\Issues\Github\GithubIssue');
-        $result[1]->getNumber()->shouldBe(5);
+        $result[1]->getId()->shouldBe(5);
     }
 }

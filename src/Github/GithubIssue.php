@@ -42,7 +42,7 @@ class GithubIssue implements Issue
     /**
      * @inheritdoc
      */
-    public function getText()
+    public function getDescription()
     {
         return $this->raw['body'];
     }
@@ -87,31 +87,49 @@ class GithubIssue implements Issue
         return $this->raw['updated_at'] ? new \DateTime($this->raw['updated_at']) : null;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssignee()
     {
         return $this->raw['assignee']['login'];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssigneeUrl()
     {
         return $this->raw['assignee']['html_url'];
     }
 
-    public function getNumber()
+    /**
+     * @inheritdoc
+     */
+    public function getId()
     {
         return $this->raw['number'];
     }
 
-    public function getOwner()
+    /**
+     * @inheritdoc
+     */
+    public function getAuthor()
     {
         return $this->raw['user']['login'];
     }
 
-    public function getOwnerUrl()
+    /**
+     * @inheritdoc
+     */
+    public function getAuthorUrl()
     {
         return $this->raw['user']['html_url'];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return isset($this->raw['pull_request']) ? 'pull' : 'issue';
@@ -126,4 +144,18 @@ class GithubIssue implements Issue
         return $this->raw;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getTags()
+    {
+        $labels = isset($this->raw['labels']) ? $this->raw['labels'] : array();
+        $return = array();
+
+        foreach ($labels as $label) {
+            $return[] = $label['name'];
+        }
+
+        return $return;
+    }
 }

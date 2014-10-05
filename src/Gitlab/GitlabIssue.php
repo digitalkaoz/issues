@@ -42,7 +42,7 @@ class GitlabIssue implements Issue
     {
         $path = $this->type == 'issue' ? 'issues' : 'merge_requests';
 
-        return sprintf('%s/%s/%d', $this->url, $path, $this->getNumber());
+        return sprintf('%s/%s/%d', $this->url, $path, $this->getId());
     }
 
     /**
@@ -56,7 +56,7 @@ class GitlabIssue implements Issue
     /**
      * @inheritdoc
      */
-    public function getText()
+    public function getDescription()
     {
         return $this->raw['description'];
     }
@@ -82,7 +82,7 @@ class GitlabIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state']; //TODO use own consts?!
+        return $this->raw['state'];
     }
 
     /**
@@ -101,11 +101,17 @@ class GitlabIssue implements Issue
         return $this->raw['updated_at'] ? new \DateTime($this->raw['updated_at']) : null;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssignee()
     {
         return $this->raw['assignee']['username'];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssigneeUrl()
     {
         $base = parse_url($this->url, PHP_URL_HOST);
@@ -114,24 +120,36 @@ class GitlabIssue implements Issue
         return sprintf('%s://%s/u/%s', $proto, $base, $this->getAssignee());
     }
 
-    public function getNumber()
+    /**
+     * @inheritdoc
+     */
+    public function getId()
     {
         return $this->raw['iid'];
     }
 
-    public function getOwner()
+    /**
+     * @inheritdoc
+     */
+    public function getAuthor()
     {
         return $this->raw['author']['username'];
     }
 
-    public function getOwnerUrl()
+    /**
+     * @inheritdoc
+     */
+    public function getAuthorUrl()
     {
         $base = parse_url($this->url, PHP_URL_HOST);
         $proto = parse_url($this->url, PHP_URL_SCHEME);
 
-        return sprintf('%s://%s/u/%s', $proto, $base, $this->getOwner());
+        return sprintf('%s://%s/u/%s', $proto, $base, $this->getAuthor());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return $this->type;
@@ -146,4 +164,11 @@ class GitlabIssue implements Issue
         return $this->raw;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getTags()
+    {
+        return isset($this->raw['labels']) ? $this->raw['labels'] : array();
+    }
 }

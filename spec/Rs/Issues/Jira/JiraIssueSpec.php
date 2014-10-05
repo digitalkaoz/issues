@@ -33,11 +33,11 @@ class JiraIssueSpec extends ObjectBehavior
         $this->getTitle()->shouldBe('foo');
     }
 
-    public function it_returns_its_text(Issue $issue)
+    public function it_returns_its_description(Issue $issue)
     {
         $issue->getDescription()->shouldBeCalled()->willReturn('bar');
 
-        $this->getText()->shouldBe('bar');
+        $this->getDescription()->shouldBe('bar');
     }
 
     public function it_returns_the_state(Issue $issue)

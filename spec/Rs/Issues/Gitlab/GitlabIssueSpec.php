@@ -14,7 +14,8 @@ class GitlabIssueSpec extends ObjectBehavior
         'created_at'  => '25.05.1981 13:37:42',
         'closed_at'   => null,
         'assignee'    => array('username' => 'digitalkaoz'),
-        'author'      => array('username' => 'lolcat')
+        'author'      => array('username' => 'lolcat'),
+        'labels'      => array('foo','bar')
     );
 
     public function let()
@@ -33,15 +34,15 @@ class GitlabIssueSpec extends ObjectBehavior
         $this->getTitle()->shouldReturn('foo bar');
     }
 
-    public function it_returns_the_text()
+    public function it_returns_the_description()
     {
-        $this->getText()->shouldReturn('lorem ipsum');
+        $this->getDescription()->shouldReturn('lorem ipsum');
     }
 
-    public function it_returns_the_owner()
+    public function it_returns_the_author()
     {
-        $this->getOwner()->shouldReturn('lolcat');
-        $this->getOwnerUrl()->shouldReturn('http://foo.com/u/lolcat');
+        $this->getAuthor()->shouldReturn('lolcat');
+        $this->getAuthorUrl()->shouldReturn('http://foo.com/u/lolcat');
     }
 
     public function it_returns_the_assignee()
@@ -85,4 +86,8 @@ class GitlabIssueSpec extends ObjectBehavior
         $this->getRaw()->shouldReturn($this->data);
     }
 
+    public function it_returns_its_tags()
+    {
+        $this->getTags()->shouldBe(array('foo','bar'));
+    }
 }

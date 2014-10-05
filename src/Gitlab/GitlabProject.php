@@ -22,11 +22,6 @@ class GitlabProject implements Project
     private $client;
 
     /**
-     * @var array
-     */
-    private $issues = array();
-
-    /**
      * @param array  $data
      * @param Client $client
      */
@@ -82,7 +77,7 @@ class GitlabProject implements Project
             $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
         }
 
-        return $this->issues = $newIssues;
+        return $newIssues;
     }
 
     /**
