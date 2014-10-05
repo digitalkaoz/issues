@@ -121,7 +121,7 @@ class JiraIssue implements Issue
 
     public function getType()
     {
-        // TODO: Implement getType() method.
+        return 'issue';
     }
 
     public function getTags()

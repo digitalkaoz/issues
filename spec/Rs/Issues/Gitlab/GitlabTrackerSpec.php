@@ -4,7 +4,6 @@ namespace spec\Rs\Issues\Gitlab;
 
 use Gitlab\Api\Projects;
 use Gitlab\Client;
-use Gitlab\HttpClient\HttpClient;
 use PhpSpec\ObjectBehavior;
 
 class GitlabTrackerSpec extends ObjectBehavior

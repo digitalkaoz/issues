@@ -4,6 +4,7 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\ResultPager;
+use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
 /**
@@ -86,60 +87,29 @@ class GithubProject implements Project
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getBadges()
     {
-        $badges = array();
-
-        if ($this->useTravis()) {
-            $badges[] = array(
-                'img' => 'https://travis-ci.org/'.$this->raw['full_name'].'.svg',
-                'link' => 'https://travis-ci.org/'.$this->raw['full_name']
-            );
-        }
-
-        if ($composer = $this->getComposerName()) {
-            $badges[] = array(
-                'img'  => 'https://poser.pugx.org/' . $composer . '/version.svg',
-                'link' => 'https://packagist.org/packages/' . $composer
-            );
-            $badges[] = array(
-                'img' => 'https://poser.pugx.org/'.$composer.'/d/total.svg',
-                'link' => 'https://packagist.org/packages/'.$composer
-            );
-        }
-
-        return $badges;
-    }
-
-    private function useTravis()
-    {
-        try {
-            $travis = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], '.travis.yml');
-            if ('base64' === $travis['encoding']) {
-                return true;
-            }
-        } catch (\Exception $e) {
-            //no .travis.yml found
-        }
-
-        return false;
+        return BadgeUtils::getBadges($this->getName(), !!$this->getFile('.travis.yml'), $this->getComposerName());
     }
 
     private function getComposerName()
     {
-        try {
-            $composer = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], 'composer.json');
-            if ('base64' === $composer['encoding']) {
-                $composer = json_decode(base64_decode($composer['content']));
+        $file = $this->getFile('composer.json');
 
-                return isset($composer->name) ? $composer->name : null;
+        return $file && isset($file->name) ? $file->name : null;
+    }
+
+    private function getFile($filename)
+    {
+        try {
+            $file = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], $filename);
+            if ('base64' === $file['encoding']) {
+                return json_decode(base64_decode($file['content']));
             }
         } catch (\Exception $e) {
-            //no composer.json found
+            //file not found
         }
-
-        return null;
     }
 }

@@ -27,4 +27,12 @@ class JiraTrackerSpec extends ObjectBehavior
         $result->shouldHaveType('Rs\Issues\Project');
         $result->shouldHaveType('Rs\Issues\Jira\JiraProject');
     }
+
+    public function it_throws_an_exception_if_something_wrong_on_getProject(Api $client)
+    {
+        $client->getProject('FOOBAR')->willReturn();
+
+        $this->shouldThrow('\RuntimeException')->during('getProject', array('FOOBAR'));
+    }
+
 }

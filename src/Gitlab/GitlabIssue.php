@@ -159,7 +159,7 @@ class GitlabIssue implements Issue
     }
 
     /**
-     * @param string $username
+     * @param  string $username
      * @return string
      */
     private function getUserUrl($username)

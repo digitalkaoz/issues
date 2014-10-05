@@ -47,6 +47,11 @@ class JiraIssueSpec extends ObjectBehavior
         $this->getState()->shouldReturn('open');
     }
 
+    public function it_returns_the_type()
+    {
+        $this->getType()->shouldReturn('issue');
+    }
+
     public function it_returns_the_create_date_as_DateTime(Issue $issue)
     {
         $issue->getCreated()->shouldBeCalled()->willReturn('25.05.1981 13:37:42');

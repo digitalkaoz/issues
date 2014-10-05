@@ -6,6 +6,7 @@ use Gitlab\Api\Issues;
 use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
+use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
 /**
@@ -97,41 +98,31 @@ class GitlabProject implements Project
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getBadges()
     {
-        $badges = array();
-
-        if ($composer = $this->getComposerName()) {
-            $badges[] = array(
-                'img'  => 'https://poser.pugx.org/' . $composer . '/version.png',
-                'link' => 'https://packagist.org/packages/' . $composer
-            );
-            $badges[] = array(
-                'img' => 'https://poser.pugx.org/'.$composer.'/d/total.png',
-                'link' => 'https://packagist.org/packages/'.$composer
-            );
-        }
-
-        return $badges;
+        return BadgeUtils::getBadges($this->getName(), false, $this->getComposerName());
     }
 
     private function getComposerName()
     {
+        $file = $this->getFile('composer.json');
+
+        return $file && isset($file->name) ? $file->name : null;
+    }
+
+    private function getFile($filename)
+    {
         try {
             $api = $this->client->api('repositories');
             /** @var Repositories $api */
-            $composer = $api->getFile($this->raw['path_with_namespace'], 'composer.json', 'master');
-            if ('base64' === $composer['encoding']) {
-                $composer = json_decode(base64_decode($composer['content']));
-
-                return isset($composer->name) ? $composer->name : false;
+            $file = $api->getFile($this->raw['path_with_namespace'], $filename, 'master');
+            if ('base64' === $file['encoding']) {
+                return json_decode(base64_decode($file['content']));
             }
         } catch (\Exception $e) {
-            //no composer.json found
+            //file not found
         }
-
-        return false;
     }
 }

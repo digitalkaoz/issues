@@ -39,9 +39,17 @@ class JiraProjectSpec extends ObjectBehavior
 
     public function it_returns_its_issues(Api $client, Api\Result $result)
     {
+        $result->beConstructedWith(array('startAt' => 0, 'maxResults' => 1, 'total' => 1, 'issues' => array(array())));
+
         $client->search("project = FOOBAR AND status != closed AND status != resolved", 0, 50, null)->shouldBeCalled()->willReturn($result);
         $result = $this->getIssues();
 
         $result->shouldBeArray();
+    }
+
+    public function it_returns_empty_badges()
+    {
+        $this->getBadges()->shouldBeArray();
+        $this->getBadges()->shouldHaveCount(0);
     }
 }

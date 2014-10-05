@@ -84,7 +84,7 @@ EOT
     /**
      * creates the correct tracker
      *
-     * @param InputInterface $input
+     * @param  InputInterface $input
      * @return Tracker
      */
     private function createTracker(InputInterface $input)

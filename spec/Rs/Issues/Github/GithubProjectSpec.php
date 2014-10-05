@@ -3,6 +3,8 @@
 namespace spec\Rs\Issues\Github;
 
 use Github\Api\Issue;
+use Github\Api\Repo;
+use Github\Api\Repository\Contents;
 use Github\Client;
 use Github\HttpClient\HttpClient;
 use Guzzle\Http\Message\Response;
@@ -16,7 +18,9 @@ class GithubProjectSpec extends ObjectBehavior
         $this->beConstructedWith(array(
             'full_name'   => 'foo/bar',
             'description' => 'lorem ipsum',
-            'html_url'    => 'http://foo.com'
+            'html_url'    => 'http://foo.com',
+            'name'        => 'bar',
+            'owner'       => array('login' => 'foo')
         ), $client);
     }
 
@@ -77,5 +81,29 @@ class GithubProjectSpec extends ObjectBehavior
 
         $result[1]->shouldHaveType('Rs\Issues\Github\GithubIssue');
         $result[1]->getId()->shouldBe(5);
+    }
+
+    public function it_returns_the_badges(Client $client, Repo $api, Contents $content)
+    {
+        $client->repos()->willReturn($api);
+        $api->contents()->willReturn($content);
+
+        $content->show('foo', 'bar', '.travis.yml')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{}')));
+        $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
+
+        $this->getBadges()->shouldBe(array(
+            array(
+                'img'  => "https://travis-ci.org/foo/bar.svg",
+                'link' => "https://travis-ci.org/foo/bar"
+            ),
+            array(
+                'img'  => "https://poser.pugx.org/foo/bar/version.svg",
+                'link' => "https://packagist.org/packages/foo/bar"
+            ),
+            array(
+                'img'  => "https://poser.pugx.org/foo/bar/d/total.svg",
+                'link' => "https://packagist.org/packages/foo/bar"
+            )
+        ));
     }
 }

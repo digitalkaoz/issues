@@ -12,6 +12,7 @@ class GithubIssueSpec extends ObjectBehavior
         'html_url'     => 'http://foo.com',
         'state'        => 'open',
         'created_at'   => '25.05.1981 13:37:42',
+        'updated_at'   => '14.05.2013 07:05:00',
         'closed_at'    => null,
         'comments'     => 7,
         'pull_request' => 'foo',
@@ -54,6 +55,11 @@ class GithubIssueSpec extends ObjectBehavior
     public function it_returns_the_create_date_as_DateTime()
     {
         $this->getCreatedAt()->shouldHaveType('\DateTime');
+    }
+
+    public function it_returns_the_updated_date_as_DateTime()
+    {
+        $this->getUpdatedAt()->shouldHaveType('\DateTime');
     }
 
     public function it_returns_the_closed_date_as_DateTime_if_set()
