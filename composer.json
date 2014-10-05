@@ -13,8 +13,7 @@
     "require-dev": {
         "phpspec/phpspec": "~2.0",
         "raulfraile/ladybug": "~1.0",
-        "kherge/box": "~2.4",
-        "henrikbjorn/phpspec-code-coverage": "~0.2"
+        "kherge/box": "~2.4"
     },
     "autoload": {
         "psr-4": {
