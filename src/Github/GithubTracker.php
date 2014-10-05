@@ -3,10 +3,12 @@
 namespace Rs\Issues\Github;
 
 use Github\Client;
+use Github\HttpClient\CachedHttpClient;
 use Rs\Issues\Tracker;
 
 /**
  * GithubTracker
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class GithubTracker implements Tracker
@@ -17,23 +19,16 @@ class GithubTracker implements Tracker
     private $client;
 
     /**
+     * @param string $token
      * @param Client $client
      */
-    public function __construct(Client $client = null)
+    public function __construct($token = null, Client $client = null)
     {
-        $this->client = $client ?: new \Github\Client(new \Github\HttpClient\CachedHttpClient());
-    }
+        $this->client = $client ?: new Client(new CachedHttpClient());
 
-    /**
-     * @inheritdoc
-     */
-    public function connect($username = null, $password = null, $host = null)
-    {
-        if ($username) {
-            $this->client->authenticate($username, $password, Client::AUTH_HTTP_PASSWORD);
+        if ($token) {
+            $this->client->authenticate($token, null, Client::AUTH_HTTP_PASSWORD);
         }
-
-        return true;
     }
 
     /**

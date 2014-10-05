@@ -6,6 +6,7 @@ use Rs\Issues\Github\GithubTracker;
 use Rs\Issues\Gitlab\GitlabTracker;
 use Rs\Issues\Issue;
 use Rs\Issues\Jira\JiraTracker;
+use Rs\Issues\Tracker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,21 +49,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        switch ($input->getArgument('type')) {
-            case 'github' :
-                $tracker = new GithubTracker();
-                break;
-            case 'jira' :
-                $tracker = new JiraTracker();
-                break;
-            case 'gitlab' :
-                $tracker = new GitlabTracker();
-                break;
-            default :
-                throw new \InvalidArgumentException('unknown type, choose github|jira');
-        }
+        $tracker = $this->createTracker($input);
 
-        $tracker->connect($input->getOption('username'), $input->getOption('password'), $input->getOption('host'));
         $project = $tracker->getProject($input->getArgument('project'));
         $issues = $project->getIssues();
 
@@ -91,5 +79,30 @@ EOT
         }
 
         $helper->render($output);
+    }
+
+    /**
+     * creates the correct tracker
+     *
+     * @param InputInterface $input
+     * @return Tracker
+     */
+    private function createTracker(InputInterface $input)
+    {
+        switch ($input->getArgument('type')) {
+            case 'github' :
+                $tracker = new GithubTracker($input->getOption('username'));
+                break;
+            case 'jira' :
+                $tracker = new JiraTracker($input->getOption('host'), $input->getOption('username'), $input->getOption('password'));
+                break;
+            case 'gitlab' :
+                $tracker = new GitlabTracker($input->getOption('host'), $input->getOption('username'));
+                break;
+            default :
+                throw new \InvalidArgumentException('unknown type, choose github|jira');
+        }
+
+        return $tracker;
     }
 }

@@ -1,8 +1,4 @@
 <?php
-/**
- * issues
- */
-
 namespace Rs\Issues\Jira;
 
 use chobie\Jira\Api;
@@ -11,6 +7,7 @@ use Rs\Issues\Tracker;
 
 /**
  * JiraTracker
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class JiraTracker implements Tracker
@@ -21,21 +18,14 @@ class JiraTracker implements Tracker
     private $client;
 
     /**
-     * @param Api $client
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param Api    $client
      */
-    public function __construct(Api $client = null)
+    public function __construct($host, $username = null, $password = null, Api $client = null)
     {
-        $this->client = $client;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function connect($username = null, $password = null, $host = null)
-    {
-        $this->client = $this->client ?: new Api($host, new Basic($username, $password));
-
-        return true;
+        $this->client = $client ?: new Api($host, new Basic($username, $password));
     }
 
     /**

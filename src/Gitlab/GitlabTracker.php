@@ -8,6 +8,7 @@ use Rs\Issues\Tracker;
 
 /**
  * GitlabTracker
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class GitlabTracker implements Tracker
@@ -18,29 +19,17 @@ class GitlabTracker implements Tracker
     private $client;
 
     /**
+     * @param string $host
+     * @param string $token
      * @param Client $client
      */
-    public function __construct(Client $client = null)
+    public function __construct($host, $token = null, Client $client = null)
     {
-        $this->client = $client ?: new Client(null);
-    }
+        $this->client = $client ?: new Client($host);
 
-    /**
-     * @inheritdoc
-     */
-    public function connect($username = null, $password = null, $host = null)
-    {
-        $this->client->setBaseUrl($host);
-        $prop = new \ReflectionProperty(get_class($this->client->getHttpClient()), 'base_url');
-        $prop->setAccessible(true);
-
-        $prop->setValue($this->client->getHttpClient(), $host);
-
-        if ($username) {
-            $this->client->authenticate($username, Client::AUTH_URL_TOKEN);
+        if ($token) {
+            $this->client->authenticate($token, Client::AUTH_URL_TOKEN);
         }
-
-        return true;
     }
 
     /**

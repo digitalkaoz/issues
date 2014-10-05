@@ -11,22 +11,15 @@ class GitlabTrackerSpec extends ObjectBehavior
 {
     public function let(Client $client)
     {
-        $this->beConstructedWith($client);
+        $client->authenticate('foo', 'url_token')->shouldBeCalled();
+
+        $this->beConstructedWith('http://foo.com', 'foo', $client);
     }
 
     public function it_is_initializable()
     {
         $this->shouldHaveType('Rs\Issues\Gitlab\GitlabTracker');
         $this->shouldHaveType('Rs\Issues\Tracker');
-    }
-
-    public function it_is_able_to_connect_to_gitlab_with_credentials(Client $client, HttpClient $http)
-    {
-        $client->authenticate('foo', Client::AUTH_URL_TOKEN)->shouldBeCalled();
-        $client->setBaseUrl('http://foo.com')->shouldBeCalled();
-        $client->getHttpClient()->shouldBeCalled()->willReturn($http);
-
-        $this->connect('foo', null, 'http://foo.com')->shouldReturn(true);
     }
 
     public function it_returns_a_Project_on_getProject(Client $client, Projects $api)
