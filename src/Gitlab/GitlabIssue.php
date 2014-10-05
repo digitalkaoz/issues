@@ -155,15 +155,6 @@ class GitlabIssue implements Issue
         return $this->type;
     }
 
-    public function getRaw($key = null)
-    {
-        if ($key && array_key_exists($key, $this->raw)) {
-            return $this->raw[$key];
-        }
-
-        return $this->raw;
-    }
-
     /**
      * @inheritdoc
      */

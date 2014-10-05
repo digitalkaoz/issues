@@ -66,11 +66,6 @@ class GithubIssueSpec extends ObjectBehavior
         $this->getCommentCount()->shouldReturn(7);
     }
 
-    public function it_can_return_the_raw_data_from_github()
-    {
-        $this->getRaw()->shouldReturn($this->data);
-    }
-
     public function it_returns_the_author()
     {
         $this->getAuthor()->shouldReturn('lolcat');

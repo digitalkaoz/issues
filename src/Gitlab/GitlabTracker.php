@@ -43,12 +43,4 @@ class GitlabTracker implements Tracker
 
         return new GitlabProject($data, $this->client);
     }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
 }

@@ -88,15 +88,9 @@ class GitlabProject implements Project
         return $this->raw['path_with_namespace'];
     }
 
-    public function getRaw($key = null)
-    {
-        if ($key && array_key_exists($key, $this->raw)) {
-            return $this->raw[$key];
-        }
-
-        return $this->raw;
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return 'gitlab';

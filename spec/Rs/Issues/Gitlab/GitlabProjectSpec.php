@@ -43,10 +43,4 @@ class GitlabProjectSpec extends ObjectBehavior
     {
         $this->getUrl()->shouldReturn('http://foo.com');
     }
-
-    public function it_can_return_the_raw_data_from_github()
-    {
-        $this->getRaw()->shouldReturn($this->data);
-    }
-
 }

@@ -135,15 +135,6 @@ class GithubIssue implements Issue
         return isset($this->raw['pull_request']) ? 'pull' : 'issue';
     }
 
-    public function getRaw($key = null)
-    {
-        if ($key && array_key_exists($key, $this->raw)) {
-            return $this->raw[$key];
-        }
-
-        return $this->raw;
-    }
-
     /**
      * @inheritdoc
      */

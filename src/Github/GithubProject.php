@@ -77,15 +77,9 @@ class GithubProject implements Project
         return $this->raw['full_name'];
     }
 
-    public function getRaw($key = null)
-    {
-        if ($key && array_key_exists($key, $this->raw)) {
-            return $this->raw[$key];
-        }
-
-        return $this->raw;
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return 'github';

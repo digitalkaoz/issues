@@ -126,6 +126,7 @@ class JiraIssue implements Issue
 
     public function getTags()
     {
-        //TODO: implement
+        //TODO
+        return array();
     }
 }

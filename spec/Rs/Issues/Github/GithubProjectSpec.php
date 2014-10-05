@@ -46,15 +46,6 @@ class GithubProjectSpec extends ObjectBehavior
         $this->getUrl()->shouldReturn('http://foo.com');
     }
 
-    public function it_can_return_the_raw_data_from_github()
-    {
-        $this->getRaw()->shouldReturn(array(
-            'full_name'   => 'foo/bar',
-            'description' => 'lorem ipsum',
-            'html_url'    => 'http://foo.com'
-        ));
-    }
-
     public function it_returns_Issue_objects_on_getIssues(Client $client, Issue $api, HttpClient $http, Response $response)
     {
         $client->issue()->willReturn($api);

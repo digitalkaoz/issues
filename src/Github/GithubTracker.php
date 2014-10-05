@@ -42,12 +42,4 @@ class GithubTracker implements Tracker
 
         return new GithubProject($data, $this->client);
     }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
 }

@@ -81,11 +81,6 @@ class GitlabIssueSpec extends ObjectBehavior
         $this->getCommentCount()->shouldReturn(null);
     }
 
-    public function it_can_return_the_raw_data_from_gitlab()
-    {
-        $this->getRaw()->shouldReturn($this->data);
-    }
-
     public function it_returns_its_tags()
     {
         $this->getTags()->shouldBe(array('foo','bar'));

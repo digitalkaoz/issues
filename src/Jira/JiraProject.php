@@ -75,13 +75,16 @@ class JiraProject implements Project
         return $issues;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return 'jira';
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getBadges()
     {
