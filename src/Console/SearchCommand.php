@@ -78,12 +78,12 @@ EOT
         $helper = $this->getHelper('table');
         /** @var Table $helper */
 
-        $helper->setHeaders(array('state', 'created at', 'title', 'url'));
+        $helper->setHeaders(array('type', 'created at', 'title', 'url'));
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
             $helper->addRow(array(
-                $issue->getState(),
+                $issue->getType(),
                 $issue->getCreatedAt()->format('Y-m-d H:i'),
                 $issue->getTitle(),
                 $issue->getUrl()
