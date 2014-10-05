@@ -21,7 +21,7 @@ interface Issue
     /**
      * @return string
      */
-    public function getText();
+    public function getDescription();
 
     /**
      * @return \DateTime
@@ -48,15 +48,33 @@ interface Issue
      */
     public function getCommentCount();
 
+    /**
+     * @return string
+     */
     public function getAssignee();
 
-    public function getNumber();
+    /**
+     * @return int
+     */
+    public function getId();
 
-    public function getOwner();
+    /**
+     * @return string
+     */
+    public function getAuthor();
 
-    public function getOwnerUrl();
+    /**
+     * @return string|null
+     */
+    public function getAuthorUrl();
 
+    /**
+     * @return string|null
+     */
     public function getAssigneeUrl();
 
+    /**
+     * @return string
+     */
     public function getType();
 }
