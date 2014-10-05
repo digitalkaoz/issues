@@ -9,6 +9,7 @@ use Rs\Issues\Issue;
 
 /**
  * GitlabIssue
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class GitlabIssue implements Issue
@@ -114,10 +115,7 @@ class GitlabIssue implements Issue
      */
     public function getAssigneeUrl()
     {
-        $base = parse_url($this->url, PHP_URL_HOST);
-        $proto = parse_url($this->url, PHP_URL_SCHEME);
-
-        return sprintf('%s://%s/u/%s', $proto, $base, $this->getAssignee());
+        return $this->getUserUrl($this->getAssignee());
     }
 
     /**
@@ -141,10 +139,7 @@ class GitlabIssue implements Issue
      */
     public function getAuthorUrl()
     {
-        $base = parse_url($this->url, PHP_URL_HOST);
-        $proto = parse_url($this->url, PHP_URL_SCHEME);
-
-        return sprintf('%s://%s/u/%s', $proto, $base, $this->getAuthor());
+        return $this->getUserUrl($this->getAuthor());
     }
 
     /**
@@ -161,5 +156,17 @@ class GitlabIssue implements Issue
     public function getTags()
     {
         return isset($this->raw['labels']) ? $this->raw['labels'] : array();
+    }
+
+    /**
+     * @param string $username
+     * @return string
+     */
+    private function getUserUrl($username)
+    {
+        $base = parse_url($this->url, PHP_URL_HOST);
+        $proto = parse_url($this->url, PHP_URL_SCHEME);
+
+        return sprintf('%s://%s/u/%s', $proto, $base, $username);
     }
 }
