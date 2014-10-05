@@ -62,7 +62,7 @@ class GithubProject implements Project
 
         $newIssues = array();
 
-        foreach ((array) $issues as $issue) {
+        foreach ($issues as $issue) {
             $newIssues[] = new GithubIssue($issue);
         }
 
@@ -98,20 +98,20 @@ class GithubProject implements Project
     {
         $badges = array();
 
-        if ($this->getTravisName()) {
+        if ($this->useTravis()) {
             $badges[] = array(
-                'img' => 'https://secure.travis-ci.org/'.$this->raw['full_name'].'.png',
-                'link' => 'http://travis-ci.org/'.$this->raw['full_name']
+                'img' => 'https://travis-ci.org/'.$this->raw['full_name'].'.svg',
+                'link' => 'https://travis-ci.org/'.$this->raw['full_name']
             );
         }
 
         if ($composer = $this->getComposerName()) {
             $badges[] = array(
-                'img'  => 'https://poser.pugx.org/' . $composer . '/version.png',
+                'img'  => 'https://poser.pugx.org/' . $composer . '/version.svg',
                 'link' => 'https://packagist.org/packages/' . $composer
             );
             $badges[] = array(
-                'img' => 'https://poser.pugx.org/'.$composer.'/d/total.png',
+                'img' => 'https://poser.pugx.org/'.$composer.'/d/total.svg',
                 'link' => 'https://packagist.org/packages/'.$composer
             );
         }
@@ -119,7 +119,7 @@ class GithubProject implements Project
         return $badges;
     }
 
-    private function getTravisName()
+    private function useTravis()
     {
         try {
             $travis = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], '.travis.yml');
@@ -140,12 +140,12 @@ class GithubProject implements Project
             if ('base64' === $composer['encoding']) {
                 $composer = json_decode(base64_decode($composer['content']));
 
-                return isset($composer->name) ? $composer->name : false;
+                return isset($composer->name) ? $composer->name : null;
             }
         } catch (\Exception $e) {
             //no composer.json found
         }
 
-        return false;
+        return null;
     }
 }

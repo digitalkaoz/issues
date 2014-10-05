@@ -7,6 +7,7 @@ use Github\Client;
 use Github\HttpClient\HttpClient;
 use Guzzle\Http\Message\Response;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class GithubProjectSpec extends ObjectBehavior
 {
@@ -57,12 +58,33 @@ class GithubProjectSpec extends ObjectBehavior
     public function it_returns_Issue_objects_on_getIssues(Client $client, Issue $api, HttpClient $http, Response $response)
     {
         $client->issue()->willReturn($api);
-        $client->getHttpClient()->shouldBeCalled()->willReturn($http);
+        $client->getHttpClient()->willReturn($http);
 
-        $http->getLastResponse()->shouldBeCalled()->willReturn($response);
+        $api->getPerPage()->willReturn(5);
+        $api->setPerPage(Argument::any())->willReturn();
+
+        $http->getLastResponse()->willReturn($response);
+
+        $response->getHeader('Link')->willReturn(null);
+
+        $api->all('foo', 'bar', array('state' => 'open'))->willReturn(array(
+            array(
+                'number' => 1,
+            ),
+            array(
+                'number' => 5,
+            ),
+        ));
 
         $result = $this->getIssues();
 
         $result->shouldBeArray();
+        $result->shouldHaveCount(2);
+
+        $result[0]->shouldHaveType('Rs\Issues\Github\GithubIssue');
+        $result[0]->getNumber()->shouldBe(1);
+
+        $result[1]->shouldHaveType('Rs\Issues\Github\GithubIssue');
+        $result[1]->getNumber()->shouldBe(5);
     }
 }
