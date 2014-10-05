@@ -20,11 +20,6 @@ class GithubProject implements Project
     private $client;
 
     /**
-     * @var array
-     */
-    private $issues = array();
-
-    /**
      * @param array  $data
      * @param Client $client
      */
@@ -71,7 +66,7 @@ class GithubProject implements Project
             $newIssues[] = new GithubIssue($issue);
         }
 
-        return $this->issues = $newIssues;
+        return $newIssues;
     }
 
     /**
