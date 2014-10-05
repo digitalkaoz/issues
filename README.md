@@ -16,17 +16,10 @@ a PHP wrapper for various issue tracker (github & jira atm)
 Installation
 ------------
 
-```
-$ composer require digitalkaoz/issues *
+```bash
+$ composer require digitalkaoz/issues
 ```
 
-or
-
-```json
-    "require" : {
-        "digitalkaoz/issues" : "*"
-    }
-```
 
 Usage
 -----
