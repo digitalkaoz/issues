@@ -6,7 +6,6 @@ a PHP wrapper for various issue tracker (github & jira atm)
 [![Build Status](https://travis-ci.org/digitalkaoz/issues.svg?branch=master)](https://travis-ci.org/digitalkaoz/issues)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/digitalkaoz/issues/version.svg)](https://packagist.org/packages/digitalkaoz/issues)
 [![Latest Unstable Version](https://poser.pugx.org/digitalkaoz/issues/v/unstable.svg)](//packagist.org/packages/digitalkaoz/issues) 
