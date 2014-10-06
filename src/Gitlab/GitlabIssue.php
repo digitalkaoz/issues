@@ -25,9 +25,9 @@ class GitlabIssue implements Issue
     private $url;
 
     /**
-     * @param array $data
-     * @param       $type
-     * @param       $url
+     * @param array  $data
+     * @param string $type
+     * @param string $url
      */
     public function __construct(array $data, $type, $url)
     {
