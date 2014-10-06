@@ -19,7 +19,7 @@ class GitlabProjectSpec extends ObjectBehavior
 
     public function let(Client $client)
     {
-        $this->beConstructedWith($this->data, $client);
+        $this->beConstructedWith($this->data, $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -55,8 +55,7 @@ class GitlabProjectSpec extends ObjectBehavior
         $api->getFile('foo/bar', 'composer.json', 'master')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
 
         $this->getBadges()->shouldBeArray();
-        $this->getBadges()->shouldHaveCount(0);
-        $this->getBadges(new BadgeFactory())->shouldHaveCount(2);
+        $this->getBadges()->shouldHaveCount(2);
     }
 
     public function it_returns_its_issues(Client $client, Issues $issuesApi, MergeRequests $mergesApi)

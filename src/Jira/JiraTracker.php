@@ -3,6 +3,7 @@ namespace Rs\Issues\Jira;
 
 use chobie\Jira\Api;
 use chobie\Jira\Api\Authentication\Basic;
+use Rs\Issues\BadgeFactory;
 use Rs\Issues\Tracker;
 
 /**
@@ -16,16 +17,22 @@ class JiraTracker implements Tracker
      * @var Api
      */
     private $client;
+    /**
+     * @var BadgeFactory
+     */
+    private $badgeFactory;
 
     /**
-     * @param string $host
-     * @param string $username
-     * @param string $password
-     * @param Api    $client
+     * @param string       $host
+     * @param string       $username
+     * @param string       $password
+     * @param Api          $client
+     * @param BadgeFactory $badgeFactory
      */
-    public function __construct($host, $username = null, $password = null, Api $client = null)
+    public function __construct($host, $username = null, $password = null, Api $client = null, BadgeFactory $badgeFactory = null)
     {
         $this->client = $client ?: new Api($host, new Basic($username, $password));
+        $this->badgeFactory = $badgeFactory;
     }
 
     /**
@@ -39,6 +46,6 @@ class JiraTracker implements Tracker
             throw new \RuntimeException('invalid Project');
         }
 
-        return new JiraProject($p, $this->client);
+        return new JiraProject($p, $this->client, $this->badgeFactory);
     }
 }

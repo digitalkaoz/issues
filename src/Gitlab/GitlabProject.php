@@ -22,15 +22,21 @@ class GitlabProject implements Project
      * @var Client
      */
     private $client;
+    /**
+     * @var BadgeFactory
+     */
+    private $badgeFactory;
 
     /**
-     * @param array  $data
-     * @param Client $client
+     * @param array        $data
+     * @param Client       $client
+     * @param BadgeFactory $badgeFactory
      */
-    public function __construct(array $data, Client $client)
+    public function __construct(array $data, Client $client, BadgeFactory $badgeFactory)
     {
         $this->raw = $data;
         $this->client = $client;
+        $this->badgeFactory = $badgeFactory;
     }
 
     /**
@@ -83,22 +89,18 @@ class GitlabProject implements Project
     /**
      * @inheritdoc
      */
-    public function getBadges(BadgeFactory $factory = null)
+    public function getBadges()
     {
         $badges = array();
 
-        if (!$factory) {
-            return $badges;
-        }
-
         if ($this->getFile('.travis.yml')) {
-            $badges[] = $factory->getTravis($this->getName());
+            $badges[] = $this->badgeFactory->getTravis($this->getName());
         }
 
         if ($composer = $this->getFile('composer.json')) {
             $composer = json_decode($composer, true);
-            $badges[] = $factory->getComposerDownloads($composer['name']);
-            $badges[] = $factory->getComposerVersion($composer['name']);
+            $badges[] = $this->badgeFactory->getComposerDownloads($composer['name']);
+            $badges[] = $this->badgeFactory->getComposerVersion($composer['name']);
         }
 
         return $badges;
@@ -125,7 +127,7 @@ class GitlabProject implements Project
     }
 
     /**
-     * @param  array $criteria
+     * @param  array   $criteria
      * @return Issue[]
      */
     private function findIssues(array $criteria)

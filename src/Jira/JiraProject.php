@@ -24,15 +24,21 @@ class JiraProject implements Project
      * @var Api
      */
     private $client;
+    /**
+     * @var BadgeFactory
+     */
+    private $badgeFactory;
 
     /**
-     * @param array $data
-     * @param Api   $client
+     * @param array        $data
+     * @param Api          $client
+     * @param BadgeFactory $badgeFactory
      */
-    public function __construct(array $data, Api $client)
+    public function __construct(array $data, Api $client, BadgeFactory $badgeFactory)
     {
         $this->raw = $data;
         $this->client = $client;
+        $this->badgeFactory = $badgeFactory;
     }
 
     /**
@@ -87,7 +93,7 @@ class JiraProject implements Project
     /**
      * @inheritdoc
      */
-    public function getBadges(BadgeFactory $factory = null)
+    public function getBadges()
     {
         return array();
     }

@@ -36,9 +36,7 @@ interface Project
     public function getType();
 
     /**
-     * @param  BadgeFactory $factory
      * @return Badge[]
      */
-    public function getBadges(BadgeFactory $factory = null);
-
+    public function getBadges();
 }

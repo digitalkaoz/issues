@@ -22,7 +22,7 @@ class GithubProjectSpec extends ObjectBehavior
             'html_url'    => 'http://foo.com',
             'name'        => 'bar',
             'owner'       => array('login' => 'foo')
-        ), $client);
+        ), $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -93,7 +93,6 @@ class GithubProjectSpec extends ObjectBehavior
         $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
 
         $this->getBadges()->shouldBeArray();
-        $this->getBadges()->shouldHaveCount(0);
-        $this->getBadges(new BadgeFactory())->shouldHaveCount(3);
+        $this->getBadges()->shouldHaveCount(3);
     }
 }

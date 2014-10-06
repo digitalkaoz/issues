@@ -4,6 +4,7 @@ namespace spec\Rs\Issues\Jira;
 
 use chobie\Jira\Api;
 use PhpSpec\ObjectBehavior;
+use Rs\Issues\BadgeFactory;
 
 class JiraProjectSpec extends ObjectBehavior
 {
@@ -13,7 +14,7 @@ class JiraProjectSpec extends ObjectBehavior
             'name'        => 'foo',
             'description' => 'bar',
             'key'         => 'FOOBAR'
-        ), $client);
+        ), $client, new BadgeFactory());
     }
 
     public function it_is_initializable()

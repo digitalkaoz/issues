@@ -4,12 +4,13 @@ namespace spec\Rs\Issues\Jira;
 
 use chobie\Jira\Api;
 use PhpSpec\ObjectBehavior;
+use Rs\Issues\BadgeFactory;
 
 class JiraTrackerSpec extends ObjectBehavior
 {
     public function let(Api $client)
     {
-        $this->beConstructedWith('https://jira.domain.com', 'foo', 'bar', $client);
+        $this->beConstructedWith('https://jira.domain.com', 'foo', 'bar', $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
