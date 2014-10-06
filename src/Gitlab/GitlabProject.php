@@ -7,6 +7,7 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use Rs\Issues\BadgeFactory;
+use Rs\Issues\Issue;
 use Rs\Issues\Project;
 
 /**
@@ -125,7 +126,7 @@ class GitlabProject implements Project
 
     /**
      * @param  array $criteria
-     * @return array
+     * @return Issue[]
      */
     private function findIssues(array $criteria)
     {
@@ -146,7 +147,7 @@ class GitlabProject implements Project
     }
 
     /**
-     * @return array
+     * @return Issue[]
      */
     private function findMergeRequests()
     {
