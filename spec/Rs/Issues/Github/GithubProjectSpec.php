@@ -10,6 +10,7 @@ use Github\HttpClient\HttpClient;
 use Guzzle\Http\Message\Response;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Rs\Issues\BadgeFactory;
 
 class GithubProjectSpec extends ObjectBehavior
 {
@@ -91,19 +92,8 @@ class GithubProjectSpec extends ObjectBehavior
         $content->show('foo', 'bar', '.travis.yml')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{}')));
         $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
 
-        $this->getBadges()->shouldBe(array(
-            array(
-                'img'  => "https://travis-ci.org/foo/bar.svg",
-                'link' => "https://travis-ci.org/foo/bar"
-            ),
-            array(
-                'img'  => "https://poser.pugx.org/foo/bar/version.svg",
-                'link' => "https://packagist.org/packages/foo/bar"
-            ),
-            array(
-                'img'  => "https://poser.pugx.org/foo/bar/d/total.svg",
-                'link' => "https://packagist.org/packages/foo/bar"
-            )
-        ));
+        $this->getBadges()->shouldBeArray();
+        $this->getBadges()->shouldHaveCount(0);
+        $this->getBadges(new BadgeFactory())->shouldHaveCount(3);
     }
 }

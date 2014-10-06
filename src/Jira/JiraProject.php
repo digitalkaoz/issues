@@ -7,6 +7,7 @@ namespace Rs\Issues\Jira;
 
 use chobie\Jira\Api;
 use chobie\Jira\Issues\Walker;
+use Rs\Issues\BadgeFactory;
 use Rs\Issues\Project;
 
 /**
@@ -86,7 +87,7 @@ class JiraProject implements Project
     /**
      * @inheritdoc
      */
-    public function getBadges()
+    public function getBadges(BadgeFactory $factory = null)
     {
         return array();
     }

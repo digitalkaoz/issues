@@ -6,6 +6,7 @@ use Gitlab\Api\Issues;
 use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
+use Rs\Issues\BadgeFactory;
 use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
@@ -100,18 +101,33 @@ class GitlabProject implements Project
     /**
      * @inheritdoc
      */
-    public function getBadges()
+    public function getBadges(BadgeFactory $factory = null)
     {
-        return BadgeUtils::getBadges($this->getName(), false, $this->getComposerName());
+        $badges = array();
+
+        if (!$factory) {
+            return $badges;
+        }
+
+        if ($this->getFile('.travis.yml')) {
+            $badges[] = $factory->getTravis($this->getName());
+        }
+
+        if ($composer = $this->getFile('composer.json')) {
+            $composer = json_decode($composer, true);
+            $badges[] = $factory->getComposerDownloads($composer['name']);
+            $badges[] = $factory->getComposerVersion($composer['name']);
+        }
+
+        return $badges;
     }
 
-    private function getComposerName()
-    {
-        $file = $this->getFile('composer.json');
-
-        return $file && isset($file->name) ? $file->name : null;
-    }
-
+    /**
+     * gets a file (content) from the repository
+     *
+     * @param string $filename
+     * @return string
+     */
     private function getFile($filename)
     {
         try {
@@ -119,7 +135,7 @@ class GitlabProject implements Project
             /** @var Repositories $api */
             $file = $api->getFile($this->raw['path_with_namespace'], $filename, 'master');
             if ('base64' === $file['encoding']) {
-                return json_decode(base64_decode($file['content']));
+                return base64_decode($file['content']);
             }
         } catch (\Exception $e) {
             //file not found

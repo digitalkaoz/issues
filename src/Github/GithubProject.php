@@ -4,6 +4,7 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\ResultPager;
+use Rs\Issues\BadgeFactory;
 use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
@@ -21,7 +22,7 @@ class GithubProject implements Project
     private $client;
 
     /**
-     * @param array  $data
+     * @param array $data
      * @param Client $client
      */
     public function __construct(array $data, Client $client)
@@ -89,24 +90,39 @@ class GithubProject implements Project
     /**
      * @inheritdoc
      */
-    public function getBadges()
+    public function getBadges(BadgeFactory $factory = null)
     {
-        return BadgeUtils::getBadges($this->getName(), !!$this->getFile('.travis.yml'), $this->getComposerName());
+        $badges = array();
+
+        if (!$factory) {
+            return $badges;
+        }
+
+        if ($this->getFile('.travis.yml')) {
+            $badges[] = $factory->getTravis($this->getName());
+        }
+
+        if ($composer = $this->getFile('composer.json')) {
+            $composer = json_decode($composer, true);
+            $badges[] = $factory->getComposerDownloads($composer['name']);
+            $badges[] = $factory->getComposerVersion($composer['name']);
+        }
+
+        return $badges;
     }
 
-    private function getComposerName()
-    {
-        $file = $this->getFile('composer.json');
-
-        return $file && isset($file->name) ? $file->name : null;
-    }
-
+    /**
+     * gets a file (content) from the repository
+     *
+     * @param string $filename
+     * @return string
+     */
     private function getFile($filename)
     {
         try {
             $file = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], $filename);
             if ('base64' === $file['encoding']) {
-                return json_decode(base64_decode($file['content']));
+                return base64_decode($file['content']);
             }
         } catch (\Exception $e) {
             //file not found

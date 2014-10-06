@@ -7,6 +7,7 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use PhpSpec\ObjectBehavior;
+use Rs\Issues\BadgeFactory;
 
 class GitlabProjectSpec extends ObjectBehavior
 {
@@ -53,16 +54,9 @@ class GitlabProjectSpec extends ObjectBehavior
 
         $api->getFile('foo/bar', 'composer.json', 'master')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
 
-        $this->getBadges()->shouldBe(array(
-            array(
-                'img'  => "https://poser.pugx.org/foo/bar/version.svg",
-                'link' => "https://packagist.org/packages/foo/bar"
-            ),
-            array(
-                'img'  => "https://poser.pugx.org/foo/bar/d/total.svg",
-                'link' => "https://packagist.org/packages/foo/bar"
-            )
-        ));
+        $this->getBadges()->shouldBeArray();
+        $this->getBadges()->shouldHaveCount(0);
+        $this->getBadges(new BadgeFactory())->shouldHaveCount(2);
     }
 
     public function it_returns_its_issues(Client $client, Issues $issuesApi, MergeRequests $mergesApi)
