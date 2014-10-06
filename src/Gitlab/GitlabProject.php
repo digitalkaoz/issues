@@ -58,7 +58,7 @@ class GitlabProject implements Project
         }
 
         $issues = $this->findIssues($criteria);
-        $issues += $this->findMergeRequests();
+        $issues = array_merge($issues, $this->findMergeRequests());
 
         return $issues;
     }
