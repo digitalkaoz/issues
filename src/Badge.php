@@ -22,22 +22,6 @@ class Badge
     }
 
     /**
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
      * @return array
      */
     public function toArray()

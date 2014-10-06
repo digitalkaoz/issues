@@ -5,7 +5,6 @@ namespace Rs\Issues\Github;
 use Github\Client;
 use Github\ResultPager;
 use Rs\Issues\BadgeFactory;
-use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
 /**
@@ -22,7 +21,7 @@ class GithubProject implements Project
     private $client;
 
     /**
-     * @param array $data
+     * @param array  $data
      * @param Client $client
      */
     public function __construct(array $data, Client $client)
@@ -114,7 +113,7 @@ class GithubProject implements Project
     /**
      * gets a file (content) from the repository
      *
-     * @param string $filename
+     * @param  string $filename
      * @return string
      */
     private function getFile($filename)

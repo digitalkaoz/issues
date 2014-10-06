@@ -7,7 +7,6 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use Rs\Issues\BadgeFactory;
-use Rs\Issues\BadgeUtils;
 use Rs\Issues\Project;
 
 /**
@@ -125,7 +124,7 @@ class GitlabProject implements Project
     /**
      * gets a file (content) from the repository
      *
-     * @param string $filename
+     * @param  string $filename
      * @return string
      */
     private function getFile($filename)

@@ -9,7 +9,7 @@ namespace Rs\Issues;
 class BadgeFactory
 {
     /**
-     * @param string $name
+     * @param  string $name
      * @return Badge
      */
     public function getComposerVersion($name)
@@ -18,7 +18,7 @@ class BadgeFactory
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return Badge
      */
     public function getComposerDownloads($name)
@@ -27,7 +27,7 @@ class BadgeFactory
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return Badge
      */
     public function getTravis($name)

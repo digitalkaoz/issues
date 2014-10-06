@@ -25,6 +25,7 @@ interface Project
     public function getUrl();
 
     /**
+     * @param  array   $criteria an array of attributes and their values to search for, depends on the concrete tracker
      * @return Issue[]
      */
     public function getIssues(array $criteria = array());
@@ -35,7 +36,7 @@ interface Project
     public function getType();
 
     /**
-     * @param BadgeFactory $factory
+     * @param  BadgeFactory $factory
      * @return Badge[]
      */
     public function getBadges(BadgeFactory $factory = null);

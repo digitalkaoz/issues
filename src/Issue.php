@@ -54,7 +54,7 @@ interface Issue
     public function getAssignee();
 
     /**
-     * @return int
+     * @return string
      */
     public function getId();
 
