@@ -7,8 +7,6 @@ if (!@include __DIR__.'/../vendor/autoload.php') {
         'php composer.phar install'.PHP_EOL);
 }
 
-use Rs\Issues\Console\Application;
-
-// run the command application
-$application = new Application();
-$application->run();
+$app = new \Symfony\Component\Console\Application('issues', '@@version@@');
+$app->add(new \Rs\Issues\Console\SearchCommand());
+$app->run();
