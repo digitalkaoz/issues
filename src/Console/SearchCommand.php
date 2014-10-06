@@ -76,7 +76,7 @@ EOT
             ));
         }
 
-        $helper->render($output);
+        $helper->render();
     }
 
     /**
