@@ -63,9 +63,7 @@ EOT
      */
     private function listIssues(array $issues, OutputInterface $output)
     {
-        $helper = $this->getHelper('table');
-        /** @var Table $helper */
-
+        $helper = new Table($output);
         $helper->setHeaders(array('type', 'created at', 'title', 'url'));
 
         foreach ($issues as $issue) {
