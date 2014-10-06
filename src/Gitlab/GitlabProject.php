@@ -57,28 +57,10 @@ class GitlabProject implements Project
             $criteria = array('state' => 'open');
         }
 
-        $api = $this->client->api('issues');
-        /** @var Issues $api */
-        $issues = $api->all($this->getName(),1 , 9999, $criteria);
+        $issues = $this->findIssues($criteria);
+        $issues += $this->findMergeRequests();
 
-        $newIssues = array();
-
-        foreach ((array) $issues as $issue) {
-            if ('closed' === $issue['state']) {
-                continue;
-            }
-            $newIssues[] = new GitlabIssue($issue, 'issue', $this->getUrl());
-        }
-
-        $api = $this->client->api('merge_requests');
-        /** @var MergeRequests $api */
-        $issues = $api->opened($this->getName(),1 , 9999);
-
-        foreach ((array) $issues as $issue) {
-            $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
-        }
-
-        return $newIssues;
+        return $issues;
     }
 
     /**
@@ -139,5 +121,44 @@ class GitlabProject implements Project
         } catch (\Exception $e) {
             //file not found
         }
+    }
+
+    /**
+     * @param  array $criteria
+     * @return array
+     */
+    private function findIssues(array $criteria)
+    {
+        $api = $this->client->api('issues');
+        /** @var Issues $api */
+        $issues = $api->all($this->getName(), 1, 9999, $criteria);
+
+        $newIssues = array();
+
+        foreach ((array) $issues as $issue) {
+            if ('closed' === $issue['state']) {
+                continue;
+            }
+            $newIssues[] = new GitlabIssue($issue, 'issue', $this->getUrl());
+        }
+
+        return $newIssues;
+    }
+
+    /**
+     * @return array
+     */
+    private function findMergeRequests()
+    {
+        $api = $this->client->api('merge_requests');
+        /** @var MergeRequests $api */
+        $issues = $api->opened($this->getName(), 1, 9999);
+        $newIssues = array();
+
+        foreach ((array) $issues as $issue) {
+            $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
+        }
+
+        return $newIssues;
     }
 }
