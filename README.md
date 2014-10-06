@@ -1,7 +1,7 @@
 issues
 ======
 
-a PHP wrapper for various issue tracker (github & jira atm)
+a PHP wrapper for various issue tracker
 
 [![Build Status](https://travis-ci.org/digitalkaoz/issues.svg?branch=master)](https://travis-ci.org/digitalkaoz/issues)
 
@@ -20,29 +20,39 @@ Installation
 $ composer require digitalkaoz/issues
 ```
 
+Trackers
+--------
 
-Usage
------
-
-The Library contains a simple Application:
-
-```
-$ bin/issues search github digitalkaoz/issues
-```
-
-or for jira:
-
-```
-$ bin/issues search -u USER -p PWD -d https://jira.domain.com jira PROJKEY
-```
-
-to use it programmaticly:
+currently these are the supported Trackers:
 
 ```php
 <?php
 
-$tracker = new GithubTracker(); // or new JiraTracker();
-$tracker->connect($username, $password, $host); //if you want or need authentication
+$github = new GithubTracker($token = null, \Github\Client $client = null);
+
+$jira   = new JiraTracker($host, $username = null, $password = null, \chobie\Jira\Api $client = null);
+
+$gitlab = new GitlabTracker($host, $token = null, \Gitlab\Client $client = null);
+```
+
+
+Usage
+-----
+
+The Library contains a simple Application to search various Trackers:
+
+```
+$ bin/issues search -u TOKEN github digitalkaoz/issues                     # search github
+$ bin/issues search -u TOKEN -h gitlab.domain.com gitlab foo/bar           # search gitlab
+$ bin/issues search -u USER -p PWD -d https://jira.domain.com jira PROJKEY # search jira
+```
+
+to use it programmatic:
+
+```php
+<?php
+
+$tracker = new GithubTracker($token); // or any other Tracker
 $project = $tracker->getProject('digitalkaoz/issues'); //Rs/Issues/Project
 $issues = $project->getIssues(); //Rs/Issues/Issue[]
 

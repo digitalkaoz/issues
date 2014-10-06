@@ -41,6 +41,6 @@ class GitlabTracker implements Tracker
         /** @var Projects $api */
         $data = $api->show($name);
 
-        return new GitlabProject($data, $this->client);
+        return new GitlabProject((array) $data, $this->client);
     }
 }
