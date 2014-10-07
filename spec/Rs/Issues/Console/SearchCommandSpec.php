@@ -30,14 +30,14 @@ class SearchCommandSpec extends ObjectBehavior
         $this->run($input, $output)->shouldPrintATable($output);
     }
 
-    public function it_displays_a_search_result_table_for_jira()
-    {
+//    public function it_displays_a_search_result_table_for_jira()
+//    {
         //TODO peding on a PR
 //        $input = new ArrayInput(array('type' => 'jira', 'project' => 'CEP', '-d'=>'https://jira.atlassian.com'));
 //        $output = new BufferedOutput();
 //
 //        $this->run($input, $output)->shouldPrintATable($output);
-    }
+//    }
 
     public function it_needs_an_implemented_tracker()
     {
