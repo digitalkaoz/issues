@@ -25,7 +25,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getUrl()
     {
@@ -33,7 +33,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getTitle()
     {
@@ -41,7 +41,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -49,7 +49,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return \DateTime
+     * @inheritdoc
      */
     public function getCreatedAt()
     {
@@ -57,7 +57,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return \DateTime|null
+     * @inheritdoc
      */
     public function getClosedAt()
     {
@@ -65,7 +65,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getState()
     {
@@ -75,7 +75,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getCommentCount()
     {
@@ -85,46 +85,86 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @return \DateTime|null
+     * @inheritdoc
      */
     public function getUpdatedAt()
     {
-        // TODO: Implement getUpdatedAt() method.
+        return $this->raw->getUpdated() ? new \DateTime($this->raw->getUpdated()): null;
     }
 
-    public function getAssignee()
-    {
-        // TODO: Implement getAssignee() method.
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function getId()
     {
-        // TODO: Implement getNumber() method.
+        return $this->raw->getKey();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAuthor()
     {
-        // TODO: Implement getOwner() method.
+        $reporter = $this->raw->getReporter();
+
+        return $reporter['displayName'];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAuthorUrl()
     {
-        // TODO: Implement getOwnerUrl() method.
+        return $this->getUserUrl($this->getAuthor());
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getAssignee()
+    {
+        if ($assignee = $this->raw->getAssignee()) {
+            return $assignee['displayName'];
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getAssigneeUrl()
     {
-        // TODO: Implement getAssigneeUrl() method.
+        if ($this->getAssignee()) {
+            return $this->getUserUrl($this->getAssignee());
+        }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
-        return 'issue';
+        $type = $this->raw->getIssueType();
+
+        return $type['name'];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getTags()
     {
-        //TODO
-        return array();
+        return $this->raw->getLabels();
+    }
+
+    /**
+     * @param  string $username
+     * @return string
+     */
+    private function getUserUrl($username)
+    {
+        $base = parse_url($this->raw->getSelf(), PHP_URL_HOST);
+        $proto = parse_url($this->raw->getSelf(), PHP_URL_SCHEME);
+
+        return sprintf('%s://%s/ViewProfile.jspa?name=%s', $proto, $base, $username);
     }
 }

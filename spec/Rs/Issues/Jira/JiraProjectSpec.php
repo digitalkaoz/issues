@@ -4,6 +4,7 @@ namespace spec\Rs\Issues\Jira;
 
 use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Api_Result as Result; //chobie\Jira\Api\Api\Result;
+use Jira_Issue as Issue; //chobie\Jira\Issue;
 use PhpSpec\ObjectBehavior;
 use Rs\Issues\BadgeFactory;
 
@@ -14,7 +15,8 @@ class JiraProjectSpec extends ObjectBehavior
         $this->beConstructedWith(array(
             'name'        => 'foo',
             'description' => 'bar',
-            'key'         => 'FOOBAR'
+            'key'         => 'FOOBAR',
+            'self'        => 'http://jira.com/foo/bar'
         ), $client, new BadgeFactory());
     }
 
@@ -34,19 +36,28 @@ class JiraProjectSpec extends ObjectBehavior
         $this->getDescription()->shouldBe('bar');
     }
 
+    public function it_returns_its_url()
+    {
+        $this->getUrl()->shouldBe('http://jira.com/browse/FOOBAR');
+    }
+
     public function it_returns_the_type()
     {
         $this->getType()->shouldReturn('jira');
     }
 
-    public function it_returns_its_issues(Api $client, Result $result)
+    public function it_returns_its_issues(Api $client, Result $result, Issue $issue)
     {
-        $result->beConstructedWith(array('startAt' => 0, 'maxResults' => 1, 'total' => 1, 'issues' => array(array())));
+        $result->getIssues()->shouldBeCalled()->willReturn(array($issue));
+        $result->getTotal()->shouldBeCalled()->willReturn(1);
+        $result->getIssuesCount()->shouldBeCalled()->willReturn(1);
 
         $client->search("project = FOOBAR AND status != closed AND status != resolved", 0, 50, null)->shouldBeCalled()->willReturn($result);
         $result = $this->getIssues();
 
         $result->shouldBeArray();
+        $result->shouldHaveCount(1);
+        $result[0]->shouldHaveType('Rs\Issues\Jira\JiraIssue');
     }
 
     public function it_returns_empty_badges()

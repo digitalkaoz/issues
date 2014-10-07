@@ -39,7 +39,7 @@ class JiraProject implements Project
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -47,7 +47,7 @@ class JiraProject implements Project
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -55,11 +55,14 @@ class JiraProject implements Project
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getUrl()
     {
-        // TODO: Implement getUrl() method.
+        $base = parse_url($this->raw['self'], PHP_URL_HOST);
+        $proto = parse_url($this->raw['self'], PHP_URL_SCHEME);
+
+        return sprintf('%s://%s/browse/%s', $proto, $base, $this->raw['key']);
     }
 
     /**
@@ -69,6 +72,7 @@ class JiraProject implements Project
     {
         $conditions = join(' AND ', $criteria);
         $walker = new Walker($this->client);
+
         $walker->push(sprintf('project = %s AND %s', $this->raw['key'], $conditions));
 
         $issues = array();

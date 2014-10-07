@@ -92,7 +92,7 @@ class GithubIssue implements Issue
      */
     public function getAssignee()
     {
-        return $this->raw['assignee']['login'];
+        return isset($this->raw['assignee']['login']) ? $this->raw['assignee']['login'] : null;
     }
 
     /**
@@ -100,7 +100,9 @@ class GithubIssue implements Issue
      */
     public function getAssigneeUrl()
     {
-        return $this->raw['assignee']['html_url'];
+        if ($this->getAssignee()) {
+            return $this->raw['assignee']['html_url'];
+        }
     }
 
     /**

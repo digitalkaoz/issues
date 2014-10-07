@@ -47,8 +47,10 @@ class JiraIssueSpec extends ObjectBehavior
         $this->getState()->shouldReturn('open');
     }
 
-    public function it_returns_the_type()
+    public function it_returns_the_type(Issue $issue)
     {
+        $issue->getIssueType()->shouldBeCalled()->willReturn(array('name'=>'issue'));
+
         $this->getType()->shouldReturn('issue');
     }
 
@@ -66,11 +68,70 @@ class JiraIssueSpec extends ObjectBehavior
         $this->getClosedAt()->shouldReturn(null);
     }
 
+    public function it_returns_the_updated_date_as_DateTime_if_set(Issue $issue)
+    {
+        $issue->getUpdated()->shouldBeCalled()->willReturn('25.05.1981 13:37:42');
+
+        $this->getUpdatedAt()->shouldHaveType('\DateTime');
+    }
+
     public function it_returns_the_comment_count(Issue $issue)
     {
         $issue->get('comment')->shouldBeCalled()->willReturn(array('total'=>7));
 
         $this->getCommentCount()->shouldReturn(7);
+    }
+
+    public function it_returns_the_id(Issue $issue)
+    {
+        $issue->getKey()->shouldBeCalled()->willReturn('FOO-7');
+
+        $this->getId()->shouldReturn('FOO-7');
+    }
+
+    public function it_returns_the_author(Issue $issue)
+    {
+        $issue->getReporter()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+
+        $this->getAuthor()->shouldReturn('foo');
+    }
+
+    public function it_returns_the_author_url(Issue $issue)
+    {
+        $issue->getReporter()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getSelf()->shouldBeCalled()->willReturn('http://jira.com');
+
+        $this->getAuthorUrl()->shouldReturn('http://jira.com/ViewProfile.jspa?name=foo');
+    }
+
+    public function it_returns_the_assignee(Issue $issue)
+    {
+        $issue->getAssignee()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+
+        $this->getAssignee()->shouldReturn('foo');
+    }
+
+    public function it_returns_the_assignee_url(Issue $issue)
+    {
+        $issue->getAssignee()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getSelf()->shouldBeCalled()->willReturn('http://jira.com');
+
+        $this->getAssigneeUrl()->shouldReturn('http://jira.com/ViewProfile.jspa?name=foo');
+    }
+
+    public function it_doenst_returns_the_assignee_url_if_no_assignee(Issue $issue)
+    {
+        $issue->getAssignee()->shouldBeCalled()->willReturn();
+        $issue->getSelf()->shouldNotBeCalled();
+
+        $this->getAssigneeUrl()->shouldReturn(null);
+    }
+
+    public function it_returns_its_tags(Issue $issue)
+    {
+        $issue->getLabels()->shouldBeCalled()->willReturn(array('foo','bar'));
+
+        $this->getTags()->shouldReturn(array('foo','bar'));
     }
 
 }

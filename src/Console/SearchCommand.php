@@ -34,7 +34,7 @@ class SearchCommand extends Command
                 new InputOption('username', 'u', InputOption::VALUE_REQUIRED, 'the username/token to use for authentication'),
                 new InputOption('password', 'p', InputOption::VALUE_REQUIRED, 'the password to use for authentication'),
                 new InputOption('host', 'd', InputOption::VALUE_REQUIRED, 'the host to connect'),
-                new InputArgument('type', InputArgument::REQUIRED, 'the tracker type github|jira'),
+                new InputArgument('type', InputArgument::REQUIRED, 'the tracker type github|jira|gitlab'),
                 new InputArgument('project', InputArgument::REQUIRED, 'the project name'),
             )))
             ->setDescription('search for issues in a tracker and project')
@@ -98,7 +98,7 @@ EOT
                 $tracker = new GitlabTracker($input->getOption('host'), $input->getOption('username'));
                 break;
             default :
-                throw new \InvalidArgumentException('unknown type, choose github|jira');
+                throw new \InvalidArgumentException(sprintf('unknown type "%s"', $input->getArgument('type')));
         }
 
         return $tracker;

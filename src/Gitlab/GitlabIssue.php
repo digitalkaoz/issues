@@ -107,7 +107,7 @@ class GitlabIssue implements Issue
      */
     public function getAssignee()
     {
-        return $this->raw['assignee']['username'];
+        return isset($this->raw['assignee']['username']) ? $this->raw['assignee']['username'] : null;
     }
 
     /**
@@ -115,7 +115,9 @@ class GitlabIssue implements Issue
      */
     public function getAssigneeUrl()
     {
-        return $this->getUserUrl($this->getAssignee());
+        if ($this->getAssignee()) {
+            return $this->getUserUrl($this->getAssignee());
+        }
     }
 
     /**

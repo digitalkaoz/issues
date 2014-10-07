@@ -21,7 +21,7 @@ class JiraTrackerSpec extends ObjectBehavior
 
     public function it_returns_a_Project_on_getProject(Api $client)
     {
-        $client->getProject('FOOBAR')->willReturn(array());
+        $client->getProject('FOOBAR')->willReturn(array('key'=>'FOOBAR'));
 
         $result = $this->getProject('FOOBAR');
 

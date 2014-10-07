@@ -3,6 +3,7 @@ namespace Rs\Issues\Jira;
 
 use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Basic;
+use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
 use Rs\Issues\BadgeFactory;
 use Rs\Issues\Tracker;
 
@@ -31,8 +32,10 @@ class JiraTracker implements Tracker
      */
     public function __construct($host, $username = null, $password = null, Api $client = null, BadgeFactory $badgeFactory = null)
     {
-        $this->client = $client ?: new Api($host, new Basic($username, $password));
-        $this->badgeFactory = $badgeFactory;
+        $auth = $username && $password ? new Basic($username, $password) : new Anonymous();
+
+        $this->client = $client ?: new Api($host, $auth);
+        $this->badgeFactory = $badgeFactory ?: new BadgeFactory();
     }
 
     /**
@@ -42,7 +45,7 @@ class JiraTracker implements Tracker
     {
         $p = $this->client->getProject($name);
 
-        if (!is_array($p)) {
+        if (!is_array($p) || !isset($p['key'])) {
             throw new \RuntimeException('invalid Project');
         }
 
