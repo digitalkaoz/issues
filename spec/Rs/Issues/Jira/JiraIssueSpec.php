@@ -2,7 +2,7 @@
 
 namespace spec\Rs\Issues\Jira;
 
-use chobie\Jira\Issue;
+use Jira_Issue as Issue; //chobie\Jira\Issue;
 use PhpSpec\ObjectBehavior;
 
 class JiraIssueSpec extends ObjectBehavior

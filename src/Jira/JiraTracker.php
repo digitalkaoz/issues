@@ -1,8 +1,8 @@
 <?php
 namespace Rs\Issues\Jira;
 
-use chobie\Jira\Api;
-use chobie\Jira\Api\Authentication\Basic;
+use Jira_Api as Api; //chobie\Jira\Api;
+use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Basic;
 use Rs\Issues\BadgeFactory;
 use Rs\Issues\Tracker;
 

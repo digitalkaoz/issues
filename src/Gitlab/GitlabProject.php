@@ -155,10 +155,20 @@ class GitlabProject implements Project
     {
         $api = $this->client->api('merge_requests');
         /** @var MergeRequests $api */
-        $issues = $api->opened($this->getName(), 1, 9999);
+
+        if (method_exists($api, 'opened')) {
+            $issues = $api->opened($this->getName(), 1, 9999);
+        } else {
+            //BC, should be removed once a new stable version of https://github.com/m4tthumphrey/php-gitlab-api is tagged
+            $issues = $api->all($this->getName(), 1, 9999);
+        }
+
         $newIssues = array();
 
         foreach ((array) $issues as $issue) {
+            if ('closed' === $issue['state']) { //could be removed once lib is tagged
+                continue;
+            }
             $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
         }
 

@@ -2,7 +2,7 @@
 
 namespace spec\Rs\Issues\Jira;
 
-use chobie\Jira\Api;
+use Jira_Api as Api; //chobie\Jira\Api;
 use PhpSpec\ObjectBehavior;
 use Rs\Issues\BadgeFactory;
 

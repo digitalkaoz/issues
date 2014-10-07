@@ -1,11 +1,9 @@
 <?php
-/**
- * issues
- */
 
 namespace Rs\Issues\Jira;
 
 use Rs\Issues\Issue;
+use Jira_Issue as ApiIssue; //chobie\Jira\Issue as ApiIssue;
 
 /**
  * JiraIssue
@@ -14,14 +12,14 @@ use Rs\Issues\Issue;
 class JiraIssue implements Issue
 {
     /**
-     * @var \chobie\Jira\Issue
+     * @var ApiIssue
      */
     private $raw;
 
     /**
-     * @param \chobie\Jira\Issue $issue
+     * @param ApiIssue $issue
      */
-    public function __construct(\chobie\Jira\Issue $issue)
+    public function __construct(ApiIssue $issue)
     {
         $this->raw = $issue;
     }

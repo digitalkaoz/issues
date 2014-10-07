@@ -64,7 +64,13 @@ class GitlabProjectSpec extends ObjectBehavior
         $client->api('merge_requests')->willReturn($mergesApi);
 
         $issuesApi->all('foo/bar', 1, 9999, array('state'=>'open'))->shouldBeCalled()->willReturn(array(array('state'=>'opened'), array('state'=>'closed')));
-        $mergesApi->opened('foo/bar', 1, 9999)->shouldBeCalled()->willReturn(array(array()));
+
+        if (method_exists($mergesApi, 'opened')) {
+            $mergesApi->opened('foo/bar', 1, 9999)->shouldBeCalled()->willReturn(array(array('state'=>'opened')));
+        } else {
+            //TODO BC only
+            $mergesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn(array(array('state'=>'opened'), array('state'=>'closed')));
+        }
 
         $result = $this->getIssues();
 

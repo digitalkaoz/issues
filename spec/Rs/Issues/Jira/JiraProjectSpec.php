@@ -2,7 +2,8 @@
 
 namespace spec\Rs\Issues\Jira;
 
-use chobie\Jira\Api;
+use Jira_Api as Api; //chobie\Jira\Api;
+use Jira_Api_Result as Result; //chobie\Jira\Api\Api\Result;
 use PhpSpec\ObjectBehavior;
 use Rs\Issues\BadgeFactory;
 
@@ -38,7 +39,7 @@ class JiraProjectSpec extends ObjectBehavior
         $this->getType()->shouldReturn('jira');
     }
 
-    public function it_returns_its_issues(Api $client, Api\Result $result)
+    public function it_returns_its_issues(Api $client, Result $result)
     {
         $result->beConstructedWith(array('startAt' => 0, 'maxResults' => 1, 'total' => 1, 'issues' => array(array())));
 

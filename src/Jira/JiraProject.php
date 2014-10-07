@@ -1,12 +1,9 @@
 <?php
-/**
- * issues
- */
 
 namespace Rs\Issues\Jira;
 
-use chobie\Jira\Api;
-use chobie\Jira\Issues\Walker;
+use Jira_Api as Api; //chobie\Jira\Api;
+use Jira_Issues_Walker as Walker; //chobie\Jira\Issues\Walker;
 use Rs\Issues\BadgeFactory;
 use Rs\Issues\Project;
 

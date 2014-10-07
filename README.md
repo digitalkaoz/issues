@@ -28,11 +28,11 @@ currently these are the supported Trackers:
 ```php
 <?php
 
-$github = new GithubTracker($token = null, \Github\Client $client = null);
+$github = new GithubTracker($token = null);
 
-$jira   = new JiraTracker($host, $username = null, $password = null, \chobie\Jira\Api $client = null);
+$jira   = new JiraTracker($host, $username = null, $password = null);
 
-$gitlab = new GitlabTracker($host, $token = null, \Gitlab\Client $client = null);
+$gitlab = new GitlabTracker($host, $token = null);
 ```
 
 
