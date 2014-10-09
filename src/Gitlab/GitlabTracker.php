@@ -5,7 +5,6 @@ namespace Rs\Issues\Gitlab;
 use Gitlab\Api\Projects;
 use Gitlab\Client;
 use Rs\Issues\BadgeFactory;
-use Rs\Issues\Project;
 use Rs\Issues\RepositoryParser;
 use Rs\Issues\Tracker;
 
