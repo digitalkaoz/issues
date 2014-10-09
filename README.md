@@ -63,9 +63,9 @@ $issues = $project->getIssues(); //Rs/Issues/Issue[]
 Searching
 =========
 
-you can either search for an concrete repository like `digitalkaoz/kaoz` or search for issues:
+you can either search for an concrete repository like `digitalkaoz/issues` or search for issues:
 
-* `digitalkaoz/*` : checks if its a wildcard repo like
+* `digitalkaoz/*` : all repos of `digitalkaoz`
 * `symfony/[Console|Debug]+$` : only `symfony/Console` or `symfony/Debug`
 * `doctrine/(?!common|lexer)([a-z0-9\.-]+)$` all but `doctrine/common` and `doctrine/lexer`
 
