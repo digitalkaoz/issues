@@ -43,7 +43,7 @@ The Library contains a simple Application to search various Trackers:
 
 ```
 $ bin/issues search -u TOKEN github digitalkaoz/issues                     # search github
-$ bin/issues search -u TOKEN -h gitlab.domain.com gitlab foo/bar           # search gitlab
+$ bin/issues search -u TOKEN -h gitlab.domain.com gitlab foo/*             # search gitlab
 $ bin/issues search -u USER -p PWD -d https://jira.domain.com jira PROJKEY # search jira
 ```
 
@@ -53,10 +53,23 @@ to use it programmatic:
 <?php
 
 $tracker = new GithubTracker($token); // or any other Tracker
-$project = $tracker->getProject('digitalkaoz/issues'); //Rs/Issues/Project
-$issues = $project->getIssues(); //Rs/Issues/Issue[]
 
+$project = $tracker->getProject('digitalkaoz/issues'); //Rs/Issues/Project
+$projects = $tracker->findProjects('digitalkaoz/*'); //Rs/Issues/Project[]
+
+$issues = $project->getIssues(); //Rs/Issues/Issue[]
 ```
+
+Searching
+=========
+
+you can either search for an concrete repository like `digitalkaoz/kaoz` or search for issues:
+
+* `digitalkaoz/*` : checks if its a wildcard repo like
+* `symfony/[Console|Debug]+$` : only `symfony/Console` or `symfony/Debug`
+* `doctrine/(?!common|lexer)([a-z0-9\.-]+)$` all but `doctrine/common` and `doctrine/lexer`
+
+The CLI Application searches by default, by Code you should use `findProjects` instead of `getProject`
 
 ![Console Output](http://i57.tinypic.com/vrgfg2.png)
 
