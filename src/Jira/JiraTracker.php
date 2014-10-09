@@ -54,8 +54,7 @@ class JiraTracker implements Tracker
     }
 
     /**
-     * @param $name
-     * @return Project[]
+     * @inheritdoc
      */
     public function findProjects($name)
     {

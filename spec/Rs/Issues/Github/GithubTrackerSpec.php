@@ -3,6 +3,7 @@
 namespace spec\Rs\Issues\Github;
 
 use Github\Api\Repo;
+use Github\Api\User;
 use Github\Client;
 use PhpSpec\ObjectBehavior;
 
@@ -30,5 +31,20 @@ class GithubTrackerSpec extends ObjectBehavior
 
         $project->shouldHaveType('Rs\Issues\Project');
         $project->shouldHaveType('Rs\Issues\Github\GithubProject');
+    }
+
+    public function it_returns_a_list_of_Projects_on_findProjects(Client $client, Repo $repoApi, User $userApi)
+    {
+        $client->repos()->willReturn($repoApi);
+        $repoApi->show('foo', 'bar')->willReturn(array('full_name'=>'foo/bar'));
+
+        $client->user()->willReturn($userApi);
+        $userApi->repositories('foo')->willReturn(array(array('full_name'=>'foo/bar')));
+
+        $projects = $this->findProjects('foo/[bar|bazz]+$');
+
+        $projects->shouldBeArray();
+        $projects['foo/bar']->shouldHaveType('Rs\Issues\Project');
+        $projects['foo/bar']->shouldHaveType('Rs\Issues\Github\GithubProject');
     }
 }

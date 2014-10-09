@@ -32,7 +32,7 @@ class SearchCommandSpec extends ObjectBehavior
 
 //    public function it_displays_a_search_result_table_for_jira()
 //    {
-        //TODO peding on a PR
+        //TODO pending on a PR
 //        $input = new ArrayInput(array('type' => 'jira', 'project' => 'CEP', '-d'=>'https://jira.atlassian.com'));
 //        $output = new BufferedOutput();
 //

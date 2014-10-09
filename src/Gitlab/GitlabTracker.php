@@ -65,8 +65,7 @@ class GitlabTracker implements Tracker
     }
 
     /**
-     * @param $name
-     * @return Project[]
+     * @inheritdoc
      */
     public function findProjects($name)
     {
@@ -76,18 +75,17 @@ class GitlabTracker implements Tracker
             $project = $this->getProject($name);
             $projects[$project->getName()] = $project;
         } else {
-            list($user, ) = explode('/', $name);
             $api = $this->client->api('projects');
             /** @var Projects $api */
             $repos = $api->accessible(1, 9999);
 
             if (true === $this->repoParser->isWildcard($name)) {
-                foreach ($repos as $repo) {
+                foreach ((array) $repos as $repo) {
                     $project = $this->getProject($repo['path_with_namespace']);
                     $projects[$project->getName()] = $project;
                 }
             } else {
-                foreach ($repos as $repo) {
+                foreach ((array) $repos as $repo) {
                     if (false === $this->repoParser->matchesRegex($name, $repo['path_with_namespace'])) {
                         continue;
                     }
