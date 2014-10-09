@@ -5,6 +5,8 @@ namespace Rs\Issues\Github;
 use Github\Client;
 use Github\HttpClient\CachedHttpClient;
 use Rs\Issues\BadgeFactory;
+use Rs\Issues\Project;
+use Rs\Issues\RepositoryParser;
 use Rs\Issues\Tracker;
 
 /**
@@ -22,13 +24,18 @@ class GithubTracker implements Tracker
      * @var BadgeFactory
      */
     private $badgeFactory;
+    /**
+     * @var RepositoryParser
+     */
+    private $repoParser;
 
     /**
-     * @param string       $token
-     * @param Client       $client
-     * @param BadgeFactory $badgeFactory
+     * @param string           $token
+     * @param Client           $client
+     * @param BadgeFactory     $badgeFactory
+     * @param RepositoryParser $repoParser
      */
-    public function __construct($token = null, Client $client = null, BadgeFactory $badgeFactory = null)
+    public function __construct($token = null, Client $client = null, BadgeFactory $badgeFactory = null, RepositoryParser $repoParser = null)
     {
         $this->client = $client ?: new Client(new CachedHttpClient());
 
@@ -37,6 +44,7 @@ class GithubTracker implements Tracker
         }
 
         $this->badgeFactory = $badgeFactory ?: new BadgeFactory();
+        $this->repoParser = $repoParser ?: new RepositoryParser();
     }
 
     /**
@@ -44,10 +52,48 @@ class GithubTracker implements Tracker
      */
     public function getProject($name)
     {
+        if (false === $this->repoParser->isConcrete($name)) {
+            throw new \InvalidArgumentException(sprintf('no concrete repository name "%s"', $name));
+        }
+
         list($username, $repo) = explode('/', $name);
 
         $data = $this->client->repos()->show($username, $repo);
 
         return new GithubProject($data, $this->client, $this->badgeFactory);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findProjects($name)
+    {
+        $projects = array();
+
+        if ($this->repoParser->isConcrete($name)) {
+            $project = $this->getProject($name);
+            $projects[$project->getName()] = $project;
+        } else {
+            list($user, ) = explode('/', $name);
+            $repos = $this->client->user()->repositories($user);
+
+            if (true === $this->repoParser->isWildcard($name)) {
+                foreach ($repos as $repo) {
+                    $project = $this->getProject($repo['full_name']);
+                    $projects[$project->getName()] = $project;
+                }
+            } else {
+                foreach ($repos as $repo) {
+                    if (false === $this->repoParser->matchesRegex($name, $repo['full_name'])) {
+                        continue;
+                    }
+                    $project = $this->getProject($repo['full_name']);
+                    $projects[$project->getName()] = $project;
+                }
+
+            }
+        }
+
+        return $projects;
     }
 }

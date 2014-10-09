@@ -5,6 +5,7 @@ use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Basic;
 use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
 use Rs\Issues\BadgeFactory;
+use Rs\Issues\Project;
 use Rs\Issues\Tracker;
 
 /**
@@ -50,5 +51,16 @@ class JiraTracker implements Tracker
         }
 
         return new JiraProject($p, $this->client, $this->badgeFactory);
+    }
+
+    /**
+     * @param $name
+     * @return Project[]
+     */
+    public function findProjects($name)
+    {
+        $project = $this->getProject($name);
+
+        return array($project->getName() => $project);
     }
 }

@@ -15,4 +15,9 @@ interface Tracker
      */
     public function getProject($name);
 
+    /**
+     * @param $name
+     * @return Project[]
+     */
+    public function findProjects($name);
 }

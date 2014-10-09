@@ -89,7 +89,7 @@ class JiraIssue implements Issue
      */
     public function getUpdatedAt()
     {
-        return $this->raw->getUpdated() ? new \DateTime($this->raw->getUpdated()): null;
+        return $this->raw->getUpdated() ? new \DateTime($this->raw->getUpdated()) : null;
     }
 
     /**

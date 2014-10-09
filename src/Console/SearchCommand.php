@@ -6,6 +6,7 @@ use Rs\Issues\Github\GithubTracker;
 use Rs\Issues\Gitlab\GitlabTracker;
 use Rs\Issues\Issue;
 use Rs\Issues\Jira\JiraTracker;
+use Rs\Issues\Project;
 use Rs\Issues\Tracker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -51,29 +52,30 @@ EOT
     {
         $tracker = $this->createTracker($input);
 
-        $project = $tracker->getProject($input->getArgument('project'));
-        $issues = $project->getIssues();
+        $projects = $tracker->findProjects($input->getArgument('project'));
 
-        $this->listIssues($issues, $output);
+        $this->listIssues($projects, $output);
     }
 
     /**
-     * @param array           $issues
+     * @param Project[]       $projects
      * @param OutputInterface $output
      */
-    private function listIssues(array $issues, OutputInterface $output)
+    private function listIssues(array $projects, OutputInterface $output)
     {
         $helper = new Table($output);
-        $helper->setHeaders(array('type', 'created at', 'title', 'url'));
+        $helper->setHeaders(array('project', 'type', 'created at', 'title', 'url'));
 
-        foreach ($issues as $issue) {
-            /** @var Issue $issue */
-            $helper->addRow(array(
-                $issue->getType(),
-                $issue->getCreatedAt()->format('Y-m-d H:i'),
-                $issue->getTitle(),
-                $issue->getUrl()
-            ));
+        foreach ($projects as $name => $project) {
+            foreach ($project->getIssues() as $issue) {
+                $helper->addRow(array(
+                    $project->getName(),
+                    $issue->getType(),
+                    $issue->getCreatedAt()->format('Y-m-d H:i'),
+                    $issue->getTitle(),
+                    $issue->getUrl()
+                ));
+            }
         }
 
         $helper->render();
