@@ -75,7 +75,6 @@ class GitlabIssue implements Issue
      */
     public function getClosedAt()
     {
-        return $this->raw['closed_at'] ? new \DateTime($this->raw['closed_at']) : null;
     }
 
     /**
