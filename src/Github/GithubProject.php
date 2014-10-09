@@ -105,8 +105,10 @@ class GithubProject implements Project
 
         if ($composer = $this->getFile('composer.json')) {
             $composer = json_decode($composer, true);
-            $badges[] = $this->badgeFactory->getComposerDownloads($composer['name']);
-            $badges[] = $this->badgeFactory->getComposerVersion($composer['name']);
+            if (isset($composer['name'])) {
+                $badges[] = $this->badgeFactory->getComposerDownloads($composer['name']);
+                $badges[] = $this->badgeFactory->getComposerVersion($composer['name']);
+            }
         }
 
         return $badges;
