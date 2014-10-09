@@ -4,7 +4,6 @@ namespace Rs\Issues\Console;
 
 use Rs\Issues\Github\GithubTracker;
 use Rs\Issues\Gitlab\GitlabTracker;
-use Rs\Issues\Issue;
 use Rs\Issues\Jira\JiraTracker;
 use Rs\Issues\Project;
 use Rs\Issues\Tracker;
