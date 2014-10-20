@@ -6,7 +6,6 @@ use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Ba
 use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
 use Rs\Issues\BadgeFactory;
 use Rs\Issues\Exception\NotFoundException;
-use Rs\Issues\Project;
 use Rs\Issues\RepositoryParser;
 use Rs\Issues\Tracker;
 

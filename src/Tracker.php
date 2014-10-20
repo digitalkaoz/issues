@@ -26,14 +26,16 @@ interface Tracker
     /**
      * overwrite the repository parser
      *
-     * @param RepositoryParser $parser
+     * @param  RepositoryParser $parser
+     * @return void
      */
     public function setRepositoryParser(RepositoryParser $parser);
 
     /**
      * overwrite the bade factory
      *
-     * @param BadgeFactory $factory
+     * @param  BadgeFactory $factory
+     * @return void
      */
     public function setBadgeFactory(BadgeFactory $factory);
 }

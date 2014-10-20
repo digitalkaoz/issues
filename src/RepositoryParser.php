@@ -39,6 +39,7 @@ class RepositoryParser
      * "doctrine/(?!common|lexer)([a-z0-9\.-]+)$" all but "doctrine/common" and "doctrine/lexer"
      *
      * @param  string $name
+     * @param  string $pattern
      * @return bool
      */
     public function matchesRegex($pattern, $name)

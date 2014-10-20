@@ -7,6 +7,7 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use Rs\Issues\BadgeFactory;
+use Rs\Issues\Git\GitProject;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;
 
@@ -14,7 +15,7 @@ use Rs\Issues\Project;
  * GitlabProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GitlabProject implements Project
+class GitlabProject extends GitProject implements Project
 {
     private $raw = array();
 
@@ -22,10 +23,6 @@ class GitlabProject implements Project
      * @var Client
      */
     private $client;
-    /**
-     * @var BadgeFactory
-     */
-    private $badgeFactory;
 
     /**
      * @param array        $data
@@ -87,34 +84,12 @@ class GitlabProject implements Project
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getBadges()
-    {
-        $badges = array();
-
-        if ($this->getFile('.travis.yml')) {
-            $badges[] = $this->badgeFactory->getTravis($this->getName());
-        }
-
-        if ($composer = $this->getFile('composer.json')) {
-            $composer = json_decode($composer, true);
-            if (isset($composer['name'])) {
-                $badges[] = $this->badgeFactory->getComposerDownloads($composer['name']);
-                $badges[] = $this->badgeFactory->getComposerVersion($composer['name']);
-            }
-        }
-
-        return $badges;
-    }
-
-    /**
      * gets a file (content) from the repository
      *
      * @param  string $filename
      * @return string
      */
-    private function getFile($filename)
+    protected function getFile($filename)
     {
         try {
             $api = $this->client->api('repositories');

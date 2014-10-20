@@ -45,7 +45,7 @@ abstract class GitTracker
     }
 
     /**
-     * @param $name
+     * @param  string            $name
      * @param  \Closure          $finder
      * @param  \Closure          $creator
      * @return Project

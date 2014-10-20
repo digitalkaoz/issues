@@ -33,7 +33,7 @@ class JiraTrackerSpec extends ObjectBehavior
     {
         $client->getProject('FOOBAR')->willReturn();
 
-        $this->shouldThrow('\RuntimeException')->during('getProject', array('FOOBAR'));
+        $this->shouldThrow('Rs\Issues\Exception\NotFoundException')->during('getProject', array('FOOBAR'));
     }
 
     public function it_returns_a_list_of_products_on_findProjects(Api $client)

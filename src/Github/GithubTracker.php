@@ -4,7 +4,6 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\HttpClient\CachedHttpClient;
-use Rs\Issues\BadgeFactory;
 use Rs\Issues\Git\GitTracker;
 use Rs\Issues\Tracker;
 

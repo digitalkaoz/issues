@@ -4,7 +4,6 @@ namespace Rs\Issues\Gitlab;
 
 use Gitlab\Api\Projects;
 use Gitlab\Client;
-use Rs\Issues\BadgeFactory;
 use Rs\Issues\Git\GitTracker;
 use Rs\Issues\Tracker;
 
@@ -56,7 +55,7 @@ class GitlabTracker extends GitTracker implements Tracker
      */
     public function findProjects($name)
     {
-        return $this->requestProjects($name, function ($name) {
+        return $this->requestProjects($name, function () {
             $api = $this->client->api('projects');
             /** @var Projects $api */
 

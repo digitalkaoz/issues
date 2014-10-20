@@ -5,13 +5,14 @@ namespace Rs\Issues\Github;
 use Github\Client;
 use Github\ResultPager;
 use Rs\Issues\BadgeFactory;
+use Rs\Issues\Git\GitProject;
 use Rs\Issues\Project;
 
 /**
  * GithubProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GithubProject implements Project
+class GithubProject extends GitProject implements Project
 {
     private $raw = array();
 
@@ -19,10 +20,6 @@ class GithubProject implements Project
      * @var Client
      */
     private $client;
-    /**
-     * @var BadgeFactory
-     */
-    private $badgeFactory;
 
     /**
      * @param array        $data
@@ -93,34 +90,12 @@ class GithubProject implements Project
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getBadges()
-    {
-        $badges = array();
-
-        if ($this->getFile('.travis.yml')) {
-            $badges[] = $this->badgeFactory->getTravis($this->getName());
-        }
-
-        if ($composer = $this->getFile('composer.json')) {
-            $composer = json_decode($composer, true);
-            if (isset($composer['name'])) {
-                $badges[] = $this->badgeFactory->getComposerDownloads($composer['name']);
-                $badges[] = $this->badgeFactory->getComposerVersion($composer['name']);
-            }
-        }
-
-        return $badges;
-    }
-
-    /**
      * gets a file (content) from the repository
      *
      * @param  string $filename
      * @return string
      */
-    private function getFile($filename)
+    protected function getFile($filename)
     {
         try {
             $file = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], $filename);
