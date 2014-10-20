@@ -57,10 +57,6 @@ class GitlabProject extends GitProject implements Project
      */
     public function getIssues(array $criteria = array())
     {
-        if (!$criteria) {
-            $criteria = array('state' => 'open');
-        }
-
         $issues = $this->findIssues();
         $issues = array_merge($issues, $this->findMergeRequests());
 
