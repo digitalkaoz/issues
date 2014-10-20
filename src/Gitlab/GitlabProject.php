@@ -61,7 +61,7 @@ class GitlabProject extends GitProject implements Project
             $criteria = array('state' => 'open');
         }
 
-        $issues = $this->findIssues($criteria);
+        $issues = $this->findIssues();
         $issues = array_merge($issues, $this->findMergeRequests());
 
         return $issues;
@@ -104,14 +104,13 @@ class GitlabProject extends GitProject implements Project
     }
 
     /**
-     * @param  array   $criteria
      * @return Issue[]
      */
-    private function findIssues(array $criteria)
+    private function findIssues()
     {
         $api = $this->client->api('issues');
         /** @var Issues $api */
-        $issues = $api->all($this->getName(), 1, 9999, $criteria);
+        $issues = $api->all($this->getName(), 1, 9999);
 
         $newIssues = array();
 
@@ -133,17 +132,12 @@ class GitlabProject extends GitProject implements Project
         $api = $this->client->api('merge_requests');
         /** @var MergeRequests $api */
 
-        if (method_exists($api, 'opened')) {
-            $issues = $api->opened($this->getName(), 1, 9999);
-        } else {
-            //BC, should be removed once a new stable version of https://github.com/m4tthumphrey/php-gitlab-api is tagged
-            $issues = $api->all($this->getName(), 1, 9999);
-        }
+        $issues = $api->all($this->getName(), 1, 9999);
 
         $newIssues = array();
 
         foreach ((array) $issues as $issue) {
-            if ('closed' === $issue['state']) { //could be removed once lib is tagged
+            if ('closed' === $issue['state']) {
                 continue;
             }
             $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
