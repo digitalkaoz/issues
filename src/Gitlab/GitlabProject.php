@@ -2,6 +2,7 @@
 
 namespace Rs\Issues\Gitlab;
 
+use Gitlab\Api\ApiInterface;
 use Gitlab\Api\Issues;
 use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
@@ -57,8 +58,8 @@ class GitlabProject extends GitProject implements Project
      */
     public function getIssues(array $criteria = array())
     {
-        $issues = $this->findIssues();
-        $issues = array_merge($issues, $this->findMergeRequests());
+        $issues = $this->findIssues($this->client->api('issues'), 'issue');
+        $issues = array_merge($issues, $this->findIssues($this->client->api('merge_requests'), 'merge'));
 
         return $issues;
     }
@@ -100,12 +101,12 @@ class GitlabProject extends GitProject implements Project
     }
 
     /**
+     * @param Issues|MergeRequests $api
+     * @param string $type
      * @return Issue[]
      */
-    private function findIssues()
+    private function findIssues(ApiInterface $api, $type)
     {
-        $api = $this->client->api('issues');
-        /** @var Issues $api */
         $issues = $api->all($this->getName(), 1, 9999);
 
         $newIssues = array();
@@ -114,29 +115,7 @@ class GitlabProject extends GitProject implements Project
             if ('closed' === $issue['state']) {
                 continue;
             }
-            $newIssues[] = new GitlabIssue($issue, 'issue', $this->getUrl());
-        }
-
-        return $newIssues;
-    }
-
-    /**
-     * @return Issue[]
-     */
-    private function findMergeRequests()
-    {
-        $api = $this->client->api('merge_requests');
-        /** @var MergeRequests $api */
-
-        $issues = $api->all($this->getName(), 1, 9999);
-
-        $newIssues = array();
-
-        foreach ((array) $issues as $issue) {
-            if ('closed' === $issue['state']) {
-                continue;
-            }
-            $newIssues[] = new GitlabIssue($issue, 'merge', $this->getUrl());
+            $newIssues[] = new GitlabIssue($issue, $type, $this->getUrl());
         }
 
         return $newIssues;
