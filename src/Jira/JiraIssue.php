@@ -69,9 +69,7 @@ class JiraIssue implements Issue
      */
     public function getState()
     {
-        $state = $this->raw->getStatus();
-
-        return $state['name'];
+        return \igorw\get_in($this->raw->getStatus(), ['name']);
     }
 
     /**
@@ -79,9 +77,7 @@ class JiraIssue implements Issue
      */
     public function getCommentCount()
     {
-        $comment = $this->raw->get('comment');
-
-        return $comment['total'];
+        return \igorw\get_in($this->raw->get('comment'), ['total']);
     }
 
     /**
@@ -105,9 +101,7 @@ class JiraIssue implements Issue
      */
     public function getAuthor()
     {
-        $reporter = $this->raw->getReporter();
-
-        return $reporter['displayName'];
+        return \igorw\get_in($this->raw->getReporter(), ['displayName']);
     }
 
     /**
@@ -124,7 +118,7 @@ class JiraIssue implements Issue
     public function getAssignee()
     {
         if ($assignee = $this->raw->getAssignee()) {
-            return $assignee['displayName'];
+            return \igorw\get_in($assignee, ['displayName']);
         }
     }
 
@@ -143,9 +137,7 @@ class JiraIssue implements Issue
      */
     public function getType()
     {
-        $type = $this->raw->getIssueType();
-
-        return $type['name'];
+        return \igorw\get_in($this->raw->getIssueType(), ['name']);
     }
 
     /**

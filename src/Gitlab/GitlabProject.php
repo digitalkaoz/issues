@@ -42,7 +42,7 @@ class GitlabProject extends GitProject implements Project
      */
     public function getDescription()
     {
-        return $this->raw['description'];
+        return \igorw\get_in($this->raw, ['description']);
     }
 
     /**
@@ -50,7 +50,7 @@ class GitlabProject extends GitProject implements Project
      */
     public function getUrl()
     {
-        return $this->raw['web_url'];
+        return \igorw\get_in($this->raw, ['web_url']);
     }
 
     /**
@@ -69,7 +69,7 @@ class GitlabProject extends GitProject implements Project
      */
     public function getName()
     {
-        return $this->raw['path_with_namespace'];
+        return \igorw\get_in($this->raw, ['path_with_namespace']);
     }
 
     /**

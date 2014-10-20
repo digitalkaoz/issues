@@ -51,7 +51,7 @@ class GitlabIssue implements Issue
      */
     public function getTitle()
     {
-        return $this->raw['title'];
+        return \igorw\get_in($this->raw, ['title']);
     }
 
     /**
@@ -59,7 +59,7 @@ class GitlabIssue implements Issue
      */
     public function getDescription()
     {
-        return $this->raw['description'];
+        return \igorw\get_in($this->raw, ['description']);
     }
 
     /**
@@ -67,7 +67,7 @@ class GitlabIssue implements Issue
      */
     public function getCreatedAt()
     {
-        return new \DateTime($this->raw['created_at']);
+        return new \DateTime(\igorw\get_in($this->raw, ['created_at']));
     }
 
     /**
@@ -82,7 +82,7 @@ class GitlabIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state'];
+        return \igorw\get_in($this->raw, ['state']);
     }
 
     /**
@@ -106,7 +106,7 @@ class GitlabIssue implements Issue
      */
     public function getAssignee()
     {
-        return isset($this->raw['assignee']['username']) ? $this->raw['assignee']['username'] : null;
+        return \igorw\get_in($this->raw, ['assignee', 'username']);
     }
 
     /**
@@ -124,7 +124,7 @@ class GitlabIssue implements Issue
      */
     public function getId()
     {
-        return $this->raw['iid'];
+        return \igorw\get_in($this->raw, ['iid']);
     }
 
     /**
@@ -132,7 +132,7 @@ class GitlabIssue implements Issue
      */
     public function getAuthor()
     {
-        return $this->raw['author']['username'];
+        return \igorw\get_in($this->raw, ['author', 'username']);
     }
 
     /**
@@ -156,7 +156,7 @@ class GitlabIssue implements Issue
      */
     public function getTags()
     {
-        return isset($this->raw['labels']) ? $this->raw['labels'] : [];
+        return \igorw\get_in($this->raw, ['labels'], []);
     }
 
     /**

@@ -43,7 +43,7 @@ class JiraProject implements Project
      */
     public function getName()
     {
-        return $this->raw['name'];
+        return \igorw\get_in($this->raw, ['name']);
     }
 
     /**
@@ -51,7 +51,7 @@ class JiraProject implements Project
      */
     public function getDescription()
     {
-        return $this->raw['description'];
+        return \igorw\get_in($this->raw, ['description']);
     }
 
     /**
@@ -59,8 +59,8 @@ class JiraProject implements Project
      */
     public function getUrl()
     {
-        $base = parse_url($this->raw['self'], PHP_URL_HOST);
-        $proto = parse_url($this->raw['self'], PHP_URL_SCHEME);
+        $base = parse_url(\igorw\get_in($this->raw, ['self']), PHP_URL_HOST);
+        $proto = parse_url(\igorw\get_in($this->raw, ['self']), PHP_URL_SCHEME);
 
         return sprintf('%s://%s/browse/%s', $proto, $base, $this->raw['key']);
     }

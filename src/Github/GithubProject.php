@@ -38,7 +38,7 @@ class GithubProject extends GitProject implements Project
      */
     public function getDescription()
     {
-        return $this->raw['description'];
+        return \igorw\get_in($this->raw, ['description']);
     }
 
     /**
@@ -46,7 +46,7 @@ class GithubProject extends GitProject implements Project
      */
     public function getUrl()
     {
-        return $this->raw['html_url'];
+        return \igorw\get_in($this->raw, ['html_url']);
     }
 
     /**
@@ -74,7 +74,7 @@ class GithubProject extends GitProject implements Project
      */
     public function getName()
     {
-        return $this->raw['full_name'];
+        return \igorw\get_in($this->raw, ['full_name']);
     }
 
     /**

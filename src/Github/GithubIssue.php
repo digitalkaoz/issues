@@ -1,7 +1,4 @@
 <?php
-/**
- * issues
- */
 
 namespace Rs\Issues\Github;
 
@@ -28,7 +25,7 @@ class GithubIssue implements Issue
      */
     public function getUrl()
     {
-        return $this->raw['html_url'];
+        return \igorw\get_in($this->raw, ['html_url']);
     }
 
     /**
@@ -36,7 +33,7 @@ class GithubIssue implements Issue
      */
     public function getTitle()
     {
-        return $this->raw['title'];
+        return \igorw\get_in($this->raw, ['title']);
     }
 
     /**
@@ -44,7 +41,7 @@ class GithubIssue implements Issue
      */
     public function getDescription()
     {
-        return $this->raw['body'];
+        return \igorw\get_in($this->raw, ['body']);
     }
 
     /**
@@ -52,7 +49,7 @@ class GithubIssue implements Issue
      */
     public function getCreatedAt()
     {
-        return new \DateTime($this->raw['created_at']);
+        return new \DateTime(\igorw\get_in($this->raw, ['created_at']));
     }
 
     /**
@@ -68,7 +65,7 @@ class GithubIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state'];
+        return \igorw\get_in($this->raw, ['state']);
     }
 
     /**
@@ -76,7 +73,7 @@ class GithubIssue implements Issue
      */
     public function getCommentCount()
     {
-        return $this->raw['comments'];
+        return \igorw\get_in($this->raw,['comments']);
     }
 
     /**
@@ -92,7 +89,7 @@ class GithubIssue implements Issue
      */
     public function getAssignee()
     {
-        return isset($this->raw['assignee']['login']) ? $this->raw['assignee']['login'] : null;
+        return \igorw\get_in($this->raw, ['assignee', 'login']);
     }
 
     /**
@@ -101,7 +98,7 @@ class GithubIssue implements Issue
     public function getAssigneeUrl()
     {
         if ($this->getAssignee()) {
-            return $this->raw['assignee']['html_url'];
+            return \igorw\get_in($this->raw, ['assignee', 'html_url']);
         }
     }
 
@@ -110,7 +107,7 @@ class GithubIssue implements Issue
      */
     public function getId()
     {
-        return $this->raw['number'];
+        return \igorw\get_in($this->raw, ['number']);
     }
 
     /**
@@ -118,7 +115,7 @@ class GithubIssue implements Issue
      */
     public function getAuthor()
     {
-        return $this->raw['user']['login'];
+        return \igorw\get_in($this->raw, ['user', 'login']);
     }
 
     /**
@@ -126,7 +123,7 @@ class GithubIssue implements Issue
      */
     public function getAuthorUrl()
     {
-        return $this->raw['user']['html_url'];
+        return \igorw\get_in($this->raw, ['user', 'html_url']);
     }
 
     /**
@@ -142,7 +139,7 @@ class GithubIssue implements Issue
      */
     public function getTags()
     {
-        $labels = isset($this->raw['labels']) ? $this->raw['labels'] : [];
+        $labels = \igorw\get_in($this->raw, ['labels'], []);
         $return = [];
 
         if (function_exists('array_column')) {
