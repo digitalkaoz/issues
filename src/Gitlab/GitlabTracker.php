@@ -5,7 +5,7 @@ namespace Rs\Issues\Gitlab;
 use Gitlab\Api\Projects;
 use Gitlab\Client;
 use Rs\Issues\BadgeFactory;
-use Rs\Issues\RepositoryParser;
+use Rs\Issues\Git\GitTracker;
 use Rs\Issues\Tracker;
 
 /**
@@ -13,20 +13,12 @@ use Rs\Issues\Tracker;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GitlabTracker implements Tracker
+class GitlabTracker extends GitTracker implements Tracker
 {
     /**
      * @var Client
      */
     private $client;
-    /**
-     * @var BadgeFactory
-     */
-    private $badgeFactory;
-    /**
-     * @var RepositoryParser
-     */
-    private $repoParser;
 
     /**
      * @param string $host
@@ -41,8 +33,7 @@ class GitlabTracker implements Tracker
             $this->client->authenticate($token, Client::AUTH_URL_TOKEN);
         }
 
-        $this->badgeFactory = new BadgeFactory();
-        $this->repoParser = new RepositoryParser();
+        parent::__construct();
     }
 
     /**
@@ -50,15 +41,14 @@ class GitlabTracker implements Tracker
      */
     public function getProject($name)
     {
-        if (false === $this->repoParser->isConcrete($name)) {
-            throw new \InvalidArgumentException(sprintf('no concrete repository name "%s"', $name));
-        }
+        return $this->requestProject($name, function ($name) {
+            $api = $this->client->api('projects');
+            /** @var Projects $api */
 
-        $api = $this->client->api('projects');
-        /** @var Projects $api */
-        $data = $api->show($name);
-
-        return new GitlabProject((array) $data, $this->client, $this->badgeFactory);
+            return $api->show($name);
+        }, function ($data) {
+            return new GitlabProject($data, $this->client, $this->badgeFactory);
+        });
     }
 
     /**
@@ -66,49 +56,12 @@ class GitlabTracker implements Tracker
      */
     public function findProjects($name)
     {
-        $projects = array();
-
-        if ($this->repoParser->isConcrete($name)) {
-            $project = $this->getProject($name);
-            $projects[$project->getName()] = $project;
-        } else {
+        return $this->requestProjects($name, function ($name) {
             $api = $this->client->api('projects');
             /** @var Projects $api */
-            $repos = $api->accessible(1, 9999);
 
-            if (true === $this->repoParser->isWildcard($name)) {
-                foreach ((array) $repos as $repo) {
-                    $project = $this->getProject($repo['path_with_namespace']);
-                    $projects[$project->getName()] = $project;
-                }
-            } else {
-                foreach ((array) $repos as $repo) {
-                    if (false === $this->repoParser->matchesRegex($name, $repo['path_with_namespace'])) {
-                        continue;
-                    }
-                    $project = $this->getProject($repo['path_with_namespace']);
-                    $projects[$project->getName()] = $project;
-                }
-
-            }
-        }
-
-        return $projects;
+            return $api->accessible(1, 9999);
+        }, 'path_with_namespace');
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setRepositoryParser(RepositoryParser $parser)
-    {
-        $this->repoParser = $parser;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setBadgeFactory(BadgeFactory $factory)
-    {
-        $this->badgeFactory = $factory;
-    }
 }

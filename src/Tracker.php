@@ -1,6 +1,7 @@
 <?php
 
 namespace Rs\Issues;
+use Rs\Issues\Exception\NotFoundException;
 
 /**
  * Interface for all Tracker
@@ -10,8 +11,9 @@ namespace Rs\Issues;
 interface Tracker
 {
     /**
-     * @param  string  $name
+     * @param  string            $name
      * @return Project
+     * @throws NotFoundException
      */
     public function getProject($name);
 
