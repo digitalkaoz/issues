@@ -36,4 +36,5 @@ abstract class GitProject
         return $badges;
     }
 
+    abstract protected function getFile($filename);
 }

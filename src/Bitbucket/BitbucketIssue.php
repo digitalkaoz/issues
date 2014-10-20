@@ -1,125 +1,79 @@
 <?php
 
-
 namespace Rs\Issues\Bitbucket;
 
+use Rs\Issues\GenericIssue;
 use Rs\Issues\Issue;
 
 /**
  * BitbucketIssue
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class BitbucketIssue implements Issue
+class BitbucketIssue extends GenericIssue implements Issue
 {
+    protected $paths = [
+        //'url'          => [],
+        'title'        => ['title'],
+        'desc'         => ['content'],
+        'created_at'   => ['created_on'],
+        'updated_at'   => ['utc_last_updated'],
+        'closed_at'    => ['closed_on'],
+        'state'        => ['state'],
+        'comments'     => ['comment_count'],
+        'assignee'     => ['responsible', 'username'],
+        //'assignee_url' => [],
+        'author'       => ['reported_by', 'username'],
+        //'author_url'   => [],
+        'id'           => ['local_id'],
+        //'type'         => [],
+        //'tags'         => [],
+    ];
 
-    /**
-     * @var array
-     */
-    private $raw = [];
     /**
      * @var
      */
     private $type;
+    /**
+     * @var
+     */
+    private $url;
 
     /**
-     * @param array $raw
+     * @param array  $raw
+     * @param string $type
+     * @param string $url
      */
-    public function __construct(array $raw, $type)
+    public function __construct(array $raw, $type, $url)
     {
         $this->raw = $raw;
         $this->type = $type;
+        $this->url = $url;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getUrl()
     {
-        // TODO: Implement getUrl() method.
+        $path = $this->type == 'issue' ? 'issue' : 'pull_request';
+
+        return sprintf('%s/%s/%d', $this->url, $path, $this->getId());
     }
 
     /**
      * @inheritdoc
      */
-    public function getTitle()
-    {
-        return $this->raw['title'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDescription()
-    {
-        return $this->raw['content'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCreatedAt()
-    {
-        return $this->raw['created_on'] ? new \DateTime($this->raw['created_on']) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getClosedAt()
-    {
-        return $this->raw['closed_on'] ? new \DateTime($this->raw['closed_on']) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUpdatedAt()
-    {
-        return $this->raw['utc_last_updated'] ? new \DateTime($this->raw['utc_last_updated']) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getState()
-    {
-        return $this->raw['state'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCommentCount()
-    {
-        return $this->raw['comment_count'];
-    }
-
-    public function getAssignee()
-    {
-        // TODO: Implement getAssignee() method.
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->raw['local_id'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthor()
-    {
-        return $this->raw['reported_by']['username'];
-    }
-
     public function getAuthorUrl()
     {
-        // TODO: Implement getAuthorUrl() method.
+        $this->getUserUrl($this->getAuthor());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAssigneeUrl()
     {
-        // TODO: Implement getAssigneeUrl() method.
+        $this->getUserUrl($this->getAssignee());
     }
 
     /**
@@ -135,6 +89,18 @@ class BitbucketIssue implements Issue
      */
     public function getTags()
     {
-        return array();
+        return [];
+    }
+
+    /**
+     * @param  string $username
+     * @return string
+     */
+    private function getUserUrl($username)
+    {
+        $base = parse_url($this->url, PHP_URL_HOST);
+        $proto = parse_url($this->url, PHP_URL_SCHEME);
+
+        return sprintf('%s://%s/%s', $proto, $base, $username);
     }
 }

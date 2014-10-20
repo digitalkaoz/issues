@@ -32,7 +32,7 @@ class BitbucketProject extends GitProject implements Project
     /**
      * @var BadgeFactory
      */
-    private $badgeFactory;
+    protected $badgeFactory;
 
     /**
      * @param array                   $data
@@ -134,7 +134,7 @@ class BitbucketProject extends GitProject implements Project
             if ('open' != $issue['status'] && 'new' != $issue['status']) {
                 continue;
             }
-            $newIssues[] = new BitbucketIssue($issue, $type);
+            $newIssues[] = new BitbucketIssue($issue, $type, $this->getUrl());
         }
 
         return $newIssues;

@@ -1,10 +1,8 @@
 <?php
-/**
- * issues
- */
 
 namespace Rs\Issues\Gitlab;
 
+use Rs\Issues\GenericIssue;
 use Rs\Issues\Issue;
 
 /**
@@ -12,9 +10,26 @@ use Rs\Issues\Issue;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GitlabIssue implements Issue
+class GitlabIssue extends GenericIssue implements Issue
 {
-    private $raw = [];
+    protected $paths = [
+        //'url'          => [],
+        'title'        => ['title'],
+        'desc'         => ['description'],
+        'created_at'   => ['created_at'],
+        'updated_at'   => ['updated_at'],
+        'closed_at'    => ['closed_at'],
+        'state'        => ['state'],
+        //'comments'     => [],
+        'assignee'     => ['assignee', 'username'],
+        //'assignee_url' => [],
+        'author'       => ['author', 'username'],
+        //'author_url'   => [],
+        'id'           => ['iid'],
+        //'type'         => [],
+        'tags'         => ['labels'],
+    ];
+
     /**
      * @var
      */
@@ -49,64 +64,9 @@ class GitlabIssue implements Issue
     /**
      * @inheritdoc
      */
-    public function getTitle()
-    {
-        return \igorw\get_in($this->raw, ['title']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDescription()
-    {
-        return \igorw\get_in($this->raw, ['description']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCreatedAt()
-    {
-        return new \DateTime(\igorw\get_in($this->raw, ['created_at']));
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getClosedAt()
-    {
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getState()
-    {
-        return \igorw\get_in($this->raw, ['state']);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getCommentCount()
     {
-        //return $this->raw['comments'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUpdatedAt()
-    {
-        return $this->raw['updated_at'] ? new \DateTime($this->raw['updated_at']) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAssignee()
-    {
-        return \igorw\get_in($this->raw, ['assignee', 'username']);
+        //TODO
     }
 
     /**
@@ -117,22 +77,6 @@ class GitlabIssue implements Issue
         if ($this->getAssignee()) {
             return $this->getUserUrl($this->getAssignee());
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return \igorw\get_in($this->raw, ['iid']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthor()
-    {
-        return \igorw\get_in($this->raw, ['author', 'username']);
     }
 
     /**
@@ -149,14 +93,6 @@ class GitlabIssue implements Issue
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getTags()
-    {
-        return \igorw\get_in($this->raw, ['labels'], []);
     }
 
     /**
