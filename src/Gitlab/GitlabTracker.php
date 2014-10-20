@@ -29,13 +29,11 @@ class GitlabTracker implements Tracker
     private $repoParser;
 
     /**
-     * @param string           $host
-     * @param string           $token
-     * @param Client           $client
-     * @param BadgeFactory     $badgeFactory
-     * @param RepositoryParser $repoParser
+     * @param string $host
+     * @param string $token
+     * @param Client $client
      */
-    public function __construct($host, $token = null, Client $client = null, BadgeFactory $badgeFactory = null, RepositoryParser $repoParser = null)
+    public function __construct($host, $token = null, Client $client = null)
     {
         $this->client = $client ?: new Client($host);
 
@@ -43,8 +41,8 @@ class GitlabTracker implements Tracker
             $this->client->authenticate($token, Client::AUTH_URL_TOKEN);
         }
 
-        $this->badgeFactory = $badgeFactory ?: new BadgeFactory();
-        $this->repoParser = $repoParser ?: new RepositoryParser();
+        $this->badgeFactory = new BadgeFactory();
+        $this->repoParser = new RepositoryParser();
     }
 
     /**
@@ -96,5 +94,21 @@ class GitlabTracker implements Tracker
         }
 
         return $projects;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRepositoryParser(RepositoryParser $parser)
+    {
+        $this->repoParser = $parser;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBadgeFactory(BadgeFactory $factory)
+    {
+        $this->badgeFactory = $factory;
     }
 }

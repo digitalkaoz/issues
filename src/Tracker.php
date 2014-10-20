@@ -20,4 +20,18 @@ interface Tracker
      * @return Project[]
      */
     public function findProjects($name);
+
+    /**
+     * overwrite the repository parser
+     *
+     * @param RepositoryParser $parser
+     */
+    public function setRepositoryParser(RepositoryParser $parser);
+
+    /**
+     * overwrite the bade factory
+     *
+     * @param BadgeFactory $factory
+     */
+    public function setBadgeFactory(BadgeFactory $factory);
 }

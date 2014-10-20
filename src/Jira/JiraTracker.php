@@ -6,6 +6,7 @@ use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Ba
 use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
 use Rs\Issues\BadgeFactory;
 use Rs\Issues\Project;
+use Rs\Issues\RepositoryParser;
 use Rs\Issues\Tracker;
 
 /**
@@ -25,18 +26,17 @@ class JiraTracker implements Tracker
     private $badgeFactory;
 
     /**
-     * @param string       $host
-     * @param string       $username
-     * @param string       $password
-     * @param Api          $client
-     * @param BadgeFactory $badgeFactory
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param Api    $client
      */
-    public function __construct($host, $username = null, $password = null, Api $client = null, BadgeFactory $badgeFactory = null)
+    public function __construct($host, $username = null, $password = null, Api $client = null)
     {
         $auth = $username && $password ? new Basic($username, $password) : new Anonymous();
 
         $this->client = $client ?: new Api($host, $auth);
-        $this->badgeFactory = $badgeFactory ?: new BadgeFactory();
+        $this->badgeFactory = new BadgeFactory();
     }
 
     /**
@@ -61,5 +61,21 @@ class JiraTracker implements Tracker
         $project = $this->getProject($name);
 
         return array($project->getName() => $project);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRepositoryParser(RepositoryParser $parser)
+    {
+        throw new \BadMethodCallException('jira doesnt support searching for projects');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBadgeFactory(BadgeFactory $factory)
+    {
+        $this->badgeFactory = $factory;
     }
 }

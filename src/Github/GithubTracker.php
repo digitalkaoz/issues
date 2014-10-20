@@ -29,12 +29,10 @@ class GithubTracker implements Tracker
     private $repoParser;
 
     /**
-     * @param string           $token
-     * @param Client           $client
-     * @param BadgeFactory     $badgeFactory
-     * @param RepositoryParser $repoParser
+     * @param string $token
+     * @param Client $client
      */
-    public function __construct($token = null, Client $client = null, BadgeFactory $badgeFactory = null, RepositoryParser $repoParser = null)
+    public function __construct($token = null, Client $client = null)
     {
         $this->client = $client ?: new Client(new CachedHttpClient());
 
@@ -42,8 +40,8 @@ class GithubTracker implements Tracker
             $this->client->authenticate($token, null, Client::AUTH_HTTP_PASSWORD);
         }
 
-        $this->badgeFactory = $badgeFactory ?: new BadgeFactory();
-        $this->repoParser = $repoParser ?: new RepositoryParser();
+        $this->badgeFactory = new BadgeFactory();
+        $this->repoParser = new RepositoryParser();
     }
 
     /**
@@ -94,5 +92,21 @@ class GithubTracker implements Tracker
         }
 
         return $projects;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRepositoryParser(RepositoryParser $parser)
+    {
+        $this->repoParser = $parser;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBadgeFactory(BadgeFactory $factory)
+    {
+        $this->badgeFactory = $factory;
     }
 }
