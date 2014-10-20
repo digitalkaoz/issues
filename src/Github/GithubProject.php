@@ -14,7 +14,7 @@ use Rs\Issues\Project;
  */
 class GithubProject extends GitProject implements Project
 {
-    private $raw = array();
+    private $raw = [];
 
     /**
      * @var Client
@@ -52,19 +52,15 @@ class GithubProject extends GitProject implements Project
     /**
      * @inheritdoc
      */
-    public function getIssues(array $criteria = array())
+    public function getIssues(array $criteria = ['state' => 'open'])
     {
-        if (!$criteria) {
-            $criteria = array('state' => 'open');
-        }
-
         list($username, $repo) = explode('/', $this->getName());
 
         $pager = new ResultPager($this->client);
 
-        $issues = $pager->fetchAll($this->client->issue(), 'all', array($username, $repo, $criteria));
+        $issues = $pager->fetchAll($this->client->issue(), 'all', [$username, $repo, $criteria]);
 
-        $newIssues = array();
+        $newIssues = [];
 
         foreach ($issues as $issue) {
             $newIssues[] = new GithubIssue($issue);

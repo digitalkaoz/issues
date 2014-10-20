@@ -19,7 +19,7 @@ abstract class GitProject
      */
     public function getBadges()
     {
-        $badges = array();
+        $badges = [];
 
         if ($this->getFile('.travis.yml')) {
             $badges[] = $this->badgeFactory->getTravis($this->getName());

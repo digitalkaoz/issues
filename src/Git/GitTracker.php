@@ -53,9 +53,6 @@ abstract class GitTracker
      */
     protected function requestProject($name, \Closure $finder, \Closure $creator)
     {
-        $finder->bindTo($this);
-        $creator->bindTo($this);
-
         if (false === $this->repoParser->isConcrete($name)) {
             throw new \InvalidArgumentException(sprintf('no concrete repository name "%s"', $name));
         }
@@ -76,9 +73,7 @@ abstract class GitTracker
      */
     protected function requestProjects($name, \Closure $finder, $nameKey)
     {
-        $finder->bindTo($this);
-
-        $projects = array();
+        $projects = [];
 
         if ($this->repoParser->isConcrete($name)) {
             $project = $this->getProject($name);

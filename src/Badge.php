@@ -20,12 +20,4 @@ class Badge
         $this->image = $image;
         $this->link = $link;
     }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return array('img' => $this->image, 'link' => $this->link);
-    }
 }

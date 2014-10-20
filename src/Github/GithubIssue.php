@@ -13,7 +13,7 @@ use Rs\Issues\Issue;
  */
 class GithubIssue implements Issue
 {
-    private $raw = array();
+    private $raw = [];
 
     /**
      * @param array $data
@@ -68,7 +68,7 @@ class GithubIssue implements Issue
      */
     public function getState()
     {
-        return $this->raw['state']; //TODO use own consts?!
+        return $this->raw['state'];
     }
 
     /**
@@ -142,8 +142,12 @@ class GithubIssue implements Issue
      */
     public function getTags()
     {
-        $labels = isset($this->raw['labels']) ? $this->raw['labels'] : array();
-        $return = array();
+        $labels = isset($this->raw['labels']) ? $this->raw['labels'] : [];
+        $return = [];
+
+        if (function_exists('array_column')) {
+            return array_column($labels, 'name');
+        }
 
         foreach ($labels as $label) {
             $return[] = $label['name'];

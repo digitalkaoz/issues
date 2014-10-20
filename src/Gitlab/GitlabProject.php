@@ -18,7 +18,7 @@ use Rs\Issues\Project;
  */
 class GitlabProject extends GitProject implements Project
 {
-    private $raw = array();
+    private $raw = [];
 
     /**
      * @var Client
@@ -56,12 +56,12 @@ class GitlabProject extends GitProject implements Project
     /**
      * @inheritdoc
      */
-    public function getIssues(array $criteria = array())
+    public function getIssues(array $criteria = [])
     {
         $issues = $this->findIssues($this->client->api('issues'), 'issue');
-        $issues = array_merge($issues, $this->findIssues($this->client->api('merge_requests'), 'merge'));
+        $merges = $this->findIssues($this->client->api('merge_requests'), 'merge');
 
-        return $issues;
+        return array_merge($issues, $merges);
     }
 
     /**
@@ -101,8 +101,8 @@ class GitlabProject extends GitProject implements Project
     }
 
     /**
-     * @param Issues|MergeRequests $api
-     * @param string $type
+     * @param  Issues|MergeRequests $api
+     * @param  string               $type
      * @return Issue[]
      */
     private function findIssues(ApiInterface $api, $type)

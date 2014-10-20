@@ -63,17 +63,17 @@ EOT
     private function listIssues(array $projects, OutputInterface $output)
     {
         $helper = new Table($output);
-        $helper->setHeaders(array('project', 'type', 'created at', 'title', 'url'));
+        $helper->setHeaders(['project', 'type', 'created at', 'title', 'url']);
 
         foreach ($projects as $name => $project) {
             foreach ($project->getIssues() as $issue) {
-                $helper->addRow(array(
+                $helper->addRow([
                     $project->getName(),
                     $issue->getType(),
                     $issue->getCreatedAt()->format('Y-m-d H:i'),
                     $issue->getTitle(),
                     $issue->getUrl()
-                ));
+                ]);
             }
         }
 

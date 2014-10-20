@@ -16,7 +16,7 @@ class JiraProject implements Project
     /**
      * @var array
      */
-    private $raw;
+    private $raw = [];
     /**
      * @var Api
      */
@@ -68,14 +68,14 @@ class JiraProject implements Project
     /**
      * @inheritdoc
      */
-    public function getIssues(array $criteria = array('status != closed', 'status != resolved'))
+    public function getIssues(array $criteria = ['status != closed', 'status != resolved'])
     {
         $conditions = join(' AND ', $criteria);
-        $walker = new Walker($this->client);
 
+        $walker = new Walker($this->client);
         $walker->push(sprintf('project = %s AND %s', $this->raw['key'], $conditions));
 
-        $issues = array();
+        $issues = [];
         foreach ($walker as $k => $issue) {
             $issues[] = new JiraIssue($issue);
         }
@@ -96,6 +96,6 @@ class JiraProject implements Project
      */
     public function getBadges()
     {
-        return array();
+        return [];
     }
 }

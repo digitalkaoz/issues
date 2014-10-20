@@ -28,7 +28,7 @@ interface Project
      * @param  array   $criteria an array of attributes and their values to search for, depends on the concrete tracker
      * @return Issue[]
      */
-    public function getIssues(array $criteria = array());
+    public function getIssues(array $criteria = []);
 
     /**
      * @return string

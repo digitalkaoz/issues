@@ -14,7 +14,7 @@ use Rs\Issues\Issue;
  */
 class GitlabIssue implements Issue
 {
-    private $raw = array();
+    private $raw = [];
     /**
      * @var
      */
@@ -156,7 +156,7 @@ class GitlabIssue implements Issue
      */
     public function getTags()
     {
-        return isset($this->raw['labels']) ? $this->raw['labels'] : array();
+        return isset($this->raw['labels']) ? $this->raw['labels'] : [];
     }
 
     /**

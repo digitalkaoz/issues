@@ -16,10 +16,6 @@ class BadgeFactorySpec extends ObjectBehavior
         $badge = $this->getComposerVersion('foo/bar');
 
         $badge->shouldHaveType('Rs\Issues\Badge');
-        $badge->toArray()->shouldBe(array(
-            'img'  => 'https://poser.pugx.org/foo/bar/version.svg',
-            'link' => 'https://packagist.org/packages/foo/bar'
-        ));
     }
 
     public function it_returns_a_composer_downloads_badge()
@@ -27,10 +23,6 @@ class BadgeFactorySpec extends ObjectBehavior
         $badge = $this->getComposerDownloads('foo/bar');
 
         $badge->shouldHaveType('Rs\Issues\Badge');
-        $badge->toArray()->shouldBe(array(
-            'img'  => 'https://poser.pugx.org/foo/bar/d/total.svg',
-            'link' => 'https://packagist.org/packages/foo/bar'
-        ));
     }
 
     public function it_returns_a_travis_badge()
@@ -38,10 +30,6 @@ class BadgeFactorySpec extends ObjectBehavior
         $badge = $this->getTravis('foo/bar');
 
         $badge->shouldHaveType('Rs\Issues\Badge');
-        $badge->toArray()->shouldBe(array(
-            'img'  => 'https://travis-ci.org/foo/bar.svg',
-            'link' => 'https://travis-ci.org/foo/bar'
-        ));
     }
 
 }

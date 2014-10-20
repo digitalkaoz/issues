@@ -44,13 +44,13 @@ class JiraTracker implements Tracker
      */
     public function getProject($name)
     {
-        $p = $this->client->getProject($name);
+        $project = $this->client->getProject($name);
 
-        if (!is_array($p) || !isset($p['key'])) {
+        if (!is_array($project) || !isset($project['key'])) {
             throw new NotFoundException(sprintf('unable to find "%s"', $name));
         }
 
-        return new JiraProject($p, $this->client, $this->badgeFactory);
+        return new JiraProject($project, $this->client, $this->badgeFactory);
     }
 
     /**
