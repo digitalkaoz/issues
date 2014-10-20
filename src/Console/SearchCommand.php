@@ -2,6 +2,7 @@
 
 namespace Rs\Issues\Console;
 
+use Rs\Issues\Bitbucket\BitbucketTracker;
 use Rs\Issues\Github\GithubTracker;
 use Rs\Issues\Gitlab\GitlabTracker;
 use Rs\Issues\Jira\JiraTracker;
@@ -97,6 +98,9 @@ EOT
                 break;
             case 'gitlab' :
                 $tracker = new GitlabTracker($input->getOption('host'), $input->getOption('username'));
+                break;
+            case 'bitbucket' :
+                $tracker = new BitbucketTracker($input->getOption('username'), $input->getOption('password'));
                 break;
             default :
                 throw new \InvalidArgumentException(sprintf('unknown type "%s"', $input->getArgument('type')));
