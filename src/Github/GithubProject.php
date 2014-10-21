@@ -15,7 +15,11 @@ use Rs\Issues\Project;
  */
 class GithubProject extends SourceProject implements Project
 {
-    private $raw = [];
+    protected $paths = [
+        'url'          => ['html_url'],
+        'name'         => ['full_name'],
+        'desc'         => ['description'],
+    ];
 
     /**
      * @var Client
@@ -37,22 +41,6 @@ class GithubProject extends SourceProject implements Project
     /**
      * @inheritdoc
      */
-    public function getDescription()
-    {
-        return \igorw\get_in($this->raw, ['description']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUrl()
-    {
-        return \igorw\get_in($this->raw, ['html_url']);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getIssues(array $criteria = ['state' => 'open'])
     {
         list($username, $repo) = explode('/', $this->getName());
@@ -68,14 +56,6 @@ class GithubProject extends SourceProject implements Project
         }
 
         return $newIssues;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return \igorw\get_in($this->raw, ['full_name']);
     }
 
     /**

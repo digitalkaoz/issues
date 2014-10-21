@@ -8,7 +8,7 @@ use Rs\Issues\BadgeFactory;
  * SourceProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-abstract class SourceProject
+abstract class SourceProject extends ArrayProject
 {
     /**
      * @var BadgeFactory

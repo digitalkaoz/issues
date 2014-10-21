@@ -19,7 +19,11 @@ use Rs\Issues\Project;
  */
 class GitlabProject extends SourceProject implements Project
 {
-    private $raw = [];
+    protected $paths = [
+        'url'          => ['web_url'],
+        'name'         => ['path_with_namespace'],
+        'desc'         => ['description'],
+    ];
 
     /**
      * @var Client
@@ -41,36 +45,12 @@ class GitlabProject extends SourceProject implements Project
     /**
      * @inheritdoc
      */
-    public function getDescription()
-    {
-        return \igorw\get_in($this->raw, ['description']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUrl()
-    {
-        return \igorw\get_in($this->raw, ['web_url']);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getIssues(array $criteria = [])
     {
         $issues = $this->findIssues($this->client->api('issues'), 'issue');
         $merges = $this->findIssues($this->client->api('merge_requests'), 'merge');
 
         return array_merge($issues, $merges);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return \igorw\get_in($this->raw, ['path_with_namespace']);
     }
 
     /**

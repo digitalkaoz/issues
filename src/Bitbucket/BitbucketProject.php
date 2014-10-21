@@ -22,10 +22,12 @@ use Rs\Issues\Project;
  */
 class BitbucketProject extends SourceProject implements Project
 {
-    /**
-     * @var array
-     */
-    private $raw = [];
+    protected $paths = [
+        'url'          => ['links', 'self', 'href'],
+        'name'         => ['full_name'],
+        'desc'         => ['description'],
+    ];
+
     /**
      * @var AuthenticationInterface
      */
@@ -45,30 +47,6 @@ class BitbucketProject extends SourceProject implements Project
         $this->raw = $data;
         $this->auth = $auth;
         $this->badgeFactory = $badgeFactory;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return \igorw\get_in($this->raw, ['full_name']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDescription()
-    {
-        return \igorw\get_in($this->raw, ['description']);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUrl()
-    {
-        return \igorw\get_in($this->raw, ['links', 'self', 'href']);
     }
 
     /**
