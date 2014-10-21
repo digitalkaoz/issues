@@ -2,14 +2,14 @@
 
 namespace Rs\Issues\Bitbucket;
 
-use Rs\Issues\GenericIssue;
+use Rs\Issues\Issue\ArrayIssue;
 use Rs\Issues\Issue;
 
 /**
  * BitbucketIssue
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class BitbucketIssue extends GenericIssue implements Issue
+class BitbucketIssue extends ArrayIssue implements Issue
 {
     protected $paths = [
         //'url'          => [],

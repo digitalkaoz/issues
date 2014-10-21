@@ -8,8 +8,8 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 
+use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Utils\BadgeFactory;
-use Rs\Issues\Git\GitProject;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;
 
@@ -17,7 +17,7 @@ use Rs\Issues\Project;
  * GitlabProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GitlabProject extends GitProject implements Project
+class GitlabProject extends SourceProject implements Project
 {
     private $raw = [];
 

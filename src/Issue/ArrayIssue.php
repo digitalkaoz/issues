@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Rs\Issues;
+namespace Rs\Issues\Issue;
 
 /**
  * GenericIssue
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GenericIssue
+class ArrayIssue
 {
     protected $paths = [
         'url'          => [],

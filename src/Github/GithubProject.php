@@ -6,14 +6,14 @@ use Github\Client;
 use Github\ResultPager;
 
 use Rs\Issues\Utils\BadgeFactory;
-use Rs\Issues\Git\GitProject;
+use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Project;
 
 /**
  * GithubProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GithubProject extends GitProject implements Project
+class GithubProject extends SourceProject implements Project
 {
     private $raw = [];
 

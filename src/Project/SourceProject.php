@@ -1,13 +1,14 @@
 <?php
 
-namespace Rs\Issues\Git;
+namespace Rs\Issues\Project;
+
 use Rs\Issues\BadgeFactory;
 
 /**
- * GitProject
+ * SourceProject
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-abstract class GitProject
+abstract class SourceProject
 {
     /**
      * @var BadgeFactory

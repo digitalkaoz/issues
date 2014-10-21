@@ -2,7 +2,7 @@
 
 namespace Rs\Issues\Github;
 
-use Rs\Issues\GenericIssue;
+use Rs\Issues\Issue\ArrayIssue;
 use Rs\Issues\Issue;
 
 /**
@@ -10,7 +10,7 @@ use Rs\Issues\Issue;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GithubIssue extends GenericIssue implements Issue
+class GithubIssue extends ArrayIssue implements Issue
 {
     protected $paths = [
         'url'          => ['html_url'],

@@ -10,8 +10,8 @@ use Bitbucket\API\Repositories\PullRequests;
 use Bitbucket\API\Repositories\Src;
 use Buzz\Message\Response;
 
+use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Utils\BadgeFactory;
-use Rs\Issues\Git\GitProject;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;
 
@@ -20,7 +20,7 @@ use Rs\Issues\Project;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class BitbucketProject extends GitProject implements Project
+class BitbucketProject extends SourceProject implements Project
 {
     /**
      * @var array
