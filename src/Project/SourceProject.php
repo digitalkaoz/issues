@@ -34,7 +34,7 @@ abstract class SourceProject extends ArrayProject
             }
         }
 
-        return $badges;
+        return array_filter($badges);
     }
 
     abstract protected function getFile($filename);

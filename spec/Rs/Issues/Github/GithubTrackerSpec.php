@@ -6,6 +6,7 @@ use Github\Api\Repo;
 use Github\Api\User;
 use Github\Client;
 use PhpSpec\ObjectBehavior;
+use Rs\Issues\Utils\RepositoryParser;
 
 class GithubTrackerSpec extends ObjectBehavior
 {
@@ -31,6 +32,22 @@ class GithubTrackerSpec extends ObjectBehavior
 
         $project->shouldHaveType('Rs\Issues\Project');
         $project->shouldHaveType('Rs\Issues\Github\GithubProject');
+    }
+
+    public function it_throws_an_exception_for_invalid_projects(Client $client, Repo $api)
+    {
+        $client->repos()->willReturn($api);
+        $api->show('foo', 'bar')->willThrow(new \RuntimeException());
+
+        $this->shouldThrow('Rs\Issues\Exception\NotFoundException')->during('getProject', ['foo/bar']);
+    }
+
+    public function it_throws_an_exception_for_invalid_project_names(RepositoryParser $repositoryParser)
+    {
+        $repositoryParser->isConcrete('foo')->shouldBeCalled()->willReturn(false);
+        $this->setRepositoryParser($repositoryParser);
+
+        $this->shouldThrow('\InvalidArgumentException')->during('getProject', ['foo']);
     }
 
     public function it_returns_a_list_of_Projects_on_findProjects(Client $client, Repo $repoApi, User $userApi)

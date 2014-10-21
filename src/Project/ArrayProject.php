@@ -42,7 +42,6 @@ class ArrayProject
         return $this->attr('name');
     }
 
-
     protected function attr($name, $default = null)
     {
         if (!array_key_exists($name, $this->paths)) {

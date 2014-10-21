@@ -65,7 +65,7 @@ class BitbucketIssue extends ArrayIssue implements Issue
      */
     public function getAuthorUrl()
     {
-        $this->getUserUrl($this->getAuthor());
+        return $this->getUserUrl($this->getAuthor());
     }
 
     /**
@@ -73,7 +73,7 @@ class BitbucketIssue extends ArrayIssue implements Issue
      */
     public function getAssigneeUrl()
     {
-        $this->getUserUrl($this->getAssignee());
+        return $this->getUserUrl($this->getAssignee());
     }
 
     /**
