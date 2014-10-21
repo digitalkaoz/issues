@@ -4,7 +4,7 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\HttpClient\CachedHttpClient;
-use Rs\Issues\Git\GitTracker;
+use Rs\Issues\Tracker\SearchableTracker;
 use Rs\Issues\Tracker;
 
 /**
@@ -12,7 +12,7 @@ use Rs\Issues\Tracker;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GithubTracker extends GitTracker implements Tracker
+class GithubTracker extends SearchableTracker implements Tracker
 {
     /**
      * @var Client

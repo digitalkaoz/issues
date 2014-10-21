@@ -1,6 +1,6 @@
 <?php
 
-namespace Rs\Issues\Git;
+namespace Rs\Issues\Tracker;
 
 use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Exception\NotFoundException;
@@ -8,10 +8,10 @@ use Rs\Issues\Project;
 use Rs\Issues\Utils\RepositoryParser;
 
 /**
- * GitTracker
+ * SearchableTracker
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-abstract class GitTracker
+abstract class SearchableTracker
 {
     /**
      * @var BadgeFactory

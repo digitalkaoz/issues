@@ -4,7 +4,7 @@ namespace Rs\Issues\Gitlab;
 
 use Gitlab\Api\Projects;
 use Gitlab\Client;
-use Rs\Issues\Git\GitTracker;
+use Rs\Issues\Tracker\SearchableTracker;
 use Rs\Issues\Tracker;
 
 /**
@@ -12,7 +12,7 @@ use Rs\Issues\Tracker;
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class GitlabTracker extends GitTracker implements Tracker
+class GitlabTracker extends SearchableTracker implements Tracker
 {
     /**
      * @var Client

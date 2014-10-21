@@ -5,14 +5,14 @@ namespace Rs\Issues\Bitbucket;
 
 use Bitbucket\API\Authentication\Basic;
 use Bitbucket\API\Repositories;
-use Rs\Issues\Git\GitTracker;
+use Rs\Issues\Tracker\SearchableTracker;
 use Rs\Issues\Tracker;
 
 /**
  * BitbucketTracker
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
-class BitbucketTracker extends GitTracker implements Tracker
+class BitbucketTracker extends SearchableTracker implements Tracker
 {
     /**
      * @var Basic
