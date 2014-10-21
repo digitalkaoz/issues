@@ -2,7 +2,7 @@
 
 namespace Rs\Issues\Project;
 
-use Rs\Issues\BadgeFactory;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
  * SourceProject
