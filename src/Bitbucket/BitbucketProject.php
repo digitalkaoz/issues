@@ -4,16 +4,14 @@
 namespace Rs\Issues\Bitbucket;
 
 use Bitbucket\API\Api;
-use Bitbucket\API\Authentication\AuthenticationInterface;
 use Bitbucket\API\Repositories\Issues;
 use Bitbucket\API\Repositories\PullRequests;
 use Bitbucket\API\Repositories\Src;
 use Buzz\Message\Response;
-
-use Rs\Issues\Project\SourceProject;
-use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;
+use Rs\Issues\Project\SourceProject;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
  * BitbucketProject
@@ -23,29 +21,29 @@ use Rs\Issues\Project;
 class BitbucketProject extends SourceProject implements Project
 {
     protected $paths = [
-        'url'          => ['links', 'self', 'href'],
-        'name'         => ['full_name'],
-        'desc'         => ['description'],
+        'url'  => ['links', 'self', 'href'],
+        'name' => ['full_name'],
+        'desc' => ['description'],
     ];
 
     /**
-     * @var AuthenticationInterface
+     * @var Api
      */
-    private $auth;
+    private $api;
     /**
      * @var BadgeFactory
      */
     protected $badgeFactory;
 
     /**
-     * @param array                   $data
-     * @param BadgeFactory            $badgeFactory
-     * @param AuthenticationInterface $auth
+     * @param array        $data
+     * @param Api          $api
+     * @param BadgeFactory $badgeFactory
      */
-    public function __construct(array $data, BadgeFactory $badgeFactory, AuthenticationInterface $auth = null)
+    public function __construct(array $data, Api $api, BadgeFactory $badgeFactory)
     {
         $this->raw = $data;
-        $this->auth = $auth;
+        $this->api = $api;
         $this->badgeFactory = $badgeFactory;
     }
 
@@ -54,8 +52,8 @@ class BitbucketProject extends SourceProject implements Project
      */
     public function getIssues(array $criteria = ['state' => 'OPEN'])
     {
-        $issues = $this->findIssues(new Issues(), 'issue', $criteria);
-        $merges = $this->findIssues(new PullRequests(), 'pull', $criteria);
+        $issues = $this->findIssues($this->api->api('Repositories\Issues'), 'issue', $criteria);
+        $merges = $this->findIssues($this->api->api('Repositories\PullRequests'), 'pull', $criteria);
 
         return array_merge($issues, $merges);
     }
@@ -76,11 +74,8 @@ class BitbucketProject extends SourceProject implements Project
      */
     protected function getFile($filename)
     {
-        $api = new Src();
-
-        if ($this->auth) {
-            $api->setCredentials($this->auth);
-        }
+        $api = $this->api->api('Repositories\Src');
+        /** @var Src $api */
 
         try {
             $file = $api->raw($this->raw['owner']['username'], $this->raw['name'], 'master', $filename);
@@ -94,25 +89,26 @@ class BitbucketProject extends SourceProject implements Project
     }
 
     /**
-     * @param  Issues|PullRequests $api
-     * @param  string              $type
-     * @param  array               $criteria
+     * @param  Api     $api
+     * @param  string  $type
+     * @param  array   $criteria
      * @return Issue[]
      */
     private function findIssues(Api $api, $type, array $criteria)
     {
-        if ($this->auth) {
-            $api->setCredentials($this->auth);
-        }
+        /** @var Issues|PullRequests $api */
 
         list($username, $repo) = explode('/', $this->getName());
         $issues = json_decode($api->all($username, $repo, $criteria)->getContent(), true);
-        $newIssues = array();
+        $newIssues = [];
 
-        foreach ((array) $issues['issues'] as $issue) {
+        $key = 'issue' == $type ? 'issues' : 'values';
+
+        foreach ((array) $issues[$key] as $issue) {
             if ('open' != $issue['status'] && 'new' != $issue['status']) {
                 continue;
             }
+
             $newIssues[] = new BitbucketIssue($issue, $type, $this->getUrl());
         }
 

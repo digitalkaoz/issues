@@ -11,7 +11,7 @@
         "m4tthumphrey/php-gitlab-api":  "~6.9.1",
         "symfony/console":              "~2.0",
         "igorw/get-in":                 "~1.0",
-        "gentle/bitbucket-api":         "~0.5"
+        "gentle/bitbucket-api":         "~0.6"
     },
     "require-dev": {
         "phpspec/phpspec":      "~2.0"

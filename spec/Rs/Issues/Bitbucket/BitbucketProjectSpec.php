@@ -2,20 +2,26 @@
 
 namespace spec\Rs\Issues\Bitbucket;
 
-use Bitbucket\API\Authentication\AuthenticationInterface;
+use Bitbucket\API\Api;
+use Bitbucket\API\Repositories\Issues;
+use Bitbucket\API\Repositories\PullRequests;
+use Bitbucket\API\Repositories\Src;
+use Buzz\Message\MessageInterface;
+use Buzz\Message\Response;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Rs\Issues\Utils\BadgeFactory;
 
 class BitbucketProjectSpec extends ObjectBehavior
 {
-    public function let(AuthenticationInterface $auth)
+    public function let(Api $client)
     {
         $this->beConstructedWith(array(
             'full_name'   => 'foo/bar',
             'description' => 'lorem ipsum',
             'links'    => ['self' => ['href'=>'http://foo.com']],
-        ), new BadgeFactory(), $auth);
+            'owner' => ['username' => 'foo'],
+            'name' => 'bar'
+        ), $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -44,48 +50,38 @@ class BitbucketProjectSpec extends ObjectBehavior
         $this->getUrl()->shouldReturn('http://foo.com');
     }
 
-//    public function it_returns_Issue_objects_on_getIssues(Client $client, Issue $api, HttpClient $http, Response $response)
-//    {
-//        $client->issue()->willReturn($api);
-//        $client->getHttpClient()->willReturn($http);
-//
-//        $api->getPerPage()->willReturn(5);
-//        $api->setPerPage(Argument::any())->willReturn();
-//
-//        $http->getLastResponse()->willReturn($response);
-//
-//        $response->getHeader('Link')->willReturn(null);
-//
-//        $api->all('foo', 'bar', array('state' => 'open'))->willReturn(array(
-//            array(
-//                'number' => 1,
-//            ),
-//            array(
-//                'number' => 5,
-//            ),
-//        ));
-//
-//        $result = $this->getIssues();
-//
-//        $result->shouldBeArray();
-//        $result->shouldHaveCount(2);
-//
-//        $result[0]->shouldHaveType('Rs\Issues\Bitbucket\BitbucketIssue');
-//        $result[0]->getId()->shouldBe(1);
-//
-//        $result[1]->shouldHaveType('Rs\Issues\Bitbucket\BitbucketIssue');
-//        $result[1]->getId()->shouldBe(5);
-//    }
-//
-//    public function it_returns_the_badges(Client $client, Repo $api, Contents $content)
-//    {
-//        $client->repos()->willReturn($api);
-//        $api->contents()->willReturn($content);
-//
-//        $content->show('foo', 'bar', '.travis.yml')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{}')));
-//        $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
-//
-//        $this->getBadges()->shouldBeArray();
-//        $this->getBadges()->shouldHaveCount(3);
-//    }
+    public function it_returns_the_badges(Api $client, Src $api, Response $response)
+    {
+        $client->api('Repositories\Src')->willReturn($api);
+
+        $api->raw('foo', 'bar', 'master', 'composer.json')->shouldBeCalled()->willReturn($response);
+
+        $response->isSuccessful()->willReturn(true);
+        $response->getContent()->shouldBeCalled()->willReturn('{ "name" : "foo/bar"}');
+
+        $this->getBadges()->shouldBeArray();
+        $this->getBadges()->shouldHaveCount(2);
+    }
+
+    public function it_returns_its_issues(Api $client, Issues $issuesApi, PullRequests $mergesApi, MessageInterface $response)
+    {
+        $client->api('Repositories\Issues')->willReturn($issuesApi);
+        $client->api('Repositories\PullRequests')->willReturn($mergesApi);
+
+        $response->getContent()->shouldBeCalled()->willReturn('{ "issues":[{"status" : "open"},{ "status" : "closed"}], "values":[{"status" : "open"},{ "status" : "closed"}] }');
+
+        $issuesApi->all('foo', 'bar', ['state' => 'OPEN'])->shouldBeCalled()->willReturn($response);
+        $mergesApi->all('foo', 'bar', ['state' => 'OPEN'])->shouldBeCalled()->willReturn($response);
+
+        $result = $this->getIssues();
+
+        $result->shouldHaveCount(2);
+
+        $result[0]->shouldHaveType('Rs\Issues\Bitbucket\BitbucketIssue');
+        $result[0]->getType()->shouldBe('issue');
+
+        $result[1]->shouldHaveType('Rs\Issues\Bitbucket\BitbucketIssue');
+        $result[1]->getType()->shouldBe('pull');
+
+    }
 }
