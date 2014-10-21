@@ -44,9 +44,9 @@ class ArrayProject
 
     /**
      * @param string $name
-     * @param string $default
+     * @param mixed $default
      *
-     * @return string
+     * @return mixed
      */
     protected function attr($name, $default = null)
     {

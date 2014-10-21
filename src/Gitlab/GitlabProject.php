@@ -81,12 +81,13 @@ class GitlabProject extends SourceProject implements Project
     }
 
     /**
-     * @param  Issues|MergeRequests $api
+     * @param  ApiInterface $api
      * @param  string               $type
      * @return Issue[]
      */
     private function findIssues(ApiInterface $api, $type)
     {
+        /** @var Issues|MergeRequests $api */
         $issues = $api->all($this->getName(), 1, 9999);
 
         $newIssues = array();
