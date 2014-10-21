@@ -21,15 +21,15 @@ class BitbucketTracker extends SearchableTracker implements Tracker
     private $api;
 
     /**
-     * @param $user
-     * @param $password
+     * @param string $username
+     * @param string $password
      */
-    public function __construct($user = null, $password = null, Api $api = null)
+    public function __construct($username = null, $password = null, Api $api = null)
     {
         $this->api = $api ?: new Api();
 
-        if ($user && $password) {
-            $this->api->setCredentials(new Basic($user, $password));
+        if ($username && $password) {
+            $this->api->setCredentials(new Basic($username, $password));
         }
 
         parent::__construct();
