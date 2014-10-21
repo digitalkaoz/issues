@@ -1,7 +1,10 @@
 <?php
 
 namespace Rs\Issues;
+
 use Rs\Issues\Exception\NotFoundException;
+use Rs\Issues\Utils\RepositoryParser;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
  * Interface for all Tracker

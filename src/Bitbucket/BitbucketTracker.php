@@ -5,7 +5,6 @@ namespace Rs\Issues\Bitbucket;
 
 use Bitbucket\API\Authentication\Basic;
 use Bitbucket\API\Repositories;
-use Rs\Issues\BadgeFactory;
 use Rs\Issues\Git\GitTracker;
 use Rs\Issues\Tracker;
 

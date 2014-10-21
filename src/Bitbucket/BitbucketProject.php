@@ -9,7 +9,8 @@ use Bitbucket\API\Repositories\Issues;
 use Bitbucket\API\Repositories\PullRequests;
 use Bitbucket\API\Repositories\Src;
 use Buzz\Message\Response;
-use Rs\Issues\BadgeFactory;
+
+use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Git\GitProject;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;

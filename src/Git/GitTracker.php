@@ -2,10 +2,10 @@
 
 namespace Rs\Issues\Git;
 
-use Rs\Issues\BadgeFactory;
+use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Exception\NotFoundException;
 use Rs\Issues\Project;
-use Rs\Issues\RepositoryParser;
+use Rs\Issues\Utils\RepositoryParser;
 
 /**
  * GitTracker

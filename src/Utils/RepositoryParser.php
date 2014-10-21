@@ -1,6 +1,6 @@
 <?php
 
-namespace Rs\Issues;
+namespace Rs\Issues\Utils;
 
 /**
  * RepositoryParser

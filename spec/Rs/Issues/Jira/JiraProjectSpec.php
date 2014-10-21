@@ -6,7 +6,7 @@ use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Api_Result as Result; //chobie\Jira\Api\Api\Result;
 use Jira_Issue as Issue; //chobie\Jira\Issue;
 use PhpSpec\ObjectBehavior;
-use Rs\Issues\BadgeFactory;
+use Rs\Issues\Utils\BadgeFactory;
 
 class JiraProjectSpec extends ObjectBehavior
 {

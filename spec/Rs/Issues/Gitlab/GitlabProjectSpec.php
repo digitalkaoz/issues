@@ -7,7 +7,7 @@ use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
 use PhpSpec\ObjectBehavior;
-use Rs\Issues\BadgeFactory;
+use Rs\Issues\Utils\BadgeFactory;
 
 class GitlabProjectSpec extends ObjectBehavior
 {

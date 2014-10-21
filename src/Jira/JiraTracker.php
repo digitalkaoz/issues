@@ -4,9 +4,10 @@ namespace Rs\Issues\Jira;
 use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Basic;
 use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
-use Rs\Issues\BadgeFactory;
+
+use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Exception\NotFoundException;
-use Rs\Issues\RepositoryParser;
+use Rs\Issues\Utils\RepositoryParser;
 use Rs\Issues\Tracker;
 
 /**

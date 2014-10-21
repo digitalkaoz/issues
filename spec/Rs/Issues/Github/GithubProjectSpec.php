@@ -10,7 +10,7 @@ use Github\HttpClient\HttpClient;
 use Guzzle\Http\Message\Response;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Rs\Issues\BadgeFactory;
+use Rs\Issues\Utils\BadgeFactory;
 
 class GithubProjectSpec extends ObjectBehavior
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Rs\Issues;
+namespace Rs\Issues\Utils;
+
+use Rs\Issues\Badge;
 
 /**
  * BadgeFactory

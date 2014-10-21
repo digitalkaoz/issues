@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Rs\Issues;
+namespace spec\Rs\Issues\Utils;
 
 use PhpSpec\ObjectBehavior;
 
@@ -8,7 +8,7 @@ class RepositoryParserSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Rs\Issues\RepositoryParser');
+        $this->shouldHaveType('Rs\Issues\Utils\RepositoryParser');
     }
 
     public function it_returns_booleans_for_concrete_repos()

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Rs\Issues;
+namespace spec\Rs\Issues\Utils;
 
 use PhpSpec\ObjectBehavior;
 
@@ -8,7 +8,7 @@ class BadgeFactorySpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Rs\Issues\BadgeFactory');
+        $this->shouldHaveType('Rs\Issues\Utils\BadgeFactory');
     }
 
     public function it_returns_a_composer_version_badge()

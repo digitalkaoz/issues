@@ -4,7 +4,8 @@ namespace Rs\Issues\Jira;
 
 use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Issues_Walker as Walker; //chobie\Jira\Issues\Walker;
-use Rs\Issues\BadgeFactory;
+
+use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Project;
 
 /**
