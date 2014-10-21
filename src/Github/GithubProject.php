@@ -4,7 +4,6 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\ResultPager;
-
 use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Project;

@@ -152,6 +152,12 @@ class ArrayIssue
         return $this->attr('tags', []);
     }
 
+    /**
+     * @param string $name
+     * @param string $default
+     *
+     * @return string
+     */
     protected function attr($name, $default = null)
     {
         if (!array_key_exists($name, $this->paths)) {

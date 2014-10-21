@@ -64,12 +64,12 @@ interface Issue
     public function getAuthor();
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getAuthorUrl();
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getAssigneeUrl();
 

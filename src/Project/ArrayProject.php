@@ -42,6 +42,12 @@ class ArrayProject
         return $this->attr('name');
     }
 
+    /**
+     * @param string $name
+     * @param string $default
+     *
+     * @return string
+     */
     protected function attr($name, $default = null)
     {
         if (!array_key_exists($name, $this->paths)) {

@@ -7,7 +7,6 @@ use Gitlab\Api\Issues;
 use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
-
 use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Issue;
