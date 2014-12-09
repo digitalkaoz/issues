@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Issues by digitalkaoz</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Issues</h1>
+        <h2>a PHP wrapper for various issue tracker</h2>
+        <a href="https://github.com/digitalkaoz/issues" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>issues</h1>
+
+<p>a PHP wrapper for various issue tracker</p>
+
+<p><a href="https://travis-ci.org/digitalkaoz/issues"><img src="https://travis-ci.org/digitalkaoz/issues.svg?branch=master" alt="Build Status"></a></p>
+
+<p><a href="https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master"><img src="https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+<a href="https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master"><img src="https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/coverage.png?b=master" alt="Code Coverage"></a></p>
+
+<p><a href="https://packagist.org/packages/digitalkaoz/issues"><img src="https://poser.pugx.org/digitalkaoz/issues/version.svg" alt="Latest Stable Version"></a>
+<a href="//packagist.org/packages/digitalkaoz/issues"><img src="https://poser.pugx.org/digitalkaoz/issues/v/unstable.svg" alt="Latest Unstable Version"></a> 
+<a href="https://packagist.org/packages/digitalkaoz/issues"><img src="https://poser.pugx.org/digitalkaoz/issues/downloads.svg" alt="Total Downloads"></a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-bash"><pre>$ composer require digitalkaoz/issues</pre></div>
+
+<h2>
+<a id="trackers" class="anchor" href="#trackers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trackers</h2>
+
+<p>currently these are the supported Trackers:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s2"></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$github</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">GithubTracker</span>(<span class="pl-vo">$token</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$jira</span>   <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">JiraTracker</span>(<span class="pl-vo">$host</span>, <span class="pl-vo">$username</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>, <span class="pl-vo">$password</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$gitlab</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">GitlabTracker</span>(<span class="pl-vo">$host</span>, <span class="pl-vo">$token</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>);</span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$bitbucket</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">BitbucketTracker</span>(<span class="pl-vo">$username</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>, <span class="pl-vo">$password</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>);</span></pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The Library contains a simple Application to search various Trackers:</p>
+
+<pre><code>$ bin/issues search -u TOKEN github digitalkaoz/issues                     # search github
+$ bin/issues search -u TOKEN -h gitlab.domain.com gitlab foo/*             # search gitlab
+$ bin/issues search -u USER -p PWD -d https://jira.domain.com jira PROJKEY # search jira
+$ bin/issues search -u USER -p PWD -d bitbucket gentlero/bitbucket-api     # search bitbucket
+</code></pre>
+
+<p>to use it programmatic:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s2"></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$tracker</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-s3">GithubTracker</span>(<span class="pl-vo">$token</span>); <span class="pl-c">// or any other Tracker</span></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$project</span> <span class="pl-k">=</span> <span class="pl-vo">$tracker</span><span class="pl-k">-&gt;</span>getProject(<span class="pl-s1"><span class="pl-pds">'</span>digitalkaoz/issues<span class="pl-pds">'</span></span>); <span class="pl-c">//Rs/Issues/Project</span></span>
+<span class="pl-s2"><span class="pl-vo">$projects</span> <span class="pl-k">=</span> <span class="pl-vo">$tracker</span><span class="pl-k">-&gt;</span>findProjects(<span class="pl-s1"><span class="pl-pds">'</span>digitalkaoz/*<span class="pl-pds">'</span></span>); <span class="pl-c">//Rs/Issues/Project[]</span></span>
+<span class="pl-s2"></span>
+<span class="pl-s2"><span class="pl-vo">$issues</span> <span class="pl-k">=</span> <span class="pl-vo">$project</span><span class="pl-k">-&gt;</span>getIssues(); <span class="pl-c">//Rs/Issues/Issue[]</span></span></pre></div>
+
+<h1>
+<a id="searching" class="anchor" href="#searching" aria-hidden="true"><span class="octicon octicon-link"></span></a>Searching</h1>
+
+<p>you can either search for an concrete repository like <code>digitalkaoz/issues</code> or search for issues:</p>
+
+<ul>
+<li>
+<code>digitalkaoz/*</code> : all repos of <code>digitalkaoz</code>
+</li>
+<li>
+<code>symfony/[Console|Debug]+$</code> : only <code>symfony/Console</code> or <code>symfony/Debug</code>
+</li>
+<li>
+<code>doctrine/(?!common|lexer)([a-z0-9\.-]+)$</code> all but <code>doctrine/common</code> and <code>doctrine/lexer</code>
+</li>
+</ul>
+
+<p>The CLI Application searches by default, in your Code you should use <code>findProjects</code> instead of <code>getProject</code></p>
+
+<p><img src="http://i57.tinypic.com/vrgfg2.png" alt="Console Output"></p>
+
+<h2>
+<a id="phar" class="anchor" href="#phar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Phar</h2>
+
+<p>To build a standalone PHAR:</p>
+
+<pre><code>$ vendor/bin/box build
+</code></pre>
+
+<p>now you can use it as standalone app as follows:</p>
+
+<pre><code>$ php issues.phar search github digitalkaoz/issues
+</code></pre>
+
+<h2>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
+
+<pre><code>$ vendor/bin/phpspec run
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/digitalkaoz/issues/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/digitalkaoz/issues/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/digitalkaoz/issues"></a> is maintained by <a href="https://github.com/digitalkaoz">digitalkaoz</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
