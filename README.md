@@ -3,14 +3,13 @@ issues
 
 a PHP wrapper for various issue tracker
 
-[![Build Status](https://travis-ci.org/digitalkaoz/issues.svg?branch=master)](https://travis-ci.org/digitalkaoz/issues)
-
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/digitalkaoz/issues/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
-
-[![Latest Stable Version](https://poser.pugx.org/digitalkaoz/issues/version.svg)](https://packagist.org/packages/digitalkaoz/issues)
-[![Latest Unstable Version](https://poser.pugx.org/digitalkaoz/issues/v/unstable.svg)](//packagist.org/packages/digitalkaoz/issues) 
-[![Total Downloads](https://poser.pugx.org/digitalkaoz/issues/downloads.svg)](https://packagist.org/packages/digitalkaoz/issues)
+[![Build Status](https://img.shields.io/travis/digitalkaoz/issues/master.svg?style=flat-square)](https://travis-ci.org/digitalkaoz/issues)
+[![Dependency Status](https://img.shields.io/versioneye/d/php/digitalkaoz:issues.svg?style=flat-square)](https://www.versioneye.com/php/digitalkaoz:issues)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/digitalkaoz/issues.svg?style=flat-square)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/digitalkaoz/issues/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/digitalkaoz/issues/?branch=master)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/8b6776fe-d453-406b-a073-a6d4eeb9d4b4.svg?style=flat-square)](https://insight.sensiolabs.com/projects/8b6776fe-d453-406b-a073-a6d4eeb9d4b4)
+[![Latest Stable Version](https://img.shields.io/packagist/v/digitalkaoz/issues.svg?style=flat-square)](https://packagist.org/packages/digitalkaoz/issues)
+[![Total Downloads](https://img.shields.io/packagist/dt/digitalkaoz/issues.svg?style=flat-square)](https://packagist.org/packages/digitalkaoz/issues)
 
 
 Installation
