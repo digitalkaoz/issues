@@ -17,8 +17,8 @@ allow_failures:
 
 before_script:
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then cp phpspec_coverage.yml phpspec.yml; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then composer require --dev  henrikbjorn/phpspec-code-coverage "~0.2"; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then composer update; fi;'
+  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then composer require --no-update --dev henrikbjorn/phpspec-code-coverage; fi;'
+  - composer update
 
 after_script:
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi;'
