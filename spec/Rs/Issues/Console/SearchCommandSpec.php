@@ -24,7 +24,7 @@ class SearchCommandSpec extends ObjectBehavior
 
     public function it_displays_a_search_result_table_for_gitlab()
     {
-        $input = new ArrayInput(array('type' => 'gitlab', 'project' => 'gitlab/*', '-d'=>'http://demo.gitlab.com/api/v3/', '-u'=>'CPcomi7q3qyREs8wkpQz'));
+        $input = new ArrayInput(array('type' => 'gitlab', 'project' => 'gitlab-org/*', '-d'=>'https://gitlab.com/api/v3/', '-u' => getenv('GITLAB_KEY')));
         $output = new BufferedOutput();
 
         $this->run($input, $output)->shouldPrintATable($output);
