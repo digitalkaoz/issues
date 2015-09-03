@@ -16,7 +16,7 @@ class SearchCommandSpec extends ObjectBehavior
 
     public function it_displays_a_search_result_table_for_github()
     {
-        $input = new ArrayInput(array('type' => 'github', 'project' => 'digitalkaoz/issues'));
+        $input = new ArrayInput(array('type' => 'github', 'project' => 'digitalkaoz/issues', '-u' => getenv('GITHUB_KEY')));
         $output = new BufferedOutput();
 
         $this->run($input, $output)->shouldPrintATable($output);
