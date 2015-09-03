@@ -26,7 +26,7 @@ class GithubTrackerSpec extends ObjectBehavior
     public function it_returns_a_Project_on_getProject(Client $client, Repo $api)
     {
         $client->repos()->willReturn($api);
-        $api->show('foo', 'bar')->willReturn(array());
+        $api->show('foo', 'bar')->willReturn([]);
 
         $project = $this->getProject('foo/bar');
 
@@ -53,10 +53,10 @@ class GithubTrackerSpec extends ObjectBehavior
     public function it_returns_a_list_of_Projects_on_findProjects(Client $client, Repo $repoApi, User $userApi)
     {
         $client->repos()->willReturn($repoApi);
-        $repoApi->show('foo', 'bar')->willReturn(array('full_name'=>'foo/bar'));
+        $repoApi->show('foo', 'bar')->willReturn(['full_name' => 'foo/bar']);
 
         $client->user()->willReturn($userApi);
-        $userApi->repositories('foo')->willReturn(array(array('full_name'=>'foo/bar')));
+        $userApi->repositories('foo')->willReturn([['full_name' => 'foo/bar']]);
 
         $projects = $this->findProjects('foo/[bar|bazz]+$');
 

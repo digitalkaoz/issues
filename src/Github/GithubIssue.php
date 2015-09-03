@@ -2,11 +2,11 @@
 
 namespace Rs\Issues\Github;
 
-use Rs\Issues\Issue\ArrayIssue;
 use Rs\Issues\Issue;
+use Rs\Issues\Issue\ArrayIssue;
 
 /**
- * GithubIssue
+ * GithubIssue.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -39,7 +39,7 @@ class GithubIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -47,7 +47,7 @@ class GithubIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTags()
     {

@@ -7,21 +7,22 @@ use Gitlab\Api\Issues;
 use Gitlab\Api\MergeRequests;
 use Gitlab\Api\Repositories;
 use Gitlab\Client;
-use Rs\Issues\Project\SourceProject;
-use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Issue;
 use Rs\Issues\Project;
+use Rs\Issues\Project\SourceProject;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
- * GitlabProject
+ * GitlabProject.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class GitlabProject extends SourceProject implements Project
 {
     protected $paths = [
-        'url'          => ['web_url'],
-        'name'         => ['path_with_namespace'],
-        'desc'         => ['description'],
+        'url'  => ['web_url'],
+        'name' => ['path_with_namespace'],
+        'desc' => ['description'],
     ];
 
     /**
@@ -36,13 +37,13 @@ class GitlabProject extends SourceProject implements Project
      */
     public function __construct(array $data, Client $client, BadgeFactory $badgeFactory)
     {
-        $this->raw = $data;
-        $this->client = $client;
+        $this->raw          = $data;
+        $this->client       = $client;
         $this->badgeFactory = $badgeFactory;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIssues(array $criteria = [])
     {
@@ -53,7 +54,7 @@ class GitlabProject extends SourceProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -61,19 +62,20 @@ class GitlabProject extends SourceProject implements Project
     }
 
     /**
-     * gets a file (content) from the repository
+     * gets a file (content) from the repository.
      *
-     * @param  string $filename
+     * @param string $filename
+     *
      * @return string
      */
     protected function getFile($filename)
     {
         try {
             $api = $this->client->api('repositories');
-            /** @var Repositories $api */
+            /* @var Repositories $api */
             $file = $api->getFile($this->raw['path_with_namespace'], $filename, 'master');
             if ('base64' === $file['encoding']) {
-                return base64_decode($file['content']);
+                return base64_decode($file['content'], true);
             }
         } catch (\Exception $e) {
             //file not found
@@ -81,16 +83,17 @@ class GitlabProject extends SourceProject implements Project
     }
 
     /**
-     * @param  ApiInterface $api
-     * @param  string               $type
+     * @param ApiInterface $api
+     * @param string       $type
+     *
      * @return Issue[]
      */
     private function findIssues(ApiInterface $api, $type)
     {
-        /** @var Issues|MergeRequests $api */
+        /* @var Issues|MergeRequests $api */
         $issues = $api->all($this->getName(), 1, 9999);
 
-        $newIssues = array();
+        $newIssues = [];
 
         foreach ((array) $issues as $issue) {
             if ('closed' === $issue['state']) {

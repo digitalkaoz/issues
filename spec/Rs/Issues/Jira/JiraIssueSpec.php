@@ -42,14 +42,14 @@ class JiraIssueSpec extends ObjectBehavior
 
     public function it_returns_the_state(Issue $issue)
     {
-        $issue->getStatus()->shouldBeCalled()->willReturn(array('name'=>'open'));
+        $issue->getStatus()->shouldBeCalled()->willReturn(['name' => 'open']);
 
         $this->getState()->shouldReturn('open');
     }
 
     public function it_returns_the_type(Issue $issue)
     {
-        $issue->getIssueType()->shouldBeCalled()->willReturn(array('name'=>'issue'));
+        $issue->getIssueType()->shouldBeCalled()->willReturn(['name' => 'issue']);
 
         $this->getType()->shouldReturn('issue');
     }
@@ -77,7 +77,7 @@ class JiraIssueSpec extends ObjectBehavior
 
     public function it_returns_the_comment_count(Issue $issue)
     {
-        $issue->get('comment')->shouldBeCalled()->willReturn(array('total'=>7));
+        $issue->get('comment')->shouldBeCalled()->willReturn(['total' => 7]);
 
         $this->getCommentCount()->shouldReturn(7);
     }
@@ -91,14 +91,14 @@ class JiraIssueSpec extends ObjectBehavior
 
     public function it_returns_the_author(Issue $issue)
     {
-        $issue->getReporter()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getReporter()->shouldBeCalled()->willReturn(['displayName' => 'foo']);
 
         $this->getAuthor()->shouldReturn('foo');
     }
 
     public function it_returns_the_author_url(Issue $issue)
     {
-        $issue->getReporter()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getReporter()->shouldBeCalled()->willReturn(['displayName' => 'foo']);
         $issue->getSelf()->shouldBeCalled()->willReturn('http://jira.com');
 
         $this->getAuthorUrl()->shouldReturn('http://jira.com/ViewProfile.jspa?name=foo');
@@ -106,14 +106,14 @@ class JiraIssueSpec extends ObjectBehavior
 
     public function it_returns_the_assignee(Issue $issue)
     {
-        $issue->getAssignee()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getAssignee()->shouldBeCalled()->willReturn(['displayName' => 'foo']);
 
         $this->getAssignee()->shouldReturn('foo');
     }
 
     public function it_returns_the_assignee_url(Issue $issue)
     {
-        $issue->getAssignee()->shouldBeCalled()->willReturn(array('displayName'=>'foo'));
+        $issue->getAssignee()->shouldBeCalled()->willReturn(['displayName' => 'foo']);
         $issue->getSelf()->shouldBeCalled()->willReturn('http://jira.com');
 
         $this->getAssigneeUrl()->shouldReturn('http://jira.com/ViewProfile.jspa?name=foo');
@@ -129,9 +129,8 @@ class JiraIssueSpec extends ObjectBehavior
 
     public function it_returns_its_tags(Issue $issue)
     {
-        $issue->getLabels()->shouldBeCalled()->willReturn(array('foo','bar'));
+        $issue->getLabels()->shouldBeCalled()->willReturn(['foo', 'bar']);
 
-        $this->getTags()->shouldReturn(array('foo','bar'));
+        $this->getTags()->shouldReturn(['foo', 'bar']);
     }
-
 }

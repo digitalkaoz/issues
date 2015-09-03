@@ -2,13 +2,14 @@
 
 namespace Rs\Issues\Tracker;
 
-use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Exception\NotFoundException;
 use Rs\Issues\Project;
+use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Utils\RepositoryParser;
 
 /**
- * SearchableTracker
+ * SearchableTracker.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 abstract class SearchableTracker
@@ -25,11 +26,11 @@ abstract class SearchableTracker
     public function __construct()
     {
         $this->badgeFactory = new BadgeFactory();
-        $this->repoParser = new RepositoryParser();
+        $this->repoParser   = new RepositoryParser();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setRepositoryParser(RepositoryParser $parser)
     {
@@ -37,7 +38,7 @@ abstract class SearchableTracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setBadgeFactory(BadgeFactory $factory)
     {
@@ -45,11 +46,13 @@ abstract class SearchableTracker
     }
 
     /**
-     * @param  string            $name
-     * @param  \Closure          $finder
-     * @param  \Closure          $creator
-     * @return Project
+     * @param string   $name
+     * @param \Closure $finder
+     * @param \Closure $creator
+     *
      * @throws NotFoundException
+     * @return Project
+     *
      */
     protected function requestProject($name, \Closure $finder, \Closure $creator)
     {
@@ -65,10 +68,12 @@ abstract class SearchableTracker
     }
 
     /**
-     * searches for projects
-     * @param  string    $name
-     * @param  \Closure  $finder
-     * @param  string    $nameKey
+     * searches for projects.
+     *
+     * @param string   $name
+     * @param \Closure $finder
+     * @param string   $nameKey
+     *
      * @return Project[]
      */
     protected function requestProjects($name, \Closure $finder, $nameKey)
@@ -76,14 +81,14 @@ abstract class SearchableTracker
         $projects = [];
 
         if ($this->repoParser->isConcrete($name)) {
-            $project = $this->getProject($name);
+            $project                       = $this->getProject($name);
             $projects[$project->getName()] = $project;
         } else {
             $repos = $finder($name);
 
             if (true === $this->repoParser->isWildcard($name)) {
                 foreach ((array) $repos as $repo) {
-                    $project = $this->getProject($repo[$nameKey]);
+                    $project                       = $this->getProject($repo[$nameKey]);
                     $projects[$project->getName()] = $project;
                 }
             } else {
@@ -91,10 +96,9 @@ abstract class SearchableTracker
                     if (false === $this->repoParser->matchesRegex($name, $repo[$nameKey])) {
                         continue;
                     }
-                    $project = $this->getProject($repo[$nameKey]);
+                    $project                       = $this->getProject($repo[$nameKey]);
                     $projects[$project->getName()] = $project;
                 }
-
             }
         }
 

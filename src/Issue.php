@@ -3,7 +3,8 @@
 namespace Rs\Issues;
 
 /**
- * Issue
+ * Issue.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 interface Issue

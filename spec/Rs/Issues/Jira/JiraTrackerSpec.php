@@ -21,7 +21,7 @@ class JiraTrackerSpec extends ObjectBehavior
 
     public function it_returns_a_Project_on_getProject(Api $client)
     {
-        $client->getProject('FOOBAR')->willReturn(array('key'=>'FOOBAR'));
+        $client->getProject('FOOBAR')->willReturn(['key' => 'FOOBAR']);
 
         $result = $this->getProject('FOOBAR');
 
@@ -33,12 +33,12 @@ class JiraTrackerSpec extends ObjectBehavior
     {
         $client->getProject('FOOBAR')->willReturn();
 
-        $this->shouldThrow('Rs\Issues\Exception\NotFoundException')->during('getProject', array('FOOBAR'));
+        $this->shouldThrow('Rs\Issues\Exception\NotFoundException')->during('getProject', ['FOOBAR']);
     }
 
     public function it_returns_a_list_of_products_on_findProjects(Api $client)
     {
-        $client->getProject('FOOBAR')->willReturn(array('key'=>'FOOBAR', 'name'=>'FOOBAR'));
+        $client->getProject('FOOBAR')->willReturn(['key' => 'FOOBAR', 'name' => 'FOOBAR']);
 
         $projects = $this->findProjects('FOOBAR');
 

@@ -17,13 +17,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * SearchCommand
+ * SearchCommand.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class SearchCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -31,13 +32,13 @@ class SearchCommand extends Command
 
         $this
             ->setName('search')
-            ->setDefinition(new InputDefinition(array(
+            ->setDefinition(new InputDefinition([
                 new InputOption('username', 'u', InputOption::VALUE_REQUIRED, 'the username/token to use for authentication'),
                 new InputOption('password', 'p', InputOption::VALUE_REQUIRED, 'the password to use for authentication'),
                 new InputOption('host', 'd', InputOption::VALUE_REQUIRED, 'the host to connect'),
                 new InputArgument('type', InputArgument::REQUIRED, 'the tracker type github|jira|gitlab'),
                 new InputArgument('project', InputArgument::REQUIRED, 'the project name'),
-            )))
+            ]))
             ->setDescription('search for issues in a tracker and project')
             ->setHelp(<<<EOT
 The <info>search</info>
@@ -46,7 +47,7 @@ EOT
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -73,7 +74,7 @@ EOT
                     $issue->getType(),
                     $issue->getCreatedAt()->format('Y-m-d H:i'),
                     $issue->getTitle(),
-                    $issue->getUrl()
+                    $issue->getUrl(),
                 ]);
             }
         }
@@ -82,9 +83,10 @@ EOT
     }
 
     /**
-     * creates the correct tracker
+     * creates the correct tracker.
      *
-     * @param  InputInterface $input
+     * @param InputInterface $input
+     *
      * @return Tracker
      */
     private function createTracker(InputInterface $input)

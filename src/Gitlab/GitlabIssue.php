@@ -2,11 +2,11 @@
 
 namespace Rs\Issues\Gitlab;
 
-use Rs\Issues\Issue\ArrayIssue;
 use Rs\Issues\Issue;
+use Rs\Issues\Issue\ArrayIssue;
 
 /**
- * GitlabIssue
+ * GitlabIssue.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -14,20 +14,20 @@ class GitlabIssue extends ArrayIssue implements Issue
 {
     protected $paths = [
         //'url'          => [],
-        'title'        => ['title'],
-        'desc'         => ['description'],
-        'created_at'   => ['created_at'],
-        'updated_at'   => ['updated_at'],
-        'closed_at'    => ['closed_at'],
-        'state'        => ['state'],
+        'title'      => ['title'],
+        'desc'       => ['description'],
+        'created_at' => ['created_at'],
+        'updated_at' => ['updated_at'],
+        'closed_at'  => ['closed_at'],
+        'state'      => ['state'],
         //'comments'     => [],
-        'assignee'     => ['assignee', 'username'],
+        'assignee' => ['assignee', 'username'],
         //'assignee_url' => [],
-        'author'       => ['author', 'username'],
+        'author' => ['author', 'username'],
         //'author_url'   => [],
-        'id'           => ['iid'],
+        'id' => ['iid'],
         //'type'         => [],
-        'tags'         => ['labels'],
+        'tags' => ['labels'],
     ];
 
     /**
@@ -46,23 +46,23 @@ class GitlabIssue extends ArrayIssue implements Issue
      */
     public function __construct(array $data, $type, $url)
     {
-        $this->raw = $data;
+        $this->raw  = $data;
         $this->type = $type;
-        $this->url = $url;
+        $this->url  = $url;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
-        $path = $this->type == 'issue' ? 'issues' : 'merge_requests';
+        $path = $this->type === 'issue' ? 'issues' : 'merge_requests';
 
         return sprintf('%s/%s/%d', $this->url, $path, $this->getId());
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCommentCount()
     {
@@ -70,7 +70,7 @@ class GitlabIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssigneeUrl()
     {
@@ -80,7 +80,7 @@ class GitlabIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthorUrl()
     {
@@ -88,7 +88,7 @@ class GitlabIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -96,12 +96,13 @@ class GitlabIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @param  string $username
+     * @param string $username
+     *
      * @return string
      */
     private function getUserUrl($username)
     {
-        $base = parse_url($this->url, PHP_URL_HOST);
+        $base  = parse_url($this->url, PHP_URL_HOST);
         $proto = parse_url($this->url, PHP_URL_SCHEME);
 
         return sprintf('%s://%s/u/%s', $proto, $base, $username);

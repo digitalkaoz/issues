@@ -12,12 +12,12 @@ class JiraProjectSpec extends ObjectBehavior
 {
     public function let(Api $client)
     {
-        $this->beConstructedWith(array(
+        $this->beConstructedWith([
             'name'        => 'foo',
             'description' => 'bar',
             'key'         => 'FOOBAR',
-            'self'        => 'http://jira.com/foo/bar'
-        ), $client, new BadgeFactory());
+            'self'        => 'http://jira.com/foo/bar',
+        ], $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -48,11 +48,11 @@ class JiraProjectSpec extends ObjectBehavior
 
     public function it_returns_its_issues(Api $client, Result $result, Issue $issue)
     {
-        $result->getIssues()->shouldBeCalled()->willReturn(array($issue));
+        $result->getIssues()->shouldBeCalled()->willReturn([$issue]);
         $result->getTotal()->shouldBeCalled()->willReturn(1);
         $result->getIssuesCount()->shouldBeCalled()->willReturn(1);
 
-        $client->search("project = FOOBAR AND status != closed AND status != resolved", 0, 50, null)->shouldBeCalled()->willReturn($result);
+        $client->search('project = FOOBAR AND status != closed AND status != resolved', 0, 50, null)->shouldBeCalled()->willReturn($result);
         $result = $this->getIssues();
 
         $result->shouldBeArray();

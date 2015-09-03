@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Rs\Issues\Bitbucket;
 
 use Bitbucket\API\Api;
@@ -14,7 +13,7 @@ use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Utils\BadgeFactory;
 
 /**
- * BitbucketProject
+ * BitbucketProject.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -42,13 +41,13 @@ class BitbucketProject extends SourceProject implements Project
      */
     public function __construct(array $data, Api $api, BadgeFactory $badgeFactory)
     {
-        $this->raw = $data;
-        $this->api = $api;
+        $this->raw          = $data;
+        $this->api          = $api;
         $this->badgeFactory = $badgeFactory;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIssues(array $criteria = ['state' => 'OPEN'])
     {
@@ -59,7 +58,7 @@ class BitbucketProject extends SourceProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -67,15 +66,16 @@ class BitbucketProject extends SourceProject implements Project
     }
 
     /**
-     * gets a file (content) from the repository
+     * gets a file (content) from the repository.
      *
-     * @param  string $filename
+     * @param string $filename
+     *
      * @return string
      */
     protected function getFile($filename)
     {
         $api = $this->api->api('Repositories\Src');
-        /** @var Src $api */
+        /* @var Src $api */
 
         try {
             $file = $api->raw($this->raw['owner']['username'], $this->raw['name'], 'master', $filename);
@@ -89,23 +89,24 @@ class BitbucketProject extends SourceProject implements Project
     }
 
     /**
-     * @param  Api     $api
-     * @param  string  $type
-     * @param  array   $criteria
+     * @param Api    $api
+     * @param string $type
+     * @param array  $criteria
+     *
      * @return Issue[]
      */
     private function findIssues(Api $api, $type, array $criteria)
     {
-        /** @var Issues|PullRequests $api */
+        /* @var Issues|PullRequests $api */
 
         list($username, $repo) = explode('/', $this->getName());
-        $issues = json_decode($api->all($username, $repo, $criteria)->getContent(), true);
-        $newIssues = [];
+        $issues                = json_decode($api->all($username, $repo, $criteria)->getContent(), true);
+        $newIssues             = [];
 
-        $key = 'issue' == $type ? 'issues' : 'values';
+        $key = 'issue' === $type ? 'issues' : 'values';
 
         foreach ((array) $issues[$key] as $issue) {
-            if ('open' != $issue['status'] && 'new' != $issue['status']) {
+            if ('open' !== $issue['status'] && 'new' !== $issue['status']) {
                 continue;
             }
 

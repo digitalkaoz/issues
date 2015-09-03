@@ -5,13 +5,15 @@ namespace Rs\Issues\Utils;
 use Rs\Issues\Badge;
 
 /**
- * BadgeFactory
+ * BadgeFactory.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class BadgeFactory
 {
     /**
-     * @param  string $name
+     * @param string $name
+     *
      * @return Badge
      */
     public function getComposerVersion($name)
@@ -20,7 +22,8 @@ class BadgeFactory
     }
 
     /**
-     * @param  string $name
+     * @param string $name
+     *
      * @return Badge
      */
     public function getComposerDownloads($name)
@@ -29,7 +32,8 @@ class BadgeFactory
     }
 
     /**
-     * @param  string $name
+     * @param string $name
+     *
      * @return Badge
      */
     public function getTravis($name)

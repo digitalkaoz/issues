@@ -1,10 +1,9 @@
 <?php
 
-
 namespace Rs\Issues\Issue;
 
 /**
- * GenericIssue
+ * GenericIssue.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -31,7 +30,7 @@ class ArrayIssue
     protected $raw = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -39,7 +38,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -47,7 +46,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -55,7 +54,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
@@ -63,7 +62,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUpdatedAt()
     {
@@ -71,7 +70,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClosedAt()
     {
@@ -79,7 +78,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getState()
     {
@@ -87,7 +86,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCommentCount()
     {
@@ -95,7 +94,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssignee()
     {
@@ -103,7 +102,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssigneeUrl()
     {
@@ -113,7 +112,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -121,7 +120,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthor()
     {
@@ -129,7 +128,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthorUrl()
     {
@@ -137,7 +136,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -145,7 +144,7 @@ class ArrayIssue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTags()
     {
@@ -154,7 +153,7 @@ class ArrayIssue
 
     /**
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

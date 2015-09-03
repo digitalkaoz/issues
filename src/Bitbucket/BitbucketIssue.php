@@ -2,29 +2,30 @@
 
 namespace Rs\Issues\Bitbucket;
 
-use Rs\Issues\Issue\ArrayIssue;
 use Rs\Issues\Issue;
+use Rs\Issues\Issue\ArrayIssue;
 
 /**
- * BitbucketIssue
+ * BitbucketIssue.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class BitbucketIssue extends ArrayIssue implements Issue
 {
     protected $paths = [
         //'url'          => [],
-        'title'        => ['title'],
-        'desc'         => ['content'],
-        'created_at'   => ['created_on'],
-        'updated_at'   => ['utc_last_updated'],
-        'closed_at'    => ['closed_on'],
-        'state'        => ['state'],
-        'comments'     => ['comment_count'],
-        'assignee'     => ['responsible', 'username'],
+        'title'      => ['title'],
+        'desc'       => ['content'],
+        'created_at' => ['created_on'],
+        'updated_at' => ['utc_last_updated'],
+        'closed_at'  => ['closed_on'],
+        'state'      => ['state'],
+        'comments'   => ['comment_count'],
+        'assignee'   => ['responsible', 'username'],
         //'assignee_url' => [],
-        'author'       => ['reported_by', 'username'],
+        'author' => ['reported_by', 'username'],
         //'author_url'   => [],
-        'id'           => ['local_id'],
+        'id' => ['local_id'],
         //'type'         => [],
         //'tags'         => [],
     ];
@@ -45,23 +46,23 @@ class BitbucketIssue extends ArrayIssue implements Issue
      */
     public function __construct(array $raw, $type, $url)
     {
-        $this->raw = $raw;
+        $this->raw  = $raw;
         $this->type = $type;
-        $this->url = $url;
+        $this->url  = $url;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
-        $path = $this->type == 'issue' ? 'issue' : 'pull_request';
+        $path = $this->type === 'issue' ? 'issue' : 'pull_request';
 
         return sprintf('%s/%s/%d', $this->url, $path, $this->getId());
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthorUrl()
     {
@@ -69,7 +70,7 @@ class BitbucketIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssigneeUrl()
     {
@@ -77,7 +78,7 @@ class BitbucketIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -85,7 +86,7 @@ class BitbucketIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTags()
     {
@@ -93,12 +94,13 @@ class BitbucketIssue extends ArrayIssue implements Issue
     }
 
     /**
-     * @param  string $username
+     * @param string $username
+     *
      * @return string
      */
     private function getUserUrl($username)
     {
-        $base = parse_url($this->url, PHP_URL_HOST);
+        $base  = parse_url($this->url, PHP_URL_HOST);
         $proto = parse_url($this->url, PHP_URL_SCHEME);
 
         return sprintf('%s://%s/%s', $proto, $base, $username);

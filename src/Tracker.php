@@ -3,42 +3,43 @@
 namespace Rs\Issues;
 
 use Rs\Issues\Exception\NotFoundException;
-use Rs\Issues\Utils\RepositoryParser;
 use Rs\Issues\Utils\BadgeFactory;
+use Rs\Issues\Utils\RepositoryParser;
 
 /**
- * Interface for all Tracker
+ * Interface for all Tracker.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 interface Tracker
 {
     /**
-     * @param  string            $name
-     * @return Project
+     * @param string $name
+     *
      * @throws NotFoundException
+     * @return Project
+     *
      */
     public function getProject($name);
 
     /**
      * @param $name
+     *
      * @return Project[]
      */
     public function findProjects($name);
 
     /**
-     * overwrite the repository parser
+     * overwrite the repository parser.
      *
-     * @param  RepositoryParser $parser
-     * @return void
+     * @param RepositoryParser $parser
      */
     public function setRepositoryParser(RepositoryParser $parser);
 
     /**
-     * overwrite the bade factory
+     * overwrite the bade factory.
      *
-     * @param  BadgeFactory $factory
-     * @return void
+     * @param BadgeFactory $factory
      */
     public function setBadgeFactory(BadgeFactory $factory);
 }

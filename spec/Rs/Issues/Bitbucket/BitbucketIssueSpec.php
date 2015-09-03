@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 
 class BitbucketIssueSpec extends ObjectBehavior
 {
-    private $data = array(
+    private $data = [
         'title'            => 'foo bar',
         'content'          => 'lorem ipsum',
         'state'            => 'open',
@@ -17,8 +17,8 @@ class BitbucketIssueSpec extends ObjectBehavior
         'pull_request'     => 'foo',
         'responsible'      => ['username' => 'digitalkaoz'],
         'reported_by'      => ['username' => 'lolcat'],
-        'local_id'         => 1337
-    );
+        'local_id'         => 1337,
+    ];
 
     public function let()
     {

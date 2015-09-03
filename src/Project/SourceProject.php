@@ -5,7 +5,8 @@ namespace Rs\Issues\Project;
 use Rs\Issues\Utils\BadgeFactory;
 
 /**
- * SourceProject
+ * SourceProject.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 abstract class SourceProject extends ArrayProject
@@ -16,7 +17,7 @@ abstract class SourceProject extends ArrayProject
     protected $badgeFactory;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBadges()
     {

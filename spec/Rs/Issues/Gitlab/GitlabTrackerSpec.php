@@ -24,7 +24,7 @@ class GitlabTrackerSpec extends ObjectBehavior
     public function it_returns_a_Project_on_getProject(Client $client, Projects $api)
     {
         $client->api('projects')->willReturn($api);
-        $api->show('foo/bar')->willReturn(array());
+        $api->show('foo/bar')->willReturn([]);
 
         $project = $this->getProject('foo/bar');
 
@@ -35,8 +35,8 @@ class GitlabTrackerSpec extends ObjectBehavior
     public function it_returns_a_list_of_Projects_on_findProjects(Client $client, Projects $repoApi)
     {
         $client->api('projects')->willReturn($repoApi);
-        $repoApi->show('foo/bar')->willReturn(array('path_with_namespace'=>'foo/bar'));
-        $repoApi->accessible(1, 9999)->willReturn(array(array('path_with_namespace'=>'foo/bar')));
+        $repoApi->show('foo/bar')->willReturn(['path_with_namespace' => 'foo/bar']);
+        $repoApi->accessible(1, 9999)->willReturn([['path_with_namespace' => 'foo/bar']]);
 
         $projects = $this->findProjects('foo/(?!bazz|lol)([a-z0-9\.-]+)$');
 
@@ -44,5 +44,4 @@ class GitlabTrackerSpec extends ObjectBehavior
         $projects['foo/bar']->shouldHaveType('Rs\Issues\Project');
         $projects['foo/bar']->shouldHaveType('Rs\Issues\Gitlab\GitlabProject');
     }
-
 }

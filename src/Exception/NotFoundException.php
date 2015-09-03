@@ -3,7 +3,8 @@
 namespace Rs\Issues\Exception;
 
 /**
- * NotFoundException
+ * NotFoundException.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class NotFoundException extends \InvalidArgumentException

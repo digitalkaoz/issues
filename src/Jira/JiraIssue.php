@@ -2,11 +2,12 @@
 
 namespace Rs\Issues\Jira;
 
-use Rs\Issues\Issue;
-use Jira_Issue as ApiIssue; //chobie\Jira\Issue as ApiIssue;
+use Jira_Issue as ApiIssue;
+use Rs\Issues\Issue; //chobie\Jira\Issue as ApiIssue;
 
 /**
- * JiraIssue
+ * JiraIssue.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class JiraIssue implements Issue
@@ -25,7 +26,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -33,7 +34,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -41,7 +42,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -49,7 +50,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
@@ -57,7 +58,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClosedAt()
     {
@@ -65,7 +66,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getState()
     {
@@ -73,7 +74,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCommentCount()
     {
@@ -81,7 +82,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUpdatedAt()
     {
@@ -89,7 +90,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -97,7 +98,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthor()
     {
@@ -105,7 +106,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAuthorUrl()
     {
@@ -113,7 +114,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssignee()
     {
@@ -123,7 +124,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAssigneeUrl()
     {
@@ -133,7 +134,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -141,7 +142,7 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getTags()
     {
@@ -149,12 +150,13 @@ class JiraIssue implements Issue
     }
 
     /**
-     * @param  string $username
+     * @param string $username
+     *
      * @return string
      */
     private function getUserUrl($username)
     {
-        $base = parse_url($this->raw->getSelf(), PHP_URL_HOST);
+        $base  = parse_url($this->raw->getSelf(), PHP_URL_HOST);
         $proto = parse_url($this->raw->getSelf(), PHP_URL_SCHEME);
 
         return sprintf('%s://%s/ViewProfile.jspa?name=%s', $proto, $base, $username);

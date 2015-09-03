@@ -3,7 +3,8 @@
 namespace Rs\Issues\Utils;
 
 /**
- * RepositoryParser
+ * RepositoryParser.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class RepositoryParser
@@ -12,9 +13,10 @@ class RepositoryParser
     const WILDCARD = '/^([a-zA-Z0-9\.-])+\/\*/';
 
     /**
-     * checks if its a concrecte repo like "digitalkaoz/issues"
+     * checks if its a concrecte repo like "digitalkaoz/issues".
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return bool
      */
     public function isConcrete($name)
@@ -23,9 +25,10 @@ class RepositoryParser
     }
 
     /**
-     * checks if its a wildcard repo like "digitalkaoz/*"
+     * checks if its a wildcard repo like "digitalkaoz/*".
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return bool
      */
     public function isWildcard($name)
@@ -36,14 +39,15 @@ class RepositoryParser
     /**
      * checks if its matches a regex
      * "symfony/[Console|Debug]+$" only "symfony/Console" or "symfony/Debug"
-     * "doctrine/(?!common|lexer)([a-z0-9\.-]+)$" all but "doctrine/common" and "doctrine/lexer"
+     * "doctrine/(?!common|lexer)([a-z0-9\.-]+)$" all but "doctrine/common" and "doctrine/lexer".
      *
-     * @param  string $name
-     * @param  string $pattern
+     * @param string $name
+     * @param string $pattern
+     *
      * @return bool
      */
     public function matchesRegex($pattern, $name)
     {
-        return (bool) preg_match('/'.str_replace('/', '\/', $pattern).'/', $name);
+        return (bool) preg_match('/' . str_replace('/', '\/', $pattern) . '/', $name);
     }
 }

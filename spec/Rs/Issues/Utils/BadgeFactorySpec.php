@@ -31,5 +31,4 @@ class BadgeFactorySpec extends ObjectBehavior
 
         $badge->shouldHaveType('Rs\Issues\Badge');
     }
-
 }

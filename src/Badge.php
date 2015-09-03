@@ -3,7 +3,8 @@
 namespace Rs\Issues;
 
 /**
- * Badge
+ * Badge.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class Badge
@@ -18,6 +19,6 @@ class Badge
     public function __construct($image, $link)
     {
         $this->image = $image;
-        $this->link = $link;
+        $this->link  = $link;
     }
 }

@@ -4,11 +4,11 @@ namespace Rs\Issues\Gitlab;
 
 use Gitlab\Api\Projects;
 use Gitlab\Client;
-use Rs\Issues\Tracker\SearchableTracker;
 use Rs\Issues\Tracker;
+use Rs\Issues\Tracker\SearchableTracker;
 
 /**
- * GitlabTracker
+ * GitlabTracker.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -36,13 +36,13 @@ class GitlabTracker extends SearchableTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getProject($name)
     {
         return $this->requestProject($name, function ($name) {
             $api = $this->client->api('projects');
-            /** @var Projects $api */
+            /* @var Projects $api */
 
             return $api->show($name);
         }, function ($data) {
@@ -51,16 +51,15 @@ class GitlabTracker extends SearchableTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findProjects($name)
     {
         return $this->requestProjects($name, function () {
             $api = $this->client->api('projects');
-            /** @var Projects $api */
+            /* @var Projects $api */
 
             return $api->accessible(1, 9999);
         }, 'path_with_namespace');
     }
-
 }

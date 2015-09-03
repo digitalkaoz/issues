@@ -4,11 +4,11 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\HttpClient\CachedHttpClient;
-use Rs\Issues\Tracker\SearchableTracker;
 use Rs\Issues\Tracker;
+use Rs\Issues\Tracker\SearchableTracker;
 
 /**
- * GithubTracker
+ * GithubTracker.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -35,7 +35,7 @@ class GithubTracker extends SearchableTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getProject($name)
     {
@@ -49,12 +49,12 @@ class GithubTracker extends SearchableTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findProjects($name)
     {
         return $this->requestProjects($name, function ($name) {
-            list($user, ) = explode('/', $name);
+            list($user) = explode('/', $name);
 
             return $this->client->user()->repositories($user);
         }, 'full_name');

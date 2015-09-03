@@ -16,13 +16,13 @@ class GithubProjectSpec extends ObjectBehavior
 {
     public function let(Client $client)
     {
-        $this->beConstructedWith(array(
+        $this->beConstructedWith([
             'full_name'   => 'foo/bar',
             'description' => 'lorem ipsum',
             'html_url'    => 'http://foo.com',
             'name'        => 'bar',
-            'owner'       => array('login' => 'foo')
-        ), $client, new BadgeFactory());
+            'owner'       => ['login' => 'foo'],
+        ], $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -63,14 +63,14 @@ class GithubProjectSpec extends ObjectBehavior
 
         $response->getHeader('Link')->willReturn(null);
 
-        $api->all('foo', 'bar', array('state' => 'open'))->willReturn(array(
-            array(
+        $api->all('foo', 'bar', ['state' => 'open'])->willReturn([
+            [
                 'number' => 1,
-            ),
-            array(
+            ],
+            [
                 'number' => 5,
-            ),
-        ));
+            ],
+        ]);
 
         $result = $this->getIssues();
 
@@ -89,8 +89,8 @@ class GithubProjectSpec extends ObjectBehavior
         $client->repos()->willReturn($api);
         $api->contents()->willReturn($content);
 
-        $content->show('foo', 'bar', '.travis.yml')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{}')));
-        $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
+        $content->show('foo', 'bar', '.travis.yml')->shouldBeCalled()->willReturn(['encoding' => 'base64', 'content' => base64_encode('{}')]);
+        $content->show('foo', 'bar', 'composer.json')->shouldBeCalled()->willReturn(['encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')]);
 
         $this->getBadges()->shouldBeArray();
         $this->getBadges()->shouldHaveCount(3);

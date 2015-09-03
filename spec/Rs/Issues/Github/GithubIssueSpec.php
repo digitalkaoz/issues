@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 
 class GithubIssueSpec extends ObjectBehavior
 {
-    private $data = array(
+    private $data = [
         'title'        => 'foo bar',
         'body'         => 'lorem ipsum',
         'html_url'     => 'http://foo.com',
@@ -16,10 +16,10 @@ class GithubIssueSpec extends ObjectBehavior
         'closed_at'    => null,
         'comments'     => 7,
         'pull_request' => 'foo',
-        'assignee'     => array('login' => 'digitalkaoz', 'html_url' => 'http://bazz.com'),
-        'user'         => array('login' => 'lolcat', 'html_url' => 'http://bar.com'),
-        'labels'       => array(array('name' => 'foo'), array('name' => 'bar'))
-    );
+        'assignee'     => ['login' => 'digitalkaoz', 'html_url' => 'http://bazz.com'],
+        'user'         => ['login' => 'lolcat', 'html_url' => 'http://bar.com'],
+        'labels'       => [['name' => 'foo'], ['name' => 'bar']],
+    ];
 
     public function let()
     {
@@ -91,6 +91,6 @@ class GithubIssueSpec extends ObjectBehavior
 
     public function it_returns_its_tags()
     {
-        $this->getTags()->shouldBe(array('foo', 'bar'));
+        $this->getTags()->shouldBe(['foo', 'bar']);
     }
 }

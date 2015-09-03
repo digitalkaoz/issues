@@ -4,12 +4,12 @@ namespace Rs\Issues\Jira;
 
 use Jira_Api as Api; //chobie\Jira\Api;
 use Jira_Issues_Walker as Walker; //chobie\Jira\Issues\Walker;
-
-use Rs\Issues\Utils\BadgeFactory;
 use Rs\Issues\Project;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
- * JiraProject
+ * JiraProject.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class JiraProject implements Project
@@ -34,13 +34,13 @@ class JiraProject implements Project
      */
     public function __construct(array $data, Api $client, BadgeFactory $badgeFactory)
     {
-        $this->raw = $data;
-        $this->client = $client;
+        $this->raw          = $data;
+        $this->client       = $client;
         $this->badgeFactory = $badgeFactory;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -48,7 +48,7 @@ class JiraProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -56,22 +56,22 @@ class JiraProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
-        $base = parse_url(\igorw\get_in($this->raw, ['self']), PHP_URL_HOST);
+        $base  = parse_url(\igorw\get_in($this->raw, ['self']), PHP_URL_HOST);
         $proto = parse_url(\igorw\get_in($this->raw, ['self']), PHP_URL_SCHEME);
 
         return sprintf('%s://%s/browse/%s', $proto, $base, $this->raw['key']);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIssues(array $criteria = ['status != closed', 'status != resolved'])
     {
-        $conditions = join(' AND ', $criteria);
+        $conditions = implode(' AND ', $criteria);
 
         $walker = new Walker($this->client);
         $walker->push(sprintf('project = %s AND %s', $this->raw['key'], $conditions));
@@ -85,7 +85,7 @@ class JiraProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -93,7 +93,7 @@ class JiraProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBadges()
     {

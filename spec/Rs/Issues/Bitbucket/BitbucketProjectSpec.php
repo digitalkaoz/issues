@@ -15,13 +15,13 @@ class BitbucketProjectSpec extends ObjectBehavior
 {
     public function let(Api $client)
     {
-        $this->beConstructedWith(array(
+        $this->beConstructedWith([
             'full_name'   => 'foo/bar',
             'description' => 'lorem ipsum',
-            'links'    => ['self' => ['href'=>'http://foo.com']],
-            'owner' => ['username' => 'foo'],
-            'name' => 'bar'
-        ), $client, new BadgeFactory());
+            'links'       => ['self'     => ['href' => 'http://foo.com']],
+            'owner'       => ['username' => 'foo'],
+            'name'        => 'bar',
+        ], $client, new BadgeFactory());
     }
 
     public function it_is_initializable()
@@ -82,6 +82,5 @@ class BitbucketProjectSpec extends ObjectBehavior
 
         $result[1]->shouldHaveType('Rs\Issues\Bitbucket\BitbucketIssue');
         $result[1]->getType()->shouldBe('pull');
-
     }
 }

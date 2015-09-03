@@ -1,25 +1,24 @@
 <?php
 
-
 namespace Rs\Issues\Project;
 
 /**
- * GenericIssue
+ * GenericIssue.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class ArrayProject
 {
     protected $paths = [
-        'url'          => [],
-        'name'         => [],
-        'desc'         => [],
+        'url'  => [],
+        'name' => [],
+        'desc' => [],
     ];
 
     protected $raw = [];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -27,7 +26,7 @@ class ArrayProject
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -35,7 +34,7 @@ class ArrayProject
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -44,7 +43,7 @@ class ArrayProject
 
     /**
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

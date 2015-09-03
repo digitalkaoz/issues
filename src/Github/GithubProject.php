@@ -4,20 +4,21 @@ namespace Rs\Issues\Github;
 
 use Github\Client;
 use Github\ResultPager;
-use Rs\Issues\Utils\BadgeFactory;
-use Rs\Issues\Project\SourceProject;
 use Rs\Issues\Project;
+use Rs\Issues\Project\SourceProject;
+use Rs\Issues\Utils\BadgeFactory;
 
 /**
- * GithubProject
+ * GithubProject.
+ *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
 class GithubProject extends SourceProject implements Project
 {
     protected $paths = [
-        'url'          => ['html_url'],
-        'name'         => ['full_name'],
-        'desc'         => ['description'],
+        'url'  => ['html_url'],
+        'name' => ['full_name'],
+        'desc' => ['description'],
     ];
 
     /**
@@ -32,13 +33,13 @@ class GithubProject extends SourceProject implements Project
      */
     public function __construct(array $data, Client $client, BadgeFactory $badgeFactory)
     {
-        $this->raw = $data;
-        $this->client = $client;
+        $this->raw          = $data;
+        $this->client       = $client;
         $this->badgeFactory = $badgeFactory;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIssues(array $criteria = ['state' => 'open'])
     {
@@ -58,7 +59,7 @@ class GithubProject extends SourceProject implements Project
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -66,9 +67,10 @@ class GithubProject extends SourceProject implements Project
     }
 
     /**
-     * gets a file (content) from the repository
+     * gets a file (content) from the repository.
      *
-     * @param  string $filename
+     * @param string $filename
+     *
      * @return string
      */
     protected function getFile($filename)
@@ -76,7 +78,7 @@ class GithubProject extends SourceProject implements Project
         try {
             $file = $this->client->repos()->contents()->show($this->raw['owner']['login'], $this->raw['name'], $filename);
             if ('base64' === $file['encoding']) {
-                return base64_decode($file['content']);
+                return base64_decode($file['content'], true);
             }
         } catch (\Exception $e) {
             //file not found

@@ -31,5 +31,4 @@ class RepositoryParserSpec extends ObjectBehavior
         $this->matchesRegex('doctrine/(?!common|lexer)([a-z0-9\.-]+)$', 'doctrine/dbal')->shouldBe(true);
         $this->matchesRegex('doctrine/(?!common|lexer)([a-z0-9\.-]+)$', 'doctrine/lexer')->shouldBe(false);
     }
-
 }

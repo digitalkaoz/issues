@@ -1,17 +1,17 @@
 <?php
+
 namespace Rs\Issues\Jira;
 
 use Jira_Api as Api; //chobie\Jira\Api;
-use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Basic;
-use \Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Anonymous
-
-use Rs\Issues\Utils\BadgeFactory;
+use Jira_Api_Authentication_Anonymous as Anonymous; // chobie\Jira\Api\Authentication\Basic;
+use Jira_Api_Authentication_Basic as Basic; // chobie\Jira\Api\Authentication\Anonymous
 use Rs\Issues\Exception\NotFoundException;
-use Rs\Issues\Utils\RepositoryParser;
 use Rs\Issues\Tracker;
+use Rs\Issues\Utils\BadgeFactory;
+use Rs\Issues\Utils\RepositoryParser;
 
 /**
- * JiraTracker
+ * JiraTracker.
  *
  * @author Robert Schönthal <robert.schoenthal@gmail.com>
  */
@@ -36,12 +36,12 @@ class JiraTracker implements Tracker
     {
         $auth = $username && $password ? new Basic($username, $password) : new Anonymous();
 
-        $this->client = $client ?: new Api($host, $auth);
+        $this->client       = $client ?: new Api($host, $auth);
         $this->badgeFactory = new BadgeFactory();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getProject($name)
     {
@@ -55,17 +55,17 @@ class JiraTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findProjects($name)
     {
         $project = $this->getProject($name);
 
-        return array($project->getName() => $project);
+        return [$project->getName() => $project];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setRepositoryParser(RepositoryParser $parser)
     {
@@ -73,7 +73,7 @@ class JiraTracker implements Tracker
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setBadgeFactory(BadgeFactory $factory)
     {

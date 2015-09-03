@@ -11,11 +11,11 @@ use Rs\Issues\Utils\BadgeFactory;
 
 class GitlabProjectSpec extends ObjectBehavior
 {
-    private $data = array(
+    private $data = [
         'path_with_namespace' => 'foo/bar',
         'description'         => 'lorem ipsum',
-        'web_url'             => 'http://foo.com'
-    );
+        'web_url'             => 'http://foo.com',
+    ];
 
     public function let(Client $client)
     {
@@ -52,7 +52,7 @@ class GitlabProjectSpec extends ObjectBehavior
     {
         $client->api('repositories')->willReturn($api);
 
-        $api->getFile('foo/bar', 'composer.json', 'master')->shouldBeCalled()->willReturn(array('encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')));
+        $api->getFile('foo/bar', 'composer.json', 'master')->shouldBeCalled()->willReturn(['encoding' => 'base64', 'content' => base64_encode('{ "name" : "foo/bar"}')]);
 
         $this->getBadges()->shouldBeArray();
         $this->getBadges()->shouldHaveCount(2);
@@ -63,9 +63,9 @@ class GitlabProjectSpec extends ObjectBehavior
         $client->api('issues')->willReturn($issuesApi);
         $client->api('merge_requests')->willReturn($mergesApi);
 
-        $issuesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn(array(array('state'=>'opened'), array('state'=>'closed')));
+        $issuesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn([['state' => 'opened'], ['state' => 'closed']]);
 
-        $mergesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn(array(array('state'=>'opened'), array('state'=>'closed')));
+        $mergesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn([['state' => 'opened'], ['state' => 'closed']]);
 
         $result = $this->getIssues();
 
@@ -76,6 +76,5 @@ class GitlabProjectSpec extends ObjectBehavior
 
         $result[1]->shouldHaveType('Rs\Issues\Gitlab\GitlabIssue');
         $result[1]->getType()->shouldBe('merge');
-
     }
 }

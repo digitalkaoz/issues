@@ -6,17 +6,17 @@ use PhpSpec\ObjectBehavior;
 
 class GitlabIssueSpec extends ObjectBehavior
 {
-    private $data = array(
+    private $data = [
         'title'       => 'foo bar',
         'iid'         => 42,
         'description' => 'lorem ipsum',
         'state'       => 'open',
         'created_at'  => '25.05.1981 13:37:42',
         'closed_at'   => null,
-        'assignee'    => array('username' => 'digitalkaoz'),
-        'author'      => array('username' => 'lolcat'),
-        'labels'      => array('foo','bar')
-    );
+        'assignee'    => ['username' => 'digitalkaoz'],
+        'author'      => ['username' => 'lolcat'],
+        'labels'      => ['foo','bar'],
+    ];
 
     public function let()
     {
@@ -83,6 +83,6 @@ class GitlabIssueSpec extends ObjectBehavior
 
     public function it_returns_its_tags()
     {
-        $this->getTags()->shouldBe(array('foo','bar'));
+        $this->getTags()->shouldBe(['foo', 'bar']);
     }
 }
