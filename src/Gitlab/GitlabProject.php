@@ -87,7 +87,7 @@ class GitlabProject extends SourceProject implements Project
      * @param string       $type
      * @param string       $method
      *
-     * @return \Rs\Issues\Issue[]
+     * @return Issue[]
      */
     private function findIssues(ApiInterface $api, $type, $method = 'all')
     {
