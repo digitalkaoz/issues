@@ -48,7 +48,7 @@ class GitlabProject extends SourceProject implements Project
     public function getIssues(array $criteria = [])
     {
         $issues = $this->findIssues($this->client->api('issues'), 'issue');
-        $merges = $this->findIssues($this->client->api('merge_requests'), 'merge', 'opened');
+        $merges = $this->findIssues($this->client->api('merge_requests'), 'merge');
 
         return array_merge($issues, $merges);
     }
@@ -85,14 +85,13 @@ class GitlabProject extends SourceProject implements Project
     /**
      * @param ApiInterface $api
      * @param string       $type
-     * @param string       $method
      *
      * @return Issue[]
      */
-    private function findIssues(ApiInterface $api, $type, $method = 'all')
+    private function findIssues(ApiInterface $api, $type)
     {
         /* @var Issues|MergeRequests $api */
-        $issues = $api->$method($this->getName(), 1, 9999);
+        $issues = $api->all($this->getName(), 1, 9999);
 
         $newIssues = [];
 
