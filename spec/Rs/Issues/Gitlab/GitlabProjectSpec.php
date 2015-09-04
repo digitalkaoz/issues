@@ -65,7 +65,7 @@ class GitlabProjectSpec extends ObjectBehavior
 
         $issuesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn([['state' => 'opened'], ['state' => 'closed']]);
 
-        $mergesApi->all('foo/bar', 1, 9999)->shouldBeCalled()->willReturn([['state' => 'opened'], ['state' => 'closed']]);
+        $mergesApi->opended('foo/bar', 1, 9999)->shouldBeCalled()->willReturn([['state' => 'opened'], ['state' => 'closed']]);
 
         $result = $this->getIssues();
 
