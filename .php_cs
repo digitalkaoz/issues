@@ -6,7 +6,7 @@ EOF;
 //Symfony\CS\Fixer\Contrib\HeaderCommentFixer::setHeader($header);
 
 $finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->exclude('vendor', 'bin')
+    ->exclude('vendor', 'Resources', 'docker', 'bin')
     ->in(__DIR__)
 ;
 
