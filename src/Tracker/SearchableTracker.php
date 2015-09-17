@@ -51,8 +51,8 @@ abstract class SearchableTracker
      * @param \Closure $creator
      *
      * @throws NotFoundException
-     * @return Project
      *
+     * @return Project
      */
     protected function requestProject($name, \Closure $finder, \Closure $creator)
     {
