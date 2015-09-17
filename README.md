@@ -10,6 +10,7 @@ a PHP wrapper for various issue tracker
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/8b6776fe-d453-406b-a073-a6d4eeb9d4b4.svg?style=flat-square)](https://insight.sensiolabs.com/projects/8b6776fe-d453-406b-a073-a6d4eeb9d4b4)
 [![Latest Stable Version](https://img.shields.io/packagist/v/digitalkaoz/issues.svg?style=flat-square)](https://packagist.org/packages/digitalkaoz/issues)
 [![Total Downloads](https://img.shields.io/packagist/dt/digitalkaoz/issues.svg?style=flat-square)](https://packagist.org/packages/digitalkaoz/issues)
+[![StyleCI](https://styleci.io/repos/23697611/shield)](https://styleci.io/repos/23697611)
 
 
 Installation
