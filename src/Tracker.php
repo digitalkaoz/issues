@@ -17,8 +17,8 @@ interface Tracker
      * @param string $name
      *
      * @throws NotFoundException
-     * @return Project
      *
+     * @return Project
      */
     public function getProject($name);
 
